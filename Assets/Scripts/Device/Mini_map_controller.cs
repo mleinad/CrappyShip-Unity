@@ -15,11 +15,12 @@ public Transform player_pos;
 
 public CinemachineVirtualCamera virtual_camera;
 
+private float zoom = 10f;
 public bool rotate;
 
 void Start()
 {
-    Debug.Log( content_transform.rect.size);
+  virtual_camera.m_Lens.OrthographicSize = zoom;   
 }
 
 
@@ -28,12 +29,20 @@ void Update()
     player_map_pos.position = new Vector3(player_pos.position.x, 0, player_pos.position.z);
 
     if(rotate){
-        virtual_camera.transform.rotation = Quaternion.Euler(90, player_pos.eulerAngles.y, 0);
+       virtual_camera.transform.rotation = Quaternion.Euler(0, player_pos.eulerAngles.y, 0);
     }
 
+    if(Input.GetKey(KeyCode.Z)){
+        ZoomIn();
+    }
 
+    
+    if(Input.GetKey(KeyCode.X)){
+        ZoomOut();
+    }
 }
 
+/*
 private Vector2 WorldPositionToMapPosition(Vector3 world_pos)
 {
     var pos = new Vector2(world_pos.x, world_pos.z);
@@ -43,5 +52,17 @@ private Vector2 WorldPositionToMapPosition(Vector3 world_pos)
     return matrix.MultiplyPoint3x4(pos);
 }
 
+*/
+    void ZoomIn(){
+        zoom -= 3f * Time.deltaTime;
+        if(zoom <= 5) zoom =5;
+        virtual_camera.m_Lens.OrthographicSize = zoom;
+
+    }
+    void ZoomOut(){
+        zoom += 3f * Time.deltaTime;
+        if(zoom >= 30) zoom =30;
+        virtual_camera.m_Lens.OrthographicSize = zoom;
+    }
 
 }

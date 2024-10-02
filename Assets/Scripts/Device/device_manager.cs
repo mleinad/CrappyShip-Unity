@@ -16,7 +16,7 @@ public class device_manager : MonoBehaviour
     
     void Start()
     {
-        
+        animator.SetInteger("Transition", 2);
     }
 
     // Update is called once per frame
@@ -32,17 +32,20 @@ public class device_manager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q)){
             device_pos1 = !device_pos1;
-            
+
+
             animator.SetBool("Position1", device_pos1);
         }
 
         if(Input.GetKeyDown(KeyCode.Tab)){
             device_pos2 = !device_pos2;
-            
+
+
             animator.SetBool("Position2", device_pos2);
+
+
         }
 
+
     }
-
-
 }
