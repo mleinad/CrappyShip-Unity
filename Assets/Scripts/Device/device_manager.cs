@@ -17,6 +17,8 @@ public class device_manager : MonoBehaviour
     void Start()
     {
         animator.SetInteger("Transition", 2);
+        Cursor.visible = false;
+
     }
 
     // Update is called once per frame
@@ -24,6 +26,8 @@ public class device_manager : MonoBehaviour
     {
       
         InputControl();
+       Cursor.visible = device_pos2;
+        Cursor.lockState = CursorLockMode.None;
 
     }
 
