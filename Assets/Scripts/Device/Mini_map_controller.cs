@@ -28,9 +28,6 @@ void Update()
 {
     player_map_pos.position = new Vector3(player_pos.position.x, 0, player_pos.position.z);
 
-    if(rotate){
-       virtual_camera.transform.rotation = Quaternion.Euler(0, player_pos.eulerAngles.y, 0);
-    }
 
     if(Input.GetKey(KeyCode.Z)){
         ZoomIn();

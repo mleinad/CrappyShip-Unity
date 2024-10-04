@@ -16,7 +16,6 @@ public class device_manager : MonoBehaviour
     
     void Start()
     {
-        animator.SetInteger("Transition", 2);
         Cursor.visible = false;
 
     }

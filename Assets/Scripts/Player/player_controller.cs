@@ -29,7 +29,6 @@ public class player_controller : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -71,6 +70,6 @@ public class player_controller : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotation_X, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * look_speed, 0);
     }
-
 }
 
+ 
