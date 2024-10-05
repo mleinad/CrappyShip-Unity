@@ -4,31 +4,56 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 [RequireComponent(typeof(CharacterController))]
-
-public class player_controller : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Static instance for Singleton
+    public static Player Instance { get; private set; }
+    
+    [SerializeField]
+    private GameObject crosshair1, crosshair2;
 
     CharacterController controller;
     Vector3 movement_vec = Vector3.zero;
 
+
+
+#region Player Variables 
     public float walking_speed = 7.5f;
     public float running_speed = 11.5f;
     public float jump_speed = 8.0f;
     public float gravity = 20.0f;
     public float look_speed = 2.0f;
     public float look_X_limit = 45.0f;
+#endregion
 
     public Camera playerCamera;
 
     float rotation_X = 0;
 
+    // Awake is called when the script instance is being loaded
+    void Awake()
+    {
+        // Implement Singleton Pattern
+        if (Instance == null)
+        {
+            Instance = this;  // Set this instance as the singleton instance
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);  // Destroy the extra instance to ensure there is only one
+        }
+
+        DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
+    }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -45,8 +70,7 @@ public class player_controller : MonoBehaviour
 
         movement_vec = (forward * speed_X) + (right * speed_Y);
 
-
-        if(Input.GetButton("Jump") && controller.isGrounded)
+        if (Input.GetButton("Jump") && controller.isGrounded)
         {
             movement_vec.y = jump_speed;
         }
@@ -55,21 +79,40 @@ public class player_controller : MonoBehaviour
             movement_vec.y = _movementY;
         }
 
-
-        if(!controller.isGrounded)
+        if (!controller.isGrounded)
         {
-            movement_vec.y -= gravity* Time.deltaTime;
+            movement_vec.y -= gravity * Time.deltaTime;
         }
-        
-        
+
         controller.Move(movement_vec * Time.deltaTime);
 
-
+        // Camera rotation
         rotation_X += -Input.GetAxis("Mouse Y") * look_speed;
         rotation_X = Mathf.Clamp(rotation_X, -look_X_limit, look_X_limit);
         playerCamera.transform.localRotation = Quaternion.Euler(rotation_X, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * look_speed, 0);
     }
-}
 
- 
+
+    public Transform GetMainCameraTransform(){
+
+        return playerCamera.transform;
+    }
+
+
+
+#region UI
+    
+    public void CrosshairOn()
+    {
+        crosshair1.SetActive(false);
+        crosshair2.SetActive(true);
+    }
+    public void CrosshairOff()
+    {
+        crosshair1.SetActive(true);
+        crosshair2.SetActive(false);
+    }
+
+#endregion
+}

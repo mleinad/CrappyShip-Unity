@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeviceOnHandState : DeviceBaseState
 {
     string trigger = "position1";
-   public override void EnterState(DeviceStateManager context){
+    public override void EnterState(DeviceStateManager context){
     context.animator.SetTrigger(trigger);
 
     }

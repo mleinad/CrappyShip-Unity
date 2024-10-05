@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody))]
 public class DragNDrop : MonoBehaviour
 {
-    public GameObject crosshair1, crosshair2;
-    public Transform objTransform, cameraTrans;
-    public bool interactable, pickedup;
-    public Rigidbody objRigidbody;
+    private bool interactable, pickedup;
+    private Rigidbody objRigidbody;
     public float throwAmount;
 
+
+    void Awake()
+    {
+        objRigidbody = GetComponent<Rigidbody>();
+    }
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("MainCamera"))
         {
-            crosshair1.SetActive(false);
-            crosshair2.SetActive(true);
+
+            Player.Instance.CrosshairOn();
             interactable = true;
+        
         }
     }
     void OnTriggerExit(Collider other)
@@ -26,9 +32,10 @@ public class DragNDrop : MonoBehaviour
         {
             if(pickedup == false)
             {
-                crosshair1.SetActive(true);
-                crosshair2.SetActive(false);
+        
+                Player.Instance.CrosshairOff();
                 interactable = false;
+        
             }
         }
     }
@@ -38,18 +45,16 @@ public class DragNDrop : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                objTransform.parent = cameraTrans;
+                transform.parent = Player.Instance.GetMainCameraTransform(); //gets camera transform from player singleton class
                 objRigidbody.useGravity = false;
                 pickedup = true;
             }
             if (Input.GetMouseButtonUp(0))
             {
-                objTransform.parent = null;
+                transform.parent = null;
                 objRigidbody.useGravity = true;
                 pickedup = false;
             }
         }
     }
-
-
 }

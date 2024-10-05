@@ -24,7 +24,7 @@ public class DeviceFullScreenState : DeviceBaseState
 
       public override void ExitState(DeviceStateManager context){
 
-        Cursor.visible = true;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
 
