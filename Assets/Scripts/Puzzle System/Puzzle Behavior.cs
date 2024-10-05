@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPuzzleBehavior
+public interface IPuzzleBehavior 
 {
      void StartPuzzle();
      bool CheckCompletion();

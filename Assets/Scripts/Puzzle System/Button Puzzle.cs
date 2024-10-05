@@ -40,7 +40,7 @@ public class ButtonPuzzle : MonoBehaviour, IPuzzleBehavior
     {
         if (other.CompareTag("MainCamera"))
         {
-                 Player.Instance.CrosshairOn();
+                Player.Instance.CrosshairOn();
                 interactable = false;
         }
     }

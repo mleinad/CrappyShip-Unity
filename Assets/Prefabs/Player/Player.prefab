@@ -202,6 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031a6e6158855c047a92c95d1a3521c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshair1: {fileID: 0}
+  crosshair2: {fileID: 0}
   walking_speed: 7.5
   running_speed: 11.5
   jump_speed: 8
@@ -221,6 +223,7 @@ GameObject:
   - component: {fileID: 7785233406650102926}
   - component: {fileID: 2509026107667227494}
   - component: {fileID: 6439787275445913554}
+  - component: {fileID: 5717560573438439268}
   m_Layer: 0
   m_Name: Camera -> 1
   m_TagString: MainCamera
@@ -347,6 +350,27 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!65 &5717560573438439268
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911474503963515053}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13647649, y: 0.13657355, z: 2.2035904}
+  m_Center: {x: 0.006262198, y: 0.023691297, z: 1.4961557}
 --- !u!1001 &8210752309017405732
 PrefabInstance:
   m_ObjectHideFlags: 0
