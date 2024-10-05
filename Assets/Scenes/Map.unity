@@ -1200,6 +1200,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &631432110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 631432112}
+  - component: {fileID: 631432111}
+  m_Layer: 0
+  m_Name: PuzzleMan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &631432111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631432110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a86ca60839444240b75ea49cdce6e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &631432112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631432110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.506329, y: 1.9409989, z: -1.4234829}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &670786671
 Mesh:
   m_ObjectHideFlags: 0
@@ -6145,7 +6189,55 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1248534734}
+    - targetCorrespondingSourceObject: {fileID: 8403293291191215815, guid: 39bd9e21160c1924595580239588fca9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2444694679367061917}
+    - targetCorrespondingSourceObject: {fileID: 8232163710328390138, guid: 39bd9e21160c1924595580239588fca9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2444694679367061916}
   m_SourcePrefab: {fileID: 100100000, guid: 39bd9e21160c1924595580239588fca9, type: 3}
+--- !u!1 &2444694679367061914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8232163710328390138, guid: 39bd9e21160c1924595580239588fca9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2444694679367061913}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2444694679367061915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8403293291191215815, guid: 39bd9e21160c1924595580239588fca9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2444694679367061913}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2444694679367061916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444694679367061914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e3acf2ef333f640847d4b2989b60fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  pickedup: 0
+--- !u!114 &2444694679367061917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444694679367061915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e3acf2ef333f640847d4b2989b60fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  pickedup: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6155,3 +6247,4 @@ SceneRoots:
   - {fileID: 1526813814}
   - {fileID: 2444694679367061913}
   - {fileID: 966533105}
+  - {fileID: 631432112}
