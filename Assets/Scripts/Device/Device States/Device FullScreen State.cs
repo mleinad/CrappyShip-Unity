@@ -10,6 +10,7 @@ public class DeviceFullScreenState : DeviceBaseState
 
          Cursor.visible = true;
          Cursor.lockState = CursorLockMode.None;
+         Player.Instance.LockCamera(true);
 
     }
 
@@ -26,7 +27,7 @@ public class DeviceFullScreenState : DeviceBaseState
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+        Player.Instance.LockCamera(false);
 
     }
 }

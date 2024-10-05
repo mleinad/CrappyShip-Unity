@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     Animator playerAnim;
 
-
+    private bool is_rotation_locked = false;    
 
 #region Player Variables 
     public float walking_speed = 7.5f;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     public Camera playerCamera;
 
-    float rotation_X = 0;
+    private float rotation_X = 0;
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -95,6 +95,12 @@ public class Player : MonoBehaviour
         controller.Move(movement_vec * Time.deltaTime);
 
         // Camera rotation
+        if(!is_rotation_locked) MoveCamera();
+    }
+
+
+    private void MoveCamera(){
+
         rotation_X += -Input.GetAxis("Mouse Y") * look_speed;
         rotation_X = Mathf.Clamp(rotation_X, -look_X_limit, look_X_limit);
         playerCamera.transform.localRotation = Quaternion.Euler(rotation_X, 0, 0);
@@ -102,8 +108,11 @@ public class Player : MonoBehaviour
     }
 
 
-    public Transform GetMainCameraTransform(){
 
+    public void LockCamera(bool state) => is_rotation_locked = state;
+
+
+    public Transform GetMainCameraTransform(){
         return playerCamera.transform;
     }
 
@@ -111,13 +120,13 @@ public class Player : MonoBehaviour
 
 #region UI
     
-    public void CrosshairOn()
-    {
+    public void CrosshairOn(){
+        
         crosshair1.SetActive(false);
         crosshair2.SetActive(true);
     }
-    public void CrosshairOff()
-    {
+    public void CrosshairOff(){
+
         crosshair1.SetActive(true);
         crosshair2.SetActive(false);
     }
