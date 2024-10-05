@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     CharacterController controller;
     Vector3 movement_vec = Vector3.zero;
 
+    Animator playerAnim;
+
 
 
 #region Player Variables 
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        playerAnim = GetComponent<Animator>();
 
         
         Cursor.visible = false;
@@ -70,13 +73,18 @@ public class Player : MonoBehaviour
 
         movement_vec = (forward * speed_X) + (right * speed_Y);
 
+        bool isWalking = movement_vec.x != 0 || movement_vec.z != 0;
+        playerAnim.SetBool("isWalking", isWalking);
+
         if (Input.GetButton("Jump") && controller.isGrounded)
         {
             movement_vec.y = jump_speed;
+            playerAnim.SetBool("isJumping",true);
         }
         else
         {
             movement_vec.y = _movementY;
+            playerAnim.SetBool("isJumping", false);
         }
 
         if (!controller.isGrounded)
