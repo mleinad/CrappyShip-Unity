@@ -5,9 +5,21 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
 
-    [SerializeField]
-    List<ButtonPuzzle> steps;
+    [SerializeReference]
+   List<GameObject> gameObjects;
+   
+    List<IPuzzleBehavior> steps = new List<IPuzzleBehavior>();
     private int count = 0;
+
+
+    //TEMPORARY!!!!!!!! VERY BAD 
+    void Awake()
+    {
+        foreach(var g in gameObjects){
+            steps.Add(g.GetComponent<IPuzzleBehavior>());
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
