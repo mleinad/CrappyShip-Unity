@@ -11,7 +11,7 @@ public class Mini_map_controller : MonoBehaviour
 public float posX=0 , posY=0;
 
 public RectTransform player_map_pos, content_transform;
-public Transform player_pos;
+private Transform player_pos;
 
 public CinemachineVirtualCamera virtual_camera;
 
@@ -20,6 +20,7 @@ public bool rotate;
 
 void Start()
 {
+  player_pos = Player.Instance.transform;
   virtual_camera.m_Lens.OrthographicSize = zoom;   
 }
 
