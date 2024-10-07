@@ -1,11 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomManager : MonoBehaviour
+public class DoorAction : MonoBehaviour, IActions
 {
     // Start is called before the first frame update
+   
+   [SerializeField]
+    private Animator animator;
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Start()
     {
         
@@ -17,7 +24,10 @@ public class RoomManager : MonoBehaviour
         
     }
 
-    public void OpenDoor(){
 
+    public void Perform()
+    {
+        animator.SetTrigger("open");
     }
+    
 }

@@ -8,15 +8,35 @@ using UnityEngine;
 public class Mini_map_controller : MonoBehaviour
 {
 
+ public static Mini_map_controller Instance { get; private set; }
 public float posX=0 , posY=0;
 
 public RectTransform player_map_pos, content_transform;
 private Transform player_pos;
 
+[SerializeField]
+Canvas canvas;
+
 public CinemachineVirtualCamera virtual_camera;
 
 private float zoom = 10f;
 public bool rotate;
+
+
+void Awake()
+{
+        // Implement Singleton Pattern
+        if (Instance == null)
+        {
+            Instance = this;  // Set this instance as the singleton instance
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);  // Destroy the extra instance to ensure there is only one
+        }
+
+        DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
+}
 
 void Start()
 {
@@ -62,5 +82,9 @@ private Vector2 WorldPositionToMapPosition(Vector3 world_pos)
         if(zoom >= 30) zoom =30;
         virtual_camera.m_Lens.OrthographicSize = zoom;
     }
+
+
+
+    public Transform GetCanvasTransform() => canvas.transform;
 
 }

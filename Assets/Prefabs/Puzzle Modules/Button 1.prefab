@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 1521967786620722088}
   - component: {fileID: 5915425162135252493}
   - component: {fileID: 1445174221617048448}
+  - component: {fileID: 9125322089638485206}
   m_Layer: 0
   m_Name: Button 1
   m_TagString: Untagged
@@ -233,3 +234,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9125322089638485206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4480349207962345938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101d319b29939bd4abe9af42dfc53343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  element_prefab: {fileID: 300901414655311126, guid: 45a4484e03a42844ea35b3de877578b8,
+    type: 3}

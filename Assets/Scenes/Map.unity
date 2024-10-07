@@ -3160,6 +3160,11 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1771775118}
+    - target: {fileID: 1382326550488839385, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: m_Lens.Dutch
+      value: -180
+      objectReference: {fileID: 0}
     - target: {fileID: 3293885981337801710, guid: 5aaf778a898193e40b91c72ace6acd6e,
         type: 3}
       propertyPath: player_map_pos
@@ -3214,6 +3219,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 15.02801
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919014594160241412, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000003090862
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919014594160241412, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000003090862
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919014594160241412, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919014594160241412, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5417790939891096263, guid: 5aaf778a898193e40b91c72ace6acd6e,
         type: 3}
@@ -6224,6 +6249,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ----MINI MAP-----
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497206119027397888, guid: 72f11e81407e4d644a3db92a10fce1a5,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.7019608
       objectReference: {fileID: 0}
     - target: {fileID: 1602111625054369562, guid: 72f11e81407e4d644a3db92a10fce1a5,
         type: 3}

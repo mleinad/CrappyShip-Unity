@@ -6,18 +6,31 @@ public class PuzzleManager : MonoBehaviour
 {
 
     [SerializeReference]
-   List<GameObject> gameObjects;
-   
+    List<GameObject> puzzle_obj;
+
+    [SerializeReference]
+    List<GameObject> action_obj;
+    
     List<IPuzzleBehavior> steps = new List<IPuzzleBehavior>();
+    List<IActions> actions = new List<IActions>();
+    
     private int count = 0;
+
+    private bool BeenSolved = false;
 
 
     //TEMPORARY!!!!!!!! VERY BAD 
     void Awake()
     {
-        foreach(var g in gameObjects){
+        foreach(var g in puzzle_obj){
             steps.Add(g.GetComponent<IPuzzleBehavior>());
         }
+        
+        foreach(var a in action_obj){
+
+            actions.Add(a.GetComponent<IActions>());
+            Debug.Log(a.name);
+        } 
 
     }
 
@@ -30,15 +43,27 @@ public class PuzzleManager : MonoBehaviour
             {
                 count++;
             }
-            if(count == steps.Count) Solved();
+            if(!BeenSolved)
+            {
+                if(count == steps.Count) {
+                    BeenSolved = true;
+                    Solved();
+                    }
+            }
         }
         count = 0;
         }
     }
 
 
-    void Solved()
+    public void Solved()
     {
-        Debug.Log("solved");
+
+        foreach(var a in actions){
+
+         a.Perform();   
+
+        }
+
     }
 }
