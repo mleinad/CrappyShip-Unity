@@ -21,14 +21,12 @@ public class ButtonPuzzle : MonoBehaviour, IPuzzleBehavior
 
     public bool CheckCompletion()
     {
-
-        
         return state;
     }
 
     public void ResetPuzzle()
     {
-
+        state = false;
     }  
 
     void Update(){
