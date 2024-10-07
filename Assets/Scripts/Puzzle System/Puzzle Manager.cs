@@ -29,7 +29,7 @@ public class PuzzleManager : MonoBehaviour
         foreach(var a in action_obj){
 
             actions.Add(a.GetComponent<IActions>());
-            Debug.Log(a.name);
+            
         } 
 
     }

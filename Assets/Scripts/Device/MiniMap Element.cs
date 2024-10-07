@@ -15,8 +15,12 @@ public class MiniMapElement : MonoBehaviour
     [SerializeField]
     GameObject element_prefab;
 
+    [SerializeField]
+    Color color;
+
     private RectTransform element_transform;
     private Transform canvas_transform;
+    private SpriteRenderer spriteRenderer;
 
     void Awake(){
     }
@@ -37,10 +41,15 @@ public class MiniMapElement : MonoBehaviour
 
 
     void InstatiateElement(){
-         GameObject element;
-       element = Instantiate(element_prefab, canvas_transform);
-       element.GetComponent<SpriteRenderer>().sprite = sprite;
-       element_transform = element.GetComponent<RectTransform>();
+        
+        GameObject element;
+        element = Instantiate(element_prefab, canvas_transform);
+        spriteRenderer = element.GetComponent<SpriteRenderer>();
+
+        spriteRenderer.sprite = sprite;
+        spriteRenderer.color = color;
+       
+        element_transform = element.GetComponent<RectTransform>();
     }
 
 
