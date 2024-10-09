@@ -111,12 +111,13 @@ public class Player : MonoBehaviour
 
     public void LockCamera(bool state) => is_rotation_locked = state;
 
+    public void SetCameraSpeed(float speed)=> look_speed = speed;
 
     public Transform GetMainCameraTransform(){
         return playerCamera.transform;
     }
 
-
+    
 
 #region UI
     
