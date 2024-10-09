@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorAction : MonoBehaviour, IActions
+public class DoorAction : MonoBehaviour, IActions   //possibly play animation action
 {
     // Start is called before the first frame update
    

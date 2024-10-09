@@ -14,8 +14,13 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
 
     public bool interactable, pickedup;
     private bool state = false;
-    public float rotationSpeed = 0f; // Speed at which the valve rotates
+    public float rotation_speed = 1f; 
+    
 
+    [SerializeField]
+    private float current_angle;
+    [SerializeField]
+    private float target_angle;
     
     //for debug only 
     public Vector2 C;
@@ -33,6 +38,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
 
     void Start()
     {
+        current_angle = 0 ;
         //change = rotation_pivot.position;   
     }
 
@@ -61,21 +67,29 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
     {
         if(interactable)
         {
+            if(Input.GetMouseButtonDown(0)){
+                change = collision_point;
+            }
 
             if(Input.GetMouseButton(0))
             {
-                
+                  
+                Player.Instance.SetCameraSpeed(0.5f);
                 HandleRotation();
-
 
             }
         }
         if(Input.GetMouseButtonUp(0)) Player.Instance.SetCameraSpeed(2.0f); //maybe bad for performance
 
+        if(Mathf.Abs(current_angle - target_angle) <= 5f){
+            state = true;
+        }
+
+
     }
 
     void HandleRotation(){
-        Player.Instance.SetCameraSpeed(1f);
+      
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 current = collision_point;      
 
@@ -101,37 +115,14 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
 #endregion
 
 
-        valve_transform.Rotate(0, rotation_angle ,0);
+        valve_transform.Rotate(0, rotation_angle* rotation_speed,0);
+
+        current_angle += rotation_angle * rotation_speed;
         change = current;
     }
 
 
-    void _HandleRotation(){ //like unity editor (?)
-            Player.Instance.SetCameraSpeed(0.2f);
 
-                change.x =  Input.GetAxis("Mouse X");
-                change.y =  Input.GetAxis("Mouse Y");
-
-                change.Normalize();
-
-
-                valve_transform.Rotate(0, -change.x*rotationSpeed * Time.deltaTime,0, Space.Self);
-                valve_transform.Rotate(0, -change.y*rotationSpeed * Time.deltaTime,0, Space.Self);
-
-
-                Debug.Log( "vertical -> " + change.x + " horizontal -> " + change.y);
-
-    }
-   
-   
-    void OnTriggerEnter(Collider other)
-    {
-            if (other.CompareTag("MainCamera"))
-            {
-                collision_point = other.ClosestPoint(transform.position);
-                change = collision_point;
-            }
-    }
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("MainCamera"))

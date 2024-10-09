@@ -65,10 +65,13 @@ public class PuzzleManager : MonoBehaviour
 
     public void Solved()
     {
+        if(actions!=null){
         foreach(var a in actions){
 
          a.Perform();   
 
         }
+        }
+            Debug.Log("performed!");
     }
 }
