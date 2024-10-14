@@ -11,6 +11,8 @@ public interface IPuzzleNode
     public void ExecuteNode();
     public void Reset();
 
+    
+
 }
 
 

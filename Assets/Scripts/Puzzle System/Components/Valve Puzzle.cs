@@ -22,12 +22,9 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
     [SerializeField]
     private float target_angle;
     
-    //for debug only 
-    public Vector2 C;
-    public Vector3 A, B;
+    private Vector2 C;
 
 
-    public float r;
     public Transform valve_transform;
 
 
@@ -104,10 +101,6 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
         float rotation_angle = Vector3.SignedAngle(center_to_mouseA, center_to_mouseB, Vector3.forward);
         
 #region debug
-        r= rotation_angle;
-        A = center_to_mouseA;
-        B = center_to_mouseB;
-
         Debug.DrawLine(valve_transform.position, current, Color.red);
         Debug.DrawLine(valve_transform.position, change, Color.green);
         Debug.DrawRay(ray.origin, ray.direction*10, Color.yellow);

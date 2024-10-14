@@ -7,12 +7,9 @@ public class PuzzleManager : MonoBehaviour
 
     [SerializeReference]
     List<GameObject> puzzle_obj;
-
-    [SerializeReference]
-    List<GameObject> action_obj;
     
     List<IPuzzleBehavior> steps = new List<IPuzzleBehavior>();
-    List<IActions> actions = new List<IActions>();
+    //List<IActions> actions = new List<IActions>();
     
 
     public bool Ordered;
@@ -28,12 +25,6 @@ public class PuzzleManager : MonoBehaviour
         foreach(var g in puzzle_obj){
             steps.Add(g.GetComponent<IPuzzleBehavior>());
         }
-        
-        foreach(var a in action_obj){
-
-            actions.Add(a.GetComponent<IActions>());
-            
-        } 
 
     }
 
@@ -65,13 +56,6 @@ public class PuzzleManager : MonoBehaviour
 
     public void Solved()
     {
-        if(actions!=null){
-        foreach(var a in actions){
-
-         a.Perform();   
-
-        }
-        }
-            Debug.Log("performed!");
+        EventManager.Instance.OnTriggerOpenDoor();
     }
 }

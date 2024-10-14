@@ -67,11 +67,16 @@ public class Player : MonoBehaviour
 
         bool is_running = Input.GetKey(KeyCode.LeftShift);
 
+
+
+        float _movementY = movement_vec.y;
+        
+        if(controller.isGrounded)
+        {
         float speed_X = Input.GetAxis("Vertical") * (is_running ? running_speed : walking_speed);          
         float speed_Y = Input.GetAxis("Horizontal") * (is_running ? running_speed : walking_speed);
-        float _movementY = movement_vec.y;
-
         movement_vec = (forward * speed_X) + (right * speed_Y);
+        }
 
         bool isWalking = movement_vec.x != 0 || movement_vec.z != 0;
         playerAnim.SetBool("isWalking", isWalking);

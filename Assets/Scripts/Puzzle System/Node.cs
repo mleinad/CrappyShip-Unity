@@ -12,7 +12,7 @@ public class Node : MonoBehaviour, IPuzzleNode
     List<IPuzzleBehavior> _compL;
     
     [SerializeField]
-    List<IActions> _ActL;
+    //List<IActions> _ActL;
 
 
         bool has_components;
@@ -49,9 +49,9 @@ public class Node : MonoBehaviour, IPuzzleNode
 
     public void PlayActions()
     {
-        foreach(IActions action in _ActL){
+      /*  foreach(IActions action in _ActL){
             action.Perform();
-        }
+        }*/
     }
 
     bool CheckComponents(){
