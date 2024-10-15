@@ -8,6 +8,11 @@ public class EventManager : MonoBehaviour
     public static EventManager Instance { get; private set; }
     
     public event Action<int> onTriggerOpenDoor; //future proof for multiple doors
+    public event Action <string> onTriggerDebug;
+
+
+
+
     private void Awake()
     {
         // Implement Singleton Pattern
@@ -27,4 +32,14 @@ public class EventManager : MonoBehaviour
     {
         onTriggerOpenDoor?.Invoke(1);
     }
+
+
+    public void OnTriggerDebug(string message)
+    {
+        onTriggerDebug?.Invoke(message);
+    }
+    
+
+
+    
 }

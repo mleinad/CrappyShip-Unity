@@ -47,12 +47,14 @@ public class DragNDrop : MonoBehaviour
             {
                 transform.parent = Player.Instance.GetMainCameraTransform(); //gets camera transform from player singleton class
                 objRigidbody.useGravity = false;
+                objRigidbody.isKinematic = true;
                 pickedup = true;
             }
             if (Input.GetMouseButtonUp(0))
             {
                 transform.parent = null;
                 objRigidbody.useGravity = true;
+                 objRigidbody.isKinematic = false;
                 pickedup = false;
             }
         }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LeverPuzzle : MonoBehaviour, IPuzzleBehavior 
+
+//leaf
+public class LeverPuzzle : MonoBehaviour, IPuzzleComponent 
 {
 
 

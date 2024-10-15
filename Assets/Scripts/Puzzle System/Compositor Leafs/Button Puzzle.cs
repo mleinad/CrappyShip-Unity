@@ -5,7 +5,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class ButtonPuzzle : MonoBehaviour, IPuzzleBehavior 
+
+//leaf
+public class ButtonPuzzle : MonoBehaviour, IPuzzleComponent 
 {
 
 

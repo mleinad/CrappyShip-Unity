@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPuzzleBehavior 
+//component
+public interface IPuzzleComponent 
 {
-     void StartPuzzle();
      bool CheckCompletion();
      void ResetPuzzle();  
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,9 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
+
+//leaf
+public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
 {
     // Start is called before the first frame update
 
@@ -35,26 +38,14 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
 
     void Start()
     {
-        current_angle = 0 ;
-        //change = rotation_pivot.position;   
+        current_angle = 0 ;        
     }
 
-   public void StartPuzzle()
-    {
-
-    }
-
-
-    public bool CheckCompletion()
-    {
-
-
-        return state;
-    }
+    public bool CheckCompletion() => state;
 
     public void ResetPuzzle()
     {
-
+        state = false;
     }  
 
 
@@ -78,6 +69,8 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
         }
         if(Input.GetMouseButtonUp(0)) Player.Instance.SetCameraSpeed(2.0f); //maybe bad for performance
 
+
+        //checks when true
         if(Mathf.Abs(current_angle - target_angle) <= 5f){
             state = true;
         }
@@ -115,7 +108,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
     }
 
 
-
+#region interaction
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("MainCamera"))
@@ -135,5 +128,6 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleBehavior
             interactable = false;
         }
     }
+#endregion
 
 }
