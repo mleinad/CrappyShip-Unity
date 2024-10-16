@@ -16,13 +16,25 @@ public class Player : MonoBehaviour
     CharacterController controller;
     Vector3 movement_vec = Vector3.zero;
 
+    float velocityZ = 0.0f;
+    float velocityX = 0.0f;
+
+    public float acceleration = 2.0f;
+    public float deceleration = 2.0f;
+    public float maxWalkSpeed = 0.5f;
+    public float maxRunSpeed = 1.2f;
+    bool forwardPressed, backwardPressed, leftPressed, rightPressed, runPressed;
+
+    int velocityZHash;
+    int velocityXHash;
+
     Animator playerAnim;
 
     private bool is_rotation_locked = false;    
 
 #region Player Variables 
-    public float walking_speed = 7.5f;
-    public float running_speed = 11.5f;
+    public float walking_speed = 3.5f;
+    public float running_speed = 6.0f;
     public float jump_speed = 8.0f;
     public float gravity = 20.0f;
     public float look_speed = 2.0f;
@@ -54,7 +66,9 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerAnim = GetComponent<Animator>();
 
-        
+        velocityXHash = Animator.StringToHash("Velocity X");
+        velocityZHash = Animator.StringToHash("Velocity Z");
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -62,47 +76,120 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
 
-        bool is_running = Input.GetKey(KeyCode.LeftShift);
+        HandleInput();
+        HandleMovementAndAnimations();
+        HandleCameraRotation();
 
+    }
+    void HandleMovementAndAnimations()
+    {
+        float currentMaxSpeed = runPressed ? maxRunSpeed : maxWalkSpeed;
 
+        // Calculate velocity changes for animations
+        ChangeVelocity(forwardPressed, backwardPressed, leftPressed, rightPressed, runPressed, currentMaxSpeed);
+        NormalizeDiagonalMovement(ref velocityX, ref velocityZ, currentMaxSpeed);
+        LockOrResetVelocity(forwardPressed, backwardPressed, leftPressed, rightPressed, runPressed, currentMaxSpeed);
 
-        float _movementY = movement_vec.y;
-        
-        if(controller.isGrounded)
-        {
-        float speed_X = Input.GetAxis("Vertical") * (is_running ? running_speed : walking_speed);          
-        float speed_Y = Input.GetAxis("Horizontal") * (is_running ? running_speed : walking_speed);
-        movement_vec = (forward * speed_X) + (right * speed_Y);
-        }
+        // Set the animator parameters
+        playerAnim.SetFloat(velocityXHash, velocityX);
+        playerAnim.SetFloat(velocityZHash, velocityZ);
 
-        bool isWalking = movement_vec.x != 0 || movement_vec.z != 0;
-        playerAnim.SetBool("isWalking", isWalking);
+        // Physical movement based on the calculated velocity
+        Vector3 move = transform.TransformDirection(new Vector3(velocityX, 0, velocityZ));
+        movement_vec = move * (runPressed ? running_speed : walking_speed);
 
-        if (Input.GetButton("Jump") && controller.isGrounded)
-        {
-            movement_vec.y = jump_speed;
-            playerAnim.SetBool("isJumping",true);
-        }
-        else
-        {
-            movement_vec.y = _movementY;
-            playerAnim.SetBool("isJumping", false);
-        }
-
+        // Apply gravity
         if (!controller.isGrounded)
         {
             movement_vec.y -= gravity * Time.deltaTime;
         }
 
+        // Move the character
         controller.Move(movement_vec * Time.deltaTime);
-
-        // Camera rotation
-        if(!is_rotation_locked) MoveCamera();
     }
 
+    void HandleCameraRotation()
+    {
+        rotation_X += -Input.GetAxis("Mouse Y") * look_speed;
+        rotation_X = Mathf.Clamp(rotation_X, -look_X_limit, look_X_limit);
+        playerCamera.transform.localRotation = Quaternion.Euler(rotation_X, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * look_speed, 0);
+    }
+    void ChangeVelocity(bool forwardPressed, bool backwardPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxSpeed)
+    {
+        if (forwardPressed && velocityZ < currentMaxSpeed)
+        {
+            velocityZ += Time.deltaTime * acceleration;
+        }
+        if (backwardPressed && velocityZ > -currentMaxSpeed)
+        {
+            velocityZ -= Time.deltaTime * acceleration;
+        }
+        if (leftPressed && velocityX > -currentMaxSpeed)
+        {
+            velocityX -= Time.deltaTime * acceleration;
+        }
+        if (rightPressed && velocityX < currentMaxSpeed)
+        {
+            velocityX += Time.deltaTime * acceleration;
+        }
+
+        // Decrease velocity when keys are not pressed
+        if (!forwardPressed && !backwardPressed && velocityZ != 0)
+        {
+            velocityZ = Mathf.MoveTowards(velocityZ, 0, Time.deltaTime * deceleration);
+        }
+        if (!leftPressed && !rightPressed && velocityX != 0)
+        {
+            velocityX = Mathf.MoveTowards(velocityX, 0, Time.deltaTime * deceleration);
+        }
+    }
+
+    // Prevents diagonal movement from being faster than forward or sideways movement
+    void NormalizeDiagonalMovement(ref float velocityX, ref float velocityZ, float currentMaxSpeed)
+    {
+        Vector3 inputDirection = new Vector3(velocityX, 0, velocityZ);
+
+        if (inputDirection.magnitude > 1)
+        {
+            inputDirection.Normalize();
+            velocityX = inputDirection.x * currentMaxSpeed;
+            velocityZ = inputDirection.z * currentMaxSpeed;
+        }
+    }
+
+    // Locks velocity values for consistent transitions
+    void LockOrResetVelocity(bool forwardPressed, bool backwardPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxSpeed)
+    {
+        // Lock forward or backward velocity
+        if (forwardPressed && runPressed && velocityZ > currentMaxSpeed)
+        {
+            velocityZ = currentMaxSpeed;
+        }
+        else if (backwardPressed && velocityZ < -currentMaxSpeed)
+        {
+            velocityZ = -currentMaxSpeed;
+        }
+
+        // Lock side velocities
+        if (leftPressed && velocityX < -currentMaxSpeed)
+        {
+            velocityX = -currentMaxSpeed;
+        }
+        if (rightPressed && velocityX > currentMaxSpeed)
+        {
+            velocityX = currentMaxSpeed;
+        }
+    }
+    void HandleInput()
+    {
+        forwardPressed = Input.GetKey(KeyCode.W);
+        backwardPressed = Input.GetKey(KeyCode.S);
+        leftPressed = Input.GetKey(KeyCode.A);
+        rightPressed = Input.GetKey(KeyCode.D);
+        runPressed = Input.GetKey(KeyCode.LeftShift);
+    }
 
     private void MoveCamera(){
 
