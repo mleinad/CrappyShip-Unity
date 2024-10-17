@@ -14,16 +14,21 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
 
     public void SetSignal(int value) => signal = value;
 
+    void Awake()
+    {
 
+    }
     public int GetOutput(string context, int value)
     {
-        if(context == "In")
+        if(context.Contains("In"))
         {
             SetSignal(value);
             return value;
         }
-        else if(context == "Out")
+        else if(context.Contains("Out"))
         {
+    
+    
             return signal;
         }
         else throw new ArgumentException("invaled input type");

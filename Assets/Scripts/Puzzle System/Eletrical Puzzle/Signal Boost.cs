@@ -22,10 +22,7 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         else throw new ArgumentException("invaled input type");
     }
 
-    public int GetSignal()
-    {
-        throw new System.NotImplementedException();
-    }
+    public int GetSignal()=>signal;
 
     public void SetSignal(int level) => signal = level * boost;
 
