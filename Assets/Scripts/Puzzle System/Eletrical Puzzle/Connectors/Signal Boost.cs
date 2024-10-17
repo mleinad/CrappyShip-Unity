@@ -8,14 +8,15 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     [SerializeField]
     int signal, boost;
 
-    public int GetOutput(string context, int value)
+    public int GetOutput(ColliderIO input, int value)
     {
-         if(context == "In")
+
+        if (input.Get_Type() == InputType.input)
         {
             SetSignal(value);
             return value;
         }
-        else if(context == "Out")
+        else if(input.Get_Type()==InputType.output)
         {
             return signal;
         }

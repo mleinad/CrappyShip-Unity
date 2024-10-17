@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ISignalModifier : IEletricalComponent
 {
-    public int GetOutput(string context, int signal);
+    public int GetOutput(ColliderIO input, int signal);
     public void SetSignal(int signal);
 }

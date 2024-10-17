@@ -6,7 +6,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
 {
 
     
-    public int GetOutput(string context, int signal)
+    public int GetOutput(ColliderIO collider, int signal)
     {
         throw new System.NotImplementedException();
     }

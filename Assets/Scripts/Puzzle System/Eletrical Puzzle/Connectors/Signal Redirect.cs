@@ -15,14 +15,17 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     public void SetSignal(int value) => signal = value;
 
 
-    public int GetOutput(string context, int value)
+    public void Start()
     {
-        if(context == "In")
+    }
+    public int GetOutput(ColliderIO input, int value)
+    {
+        if (input.Get_Type() == InputType.input)
         {
             SetSignal(value);
             return value;
         }
-        else if(context == "Out")
+        else if(input.Get_Type()==InputType.output)
         {
             return signal;
         }

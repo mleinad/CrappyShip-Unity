@@ -16,72 +16,49 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     [SerializeField]
     string t;
-    Dictionary<IEletricalComponent, string> connection_type;
+    Dictionary<IEletricalComponent, ColliderIO> connection_type;
 
    public int GetSignal()=>signal;
 
     void Start(){
-        connection_type = new Dictionary<IEletricalComponent, string>();
+        connection_type = new Dictionary<IEletricalComponent, ColliderIO>();
     }
     void OnTriggerEnter(Collider other)
     {   
-        string type;
         IEletricalComponent electricalComponent;
-        if (other.name.Contains("In"))
+        ColliderIO collider;
+        collider = other.GetComponent<ColliderIO>();
+
+        if(collider!= null)
         {
-            electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-            type ="In";
-        }
-        else if (other.name.Contains("Out"))
-        {
-            electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-            type ="Out";
-        }
-        else
-        {
-            electricalComponent = other.GetComponent<IEletricalComponent>();
-            if(electricalComponent is not ISignalModifier)
-            {
-            type = "I/O";
-            }else return;
-        }
+            electricalComponent = collider.GetEletricalComponent();
+
+        }else return;
 
         if (electricalComponent == null)
             return;
     
         if(!connection_type.ContainsKey(electricalComponent))
         {
-        t= type;
-        connection_type.Add(electricalComponent, type);
+        connection_type.Add(electricalComponent, collider);
         }
 
     }
 
-    //Dictionary Management
-   void OnTriggerStay(Collider other)
-   {
-     /*if(other.name == "In")
-        {
-            Debug.Log(other.transform.parent.name);
-        }*/
-       
-   }
     void OnTriggerExit(Collider other)
     {
             
+        ColliderIO collider;
         IEletricalComponent electricalComponent;
-        if (other.name.Contains("In"))
+        
+        collider = other.GetComponent<ColliderIO>();
+
+        if(collider!= null)
         {
-            electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-        }
-        else if (other.name.Contains("Out"))
-        {
-            electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-        }
-        else
-        {
-            electricalComponent = other.GetComponent<IEletricalComponent>();
-        }
+            electricalComponent = collider.GetEletricalComponent();
+
+        }else return;
+
 
         if (electricalComponent == null)
             return;
@@ -89,15 +66,15 @@ public class Cable : MonoBehaviour, IEletricalComponent
         if(connection_type.ContainsKey(electricalComponent))
         {
             connection_type.Remove(electricalComponent);
-            signal = 0;
+              //signal = 0;
             t = " ";
         }
     }
 
     void Update()
     {
-
-        foreach(KeyValuePair<IEletricalComponent, string> con in connection_type)
+        signal =0;
+        foreach(KeyValuePair<IEletricalComponent, ColliderIO> con in connection_type)
         {
             if(con.Key is Battery battery)
             {
@@ -111,11 +88,12 @@ public class Cable : MonoBehaviour, IEletricalComponent
             }
             else if (con.Key is ISignalModifier signalModifier)
             {
-                signal = signalModifier.GetOutput(con.Value ,signal); 
+                signal = signalModifier.GetOutput(con.Value, signal); 
                 Debug.Log(transform.name + "input->" + con.Value);
             }
 
         }
+        
 
 
     }
