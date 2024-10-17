@@ -23,7 +23,6 @@ public class Cable : MonoBehaviour, IEletricalComponent
     void Start(){
         connection_type = new Dictionary<IEletricalComponent, string>();
     }
-    
     void OnTriggerEnter(Collider other)
     {   
         string type;
@@ -31,12 +30,12 @@ public class Cable : MonoBehaviour, IEletricalComponent
         if (other.name.Contains("In"))
         {
             electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-            type = other.name;
+            type ="In";
         }
         else if (other.name.Contains("Out"))
         {
             electricalComponent = other.GetComponentInParent<IEletricalComponent>();
-            type = other.name;
+            type ="Out";
         }
         else
         {
@@ -113,7 +112,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
             else if (con.Key is ISignalModifier signalModifier)
             {
                 signal = signalModifier.GetOutput(con.Value ,signal); 
-                //Debug.Log(transform.name + "input->" + con.Value);
+                Debug.Log(transform.name + "input->" + con.Value);
             }
 
         }

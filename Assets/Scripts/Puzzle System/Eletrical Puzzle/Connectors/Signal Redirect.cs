@@ -1,16 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class SignalBoost : MonoBehaviour, ISignalModifier
+public class SignalRedirect : MonoBehaviour, ISignalModifier
 {
     [SerializeField]
-    int signal, boost;
+    private int signal;
+    
+    public int GetSignal()=>signal;
+
+    public void SetSignal(int value) => signal = value;
+
 
     public int GetOutput(string context, int value)
     {
-         if(context == "In")
+        if(context == "In")
         {
             SetSignal(value);
             return value;
@@ -22,13 +29,9 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         else throw new ArgumentException("invaled input type");
     }
 
-    public int GetSignal()=>signal;
-
-    public void SetSignal(int level) => signal = level * boost;
-
-
     void OnTriggerExit(Collider other)
     {
         signal = 0;
     }   
+
 }

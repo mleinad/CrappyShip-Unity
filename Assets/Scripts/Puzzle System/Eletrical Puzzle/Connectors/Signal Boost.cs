@@ -1,42 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class SignalRedirect : MonoBehaviour, ISignalModifier
+public class SignalBoost : MonoBehaviour, ISignalModifier
 {
     [SerializeField]
-    private int signal;
-    
-    public int GetSignal()=>signal;
+    int signal, boost;
 
-    public void SetSignal(int value) => signal = value;
-
-    void Awake()
-    {
-
-    }
     public int GetOutput(string context, int value)
     {
-        if(context.Contains("In"))
+         if(context == "In")
         {
             SetSignal(value);
             return value;
         }
-        else if(context.Contains("Out"))
+        else if(context == "Out")
         {
-    
-    
             return signal;
         }
         else throw new ArgumentException("invaled input type");
     }
 
+    public int GetSignal()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetSignal(int level) => signal = level * boost;
+
+
     void OnTriggerExit(Collider other)
     {
         signal = 0;
     }   
-
 }

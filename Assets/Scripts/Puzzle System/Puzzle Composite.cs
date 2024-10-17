@@ -11,6 +11,8 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     private bool state = false;
     private readonly List<IPuzzleComponent> _components = new List<IPuzzleComponent>();
 
+
+
     void Awake()
     {
         foreach(GameObject g in gameObjects)
