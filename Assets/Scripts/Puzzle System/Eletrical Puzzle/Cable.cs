@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -65,6 +67,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
         
         if(connection_type.ContainsKey(electricalComponent))
         {
+            if(electricalComponent is SignalEvaluator signalEvaluator) signalEvaluator.Disconnect(collider);
             connection_type.Remove(electricalComponent);
               //signal = 0;
             t = " ";
@@ -73,6 +76,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     void Update()
     {
+        
         signal =0;
         foreach(KeyValuePair<IEletricalComponent, ColliderIO> con in connection_type)
         {
@@ -97,4 +101,6 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
 
     }
+
+
 }

@@ -15,7 +15,6 @@ public class ColliderIO : MonoBehaviour
 {
 
     IEletricalComponent component;
-    
     int ID;
     InputType type;
    

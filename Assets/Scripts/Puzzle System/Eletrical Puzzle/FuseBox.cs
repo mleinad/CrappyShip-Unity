@@ -8,6 +8,8 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 {
     bool state= false;
     int signal;
+
+    public int signal_needed;
     public bool CheckCompletion()=>state;
 
     public int GetSignal()
@@ -19,7 +21,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 
     void Update()
     {
-            if(signal>0) state = true;        
+            if(signal> signal_needed) state = true;        
     }
 
 
