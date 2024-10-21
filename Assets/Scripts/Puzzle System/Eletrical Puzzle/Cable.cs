@@ -93,7 +93,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
             else if (con.Key is ISignalModifier signalModifier)
             {
                 signal = signalModifier.GetOutput(con.Value, signal); 
-                Debug.Log(transform.name + "input->" + con.Value);
+//                Debug.Log(transform.name + "input->" + con.Value);
             }
 
         }

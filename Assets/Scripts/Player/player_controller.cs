@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
     
     [SerializeField]
-    private GameObject crosshair1, crosshair2;
+    private GameObject crosshair1, crosshair2, message;
 
     CharacterController controller;
     Vector3 movement_vec = Vector3.zero;
@@ -222,6 +222,12 @@ public class Player : MonoBehaviour
 
         crosshair1.SetActive(true);
         crosshair2.SetActive(false);
+    }
+
+
+    public void MessageOn(bool state)
+    {
+        message.SetActive(state);
     }
 
 #endregion

@@ -10,6 +10,8 @@ public class EventManager : MonoBehaviour
     public event Action<int> onTriggerOpenDoor; //future proof for multiple doors
     public event Action <string> onTriggerDebug;
 
+    public event Action <PuzzleComposite> onTriggerSolved;
+
 
 
 
@@ -28,6 +30,9 @@ public class EventManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
     }
 
+
+
+    //test function
     public void OnTriggerOpenDoor()
     {
         onTriggerOpenDoor?.Invoke(1);
@@ -39,6 +44,11 @@ public class EventManager : MonoBehaviour
         onTriggerDebug?.Invoke(message);
     }
     
+
+    public void OnTriggerSolved(PuzzleComposite puzzleComposite)
+    {
+        onTriggerSolved?.Invoke(puzzleComposite);
+    }
 
 
     

@@ -38,7 +38,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
 
     void Start()
     {
-        current_angle = 0 ;        
+        current_angle = 1;        
     }
 
     public bool CheckCompletion() => state;
@@ -48,7 +48,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
         state = false;
     }  
 
-
+    public float GetCurrentAngle()=> current_angle;
 
     // Update is called once per frame
     void Update()

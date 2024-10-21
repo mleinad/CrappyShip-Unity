@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class MiniMapElement : MonoBehaviour
@@ -14,6 +13,9 @@ public class MiniMapElement : MonoBehaviour
 
     [SerializeField]
     Color color;
+
+    [SerializeField]
+    float scale;
 
     private RectTransform element_transform;
     private Transform canvas_transform;
@@ -34,6 +36,8 @@ public class MiniMapElement : MonoBehaviour
     void Update()
     {
         element_transform.position = new Vector3(transform.position.x, 0, transform.position.z);    //update frame by frame, might be unecessary
+        element_transform.localScale = new Vector3(scale, scale, scale);
+    
     }
 
 

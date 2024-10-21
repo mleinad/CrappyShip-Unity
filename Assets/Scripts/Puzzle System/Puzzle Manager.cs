@@ -14,20 +14,17 @@ PuzzleComposite composite;
 
     void Start()
     {
-        EventManager.Instance.onTriggerDebug += solved;
+      //  EventManager.Instance.onTriggerSolved += solved;
     }
     void Update()
     {
-            if(composite.CheckCompletion()){
-             EventManager.Instance.OnTriggerDebug("solved puzzle one");
-        }
+            if(composite.CheckCompletion())
+            {
+                EventManager.Instance.OnTriggerSolved(composite);
+            
+                Debug.Log("Move on to next room!");
+            }
     }
 
-    private void solved(string s)
-    {
-        Debug.Log(s);
-        EventManager.Instance.onTriggerDebug -= solved;
-
-    }
 
 }

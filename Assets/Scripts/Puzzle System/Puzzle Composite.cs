@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
@@ -8,7 +9,12 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     [SerializeField]
     List<GameObject> gameObjects;
 
-    private bool state = false;
+
+    private bool been_solved = false;
+     
+     
+    public bool state = false; 
+    
     private readonly List<IPuzzleComponent> _components = new List<IPuzzleComponent>();
 
 
@@ -45,6 +51,17 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
         state = false;
     }
 
+    void Update()
+    {
+        if(state)
+        {
+        if(!been_solved){
+            been_solved = true;
+            Debug.Log("soved but no event triggerd");
+            EventManager.Instance.OnTriggerSolved(this);
+        }
+        }
+    }
 
     private void Add(IPuzzleComponent component)
     {
