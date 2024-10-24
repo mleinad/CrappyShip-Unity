@@ -59,4 +59,7 @@ public class DragNDrop : MonoBehaviour
             }
         }
     }
+
+    public bool IsPickedUp()=> pickedup;
+
 }

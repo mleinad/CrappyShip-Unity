@@ -98,7 +98,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
         }
         
-
+          Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
 
     }
 

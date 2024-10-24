@@ -5,7 +5,8 @@ using UnityEngine;
 public class DeviceFullScreenState : DeviceBaseState
 {
     string trigger = "position2";
-    public override void EnterState(DeviceStateManager context){
+    public override void EnterState(DeviceStateManager context)
+    {
         context.animator.SetTrigger(trigger);
 
          Cursor.visible = true;
@@ -21,6 +22,9 @@ public class DeviceFullScreenState : DeviceBaseState
         if(Input.GetKeyDown(KeyCode.Q)){
             context.SwitchState(context.onHand_state);
         }
+
+
+        //update method of the state
     }
 
       public override void ExitState(DeviceStateManager context){
