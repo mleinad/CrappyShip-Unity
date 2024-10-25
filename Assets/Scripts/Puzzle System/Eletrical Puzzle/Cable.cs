@@ -12,94 +12,80 @@ public class Cable : MonoBehaviour, IEletricalComponent
 {
 
 
-   [SerializeField]
-   private int signal = 0;
+    [SerializeField]
+     private int signal = 0;
 
 
     [SerializeField]
     string t;
-    Dictionary<IEletricalComponent, ColliderIO> connection_type;
 
-   public int GetSignal()=>signal;
+    
+    List<IEletricalComponent> adjecent_components;
+    public List<string> adj_comp_names;
 
-    void Start(){
-        connection_type = new Dictionary<IEletricalComponent, ColliderIO>();
+
+    public int GetSignal()=>signal;
+
+    void Start()
+    {
+    
+        adjecent_components = new List<IEletricalComponent>();
     }
     void OnTriggerEnter(Collider other)
     {   
         IEletricalComponent electricalComponent;
-        ColliderIO collider;
-        collider = other.GetComponent<ColliderIO>();
+        electricalComponent = other.GetComponent<IEletricalComponent>();
 
-        if(collider!= null)
-        {
-            electricalComponent = collider.GetEletricalComponent();
+        if(electricalComponent == null) return;
 
-        }else return;
-
-        if (electricalComponent == null)
-            return;
-    
-        if(!connection_type.ContainsKey(electricalComponent))
-        {
-        connection_type.Add(electricalComponent, collider);
+        if(!adjecent_components.Contains(electricalComponent)){
+            adjecent_components.Add(electricalComponent);
         }
 
     }
 
     void OnTriggerExit(Collider other)
-    {
-            
-        ColliderIO collider;
-        IEletricalComponent electricalComponent;
-        
-        collider = other.GetComponent<ColliderIO>();
+    {    
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
 
-        if(collider!= null)
-        {
-            electricalComponent = collider.GetEletricalComponent();
+        if(eletricalComponent == null) return;
 
-        }else return;
-
-
-        if (electricalComponent == null)
-            return;
-        
-        if(connection_type.ContainsKey(electricalComponent))
-        {
-            if(electricalComponent is SignalEvaluator signalEvaluator) signalEvaluator.Disconnect(collider);
-            connection_type.Remove(electricalComponent);
-              //signal = 0;
-            t = " ";
+        if(adjecent_components.Contains(eletricalComponent)){
+            adjecent_components.Remove(eletricalComponent);
         }
+    }
+
+    void CheckAdjacencies()
+    {
+        adj_comp_names = new List<string>();
+
+        foreach(IEletricalComponent comp in adjecent_components){
+            adj_comp_names.Add(comp.ToString());
+        } 
     }
 
     void Update()
     {
         
         signal =0;
-        foreach(KeyValuePair<IEletricalComponent, ColliderIO> con in connection_type)
+  
+        SetAdjacenciesSignal();
+  
+        CheckAdjacencies(); //debug only
+//        Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
+    }
+
+    void SetAdjacenciesSignal()
+    {
+         foreach(IEletricalComponent eletricalComponent in adjecent_components)
         {
-            if(con.Key is Battery battery)
+            if(eletricalComponent.GetSignal()>0)
             {
-                signal = battery.GetSignal();
-            }
-            else if (con.Key is Cable cable)
-            {
-                if(cable.GetSignal()>0){
-                    signal = cable.GetSignal();
-                }
-            }
-            else if (con.Key is ISignalModifier signalModifier)
-            {
-                signal = signalModifier.GetOutput(con.Value, signal); 
-//                Debug.Log(transform.name + "input->" + con.Value);
+                signal = eletricalComponent.GetSignal();
             }
 
         }
-        
-          Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
-
     }
 
 

@@ -39,8 +39,9 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
         ColliderIO col;
         IEletricalComponent electricalComponent;
         col = other.GetComponent<ColliderIO>();
+        if(col==null) return;
         electricalComponent = col.GetEletricalComponent();
-
+        
         if(electricalComponent==null) return;
         if(electricalComponent.GetSignal()>0)
         {

@@ -1,26 +1,34 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
-public class ModuleBase : MonoBehaviour
+public class ModuleBase : MonoBehaviour, IEletricalComponent
 {
 
-    int input1, input2, input3, input4;
     public string component_name;
     public List<string> cable_names;
-
+    
+    ColliderIO[] colliders;
+    List<IEletricalComponent> adjencencies_list;
+    Dictionary<ColliderIO, IEletricalComponent> adjencency_dictionary;
     ISignalModifier signalModifier;
 
-    List<BaseCollider> baseColliders;
+
+
 
     void Awake(){
-         foreach(Transform child in transform){
-         }
+        
+        
+        adjencencies_list = new List<IEletricalComponent>();
+        adjencency_dictionary = new Dictionary<ColliderIO, IEletricalComponent>();
+
+
+        colliders = GetComponentsInChildren<ColliderIO>();
     }
-
-
     public void Hover()
     {
 
@@ -30,23 +38,11 @@ public class ModuleBase : MonoBehaviour
 
     void Update()
     {
-        //CheckComponent();
+        CheckAdjacencies();
         DrawVectors();
 
         if(signalModifier==null) component_name = "no attachements";
-        else component_name = signalModifier.ToString();
-    
-    
-        foreach(BaseCollider col in baseColliders)
-        {   
-
-            IEletricalComponent ec = col.GetEletricalComponent();
-            if(ec is Cable){
-                cable_names.Add(ec.ToString() + " " + col.ToString());
-            }
-            
-        }
-    
+        else component_name = signalModifier.ToString();    
     }
 
     void DrawVectors()  //also updates them
@@ -87,30 +83,54 @@ public class ModuleBase : MonoBehaviour
     };
 
     return vectorList; 
-}
-
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        Cable cable = other.GetComponent<Cable>();
-        if(cable==null) return;
-
-        GetInputAngles(other.transform);
     }
-    
-    
-    void GetInputAngles(Transform t)
+
+    public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
     {
-        List<Vector3> vectorList = GetRotationAngles();
-        int i=1;
-        foreach(Vector3 vec in vectorList)
-        {
-        float dot = Vector3.Dot(t.forward, vec);
-        Debug.Log("dot " + i + " ->" + dot);
-        i++;
+        if(current_collider==null) return;
+
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
+        
+        if(eletricalComponent == null) return;
+
+        if(!adjencencies_list.Contains(eletricalComponent)){
+            
+            adjencency_dictionary.Add(current_collider, eletricalComponent);
+            adjencencies_list.Add(eletricalComponent);
+            Debug.Log(current_collider.ToString() + " -> " + eletricalComponent.ToString());
         }
-    
     }
 
+   public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
+   {        
+
+        if(current_collider==null) return;
+
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
+
+        if(eletricalComponent == null) return;
+
+        if(adjencencies_list.Contains(eletricalComponent)){
+            
+            adjencencies_list.Remove(eletricalComponent);
+            adjencency_dictionary.Remove(current_collider);
+        }
+   }
+    
+
+    void CheckAdjacencies()
+    {
+        cable_names = new List<string>();
+
+        foreach(KeyValuePair<ColliderIO, IEletricalComponent> key_pair in adjencency_dictionary){
+            cable_names.Add("ex");
+        } 
+    }
+
+    public int GetSignal()
+    {
+        return 1;
+    }
 }
