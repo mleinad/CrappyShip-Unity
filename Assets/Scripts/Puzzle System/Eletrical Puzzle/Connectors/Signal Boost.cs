@@ -42,8 +42,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
     }
 
-
-    List<IEletricalComponent> inputs;
     public int GetOutput(ColliderIO input, int value)
     {
 
@@ -59,38 +57,9 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         else throw new ArgumentException("invalid input type");
     }
 
-    public int GetSignal()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public void SetSignal(int level) => signal = level * boost;
 
-    void OnTriggerEnter(Collider other)
-    {
-        ColliderIO collider;
-        IEletricalComponent electricalComponent;
-        
-        collider = other.GetComponent<ColliderIO>();
-
-        if(collider!= null)
-        {
-            electricalComponent = collider.GetEletricalComponent();
-
-        }else return;
-
-        if (electricalComponent == null)
-            return;
-    
-        if(!inputs.Contains(electricalComponent)){
-            inputs.Add(electricalComponent);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        signal = 0;
-    }   
     void GetClosestBase()
     {
         Vector3 rayOrigin = transform.position;
@@ -119,7 +88,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
         Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
     } 
-
 
     void SnapToBase(Transform base_transform)
     {
