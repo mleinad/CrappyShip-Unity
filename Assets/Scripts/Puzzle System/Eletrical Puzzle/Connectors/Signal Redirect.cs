@@ -11,7 +11,9 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     public void SetSignal(int value) => signal = value;
 
 
-
+    public void Start()
+    {
+    }
     public int GetOutput(ColliderIO input, int value)
     {
         if (input.Get_Type() == InputType.input)
