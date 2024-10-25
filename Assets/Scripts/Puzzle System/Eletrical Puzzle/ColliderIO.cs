@@ -6,7 +6,8 @@ public enum InputType
 {
     input =0,
     output =1,
-    InOut =2
+    InOut =2,
+    error =-1
 };
 
 [RequireComponent(typeof(BoxCollider))]
@@ -31,7 +32,7 @@ public class ColliderIO : MonoBehaviour
    }
 
     public int GetID()=> ID;
-    public InputType Get_Type()=> type;
+    public InputType GetInputType()=> type;
     public IEletricalComponent GetEletricalComponent() => component;
 
     public Collider GetCollider() => this.GetComponent<Collider>();

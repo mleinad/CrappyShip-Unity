@@ -24,7 +24,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         }
         
 
-        if(collider.Get_Type() == InputType.InOut)
+        if(collider.GetInputType() == InputType.InOut)
         {
             SetSignal(value);
             e1 = value;
@@ -55,7 +55,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
 
         foreach (var kvp in Collider_value_list)
         {
-            if (kvp.Key.Get_Type() == InputType.input)
+            if (kvp.Key.GetInputType() == InputType.input)
             {
                 inputTypeZeroValues.Add(kvp.Value);
             }

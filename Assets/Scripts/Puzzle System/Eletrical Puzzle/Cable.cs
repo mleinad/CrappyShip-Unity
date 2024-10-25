@@ -73,18 +73,26 @@ public class Cable : MonoBehaviour, IEletricalComponent
         SetAdjacenciesSignal();
   
         CheckAdjacencies(); //debug only
-//        Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
+        //Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
     }
 
     void SetAdjacenciesSignal()
     {
-         foreach(IEletricalComponent eletricalComponent in adjecent_components)
-        {
-            if(eletricalComponent.GetSignal()>0)
+        foreach(IEletricalComponent eletricalComponent in adjecent_components)
+        {   
+            if(eletricalComponent is Cable cable)
             {
-                signal = eletricalComponent.GetSignal();
+                signal = cable.GetSignal();
             }
-
+            else if(eletricalComponent is ModuleBase moduleBase)
+            {
+                signal = moduleBase.GetSignal(this);
+            }
+            else if(eletricalComponent is Battery battery)
+            {
+                signal = battery.GetSignal();
+            }
+            else throw new ArgumentException("nem sim nem sopas... ->" + this.ToSafeString());
         }
     }
 

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISignalModifier : IEletricalComponent
+public interface ISignalModifier
 {
-    public int GetOutput(ColliderIO input, int signal);
+    public int GetOutput(ColliderIO input);
     public void SetSignal(int signal);
 
 }
+    

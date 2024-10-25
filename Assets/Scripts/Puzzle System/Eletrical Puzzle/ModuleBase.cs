@@ -13,18 +13,16 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     public List<string> cable_names;
     
     ColliderIO[] colliders;
-    List<IEletricalComponent> adjencencies_list;
-    Dictionary<ColliderIO, IEletricalComponent> adjencency_dictionary;
+    Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
     ISignalModifier signalModifier;
 
-
+    int signal;
 
 
     void Awake(){
         
         
-        adjencencies_list = new List<IEletricalComponent>();
-        adjencency_dictionary = new Dictionary<ColliderIO, IEletricalComponent>();
+        adjencency_dictionary = new Dictionary<IEletricalComponent, ColliderIO>();
 
 
         colliders = GetComponentsInChildren<ColliderIO>();
@@ -94,11 +92,10 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         
         if(eletricalComponent == null) return;
 
-        if(!adjencencies_list.Contains(eletricalComponent)){
+        if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
             
-            adjencency_dictionary.Add(current_collider, eletricalComponent);
-            adjencencies_list.Add(eletricalComponent);
-            Debug.Log(current_collider.ToString() + " -> " + eletricalComponent.ToString());
+            adjencency_dictionary.Add(eletricalComponent, current_collider);
+           // Debug.Log(current_collider.ToString() + " -> " + eletricalComponent.ToString());
         }
     }
 
@@ -112,10 +109,9 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
 
         if(eletricalComponent == null) return;
 
-        if(adjencencies_list.Contains(eletricalComponent)){
+        if(adjencency_dictionary.ContainsKey(eletricalComponent)){
             
-            adjencencies_list.Remove(eletricalComponent);
-            adjencency_dictionary.Remove(current_collider);
+            adjencency_dictionary.Remove(eletricalComponent);
         }
    }
     
@@ -124,13 +120,44 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     {
         cable_names = new List<string>();
 
-        foreach(KeyValuePair<ColliderIO, IEletricalComponent> key_pair in adjencency_dictionary){
-            cable_names.Add("ex");
+        foreach(KeyValuePair<IEletricalComponent,ColliderIO> key_pair in adjencency_dictionary)
+        {
+            cable_names.Add(key_pair.ToString());
         } 
     }
 
-    public int GetSignal()
+
+    public InputType GetInputTypeByComponent(IEletricalComponent eletricalComponent)
     {
-        return 1;
+        if(adjencency_dictionary.ContainsKey(eletricalComponent)) return adjencency_dictionary[eletricalComponent].GetInputType();
+        else return InputType.error;
+    }
+
+    private ColliderIO GetColliderByComponent(IEletricalComponent eletricalComponent){
+        return adjencency_dictionary[eletricalComponent];
+    }
+    public int GetSignal()=>1;
+    public int GetSignal(IEletricalComponent eletricalComponent)
+    {
+        if(signalModifier == null) return 0; 
+
+        if(adjencency_dictionary.ContainsKey(eletricalComponent))
+        {
+            if(GetInputTypeByComponent(eletricalComponent)==InputType.input)
+            {
+                signalModifier.SetSignal(eletricalComponent.GetSignal());
+                return 0;    
+            }
+            
+            else if(GetInputTypeByComponent(eletricalComponent)==InputType.output)
+            {
+                return signalModifier.GetOutput(            //calculates output on signal modifer 
+                GetColliderByComponent(eletricalComponent)//gets specific colliderIO 
+                );            
+            }
+            else return 0;
+
+        }else return 0;
+        
     }
 }
