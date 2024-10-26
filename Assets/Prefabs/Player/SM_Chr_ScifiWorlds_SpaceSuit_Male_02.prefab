@@ -4483,7 +4483,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbe1a660359eede47beba9572abc3614,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5606690777106735557}
+      addedObject: {fileID: 2766335131120578551}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbe1a660359eede47beba9572abc3614,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2641529482004881274}
     - targetCorrespondingSourceObject: {fileID: -117334987287769072, guid: fbe1a660359eede47beba9572abc3614,
         type: 3}
       insertIndex: -1
@@ -4758,7 +4762,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &5606690777106735557
+--- !u!114 &2766335131120578551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4777,13 +4781,29 @@ MonoBehaviour:
   deceleration: 2
   maxWalkSpeed: 0.5
   maxRunSpeed: 1.2
-  walking_speed: 7.5
-  running_speed: 11.5
+  walking_speed: 3.5
+  running_speed: 6
   jump_speed: 8
   gravity: 20
   look_speed: 2
   look_X_limit: 45
   playerCamera: {fileID: 6334273988069689054}
+--- !u!114 &2641529482004881274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3838828044676302642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 4539810182378844672}
+    m_Active: 1
+  m_Effectors: []
 --- !u!4 &3922247873648905625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1146649605160564730, guid: fbe1a660359eede47beba9572abc3614,
