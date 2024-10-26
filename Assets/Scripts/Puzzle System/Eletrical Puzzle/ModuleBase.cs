@@ -143,21 +143,21 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
 
         if(adjencency_dictionary.ContainsKey(eletricalComponent))
         {
-            if(GetInputTypeByComponent(eletricalComponent)==InputType.input)
-            {
-                signalModifier.SetSignal(eletricalComponent.GetSignal());
-                return 0;    
-            }
-            
-            else if(GetInputTypeByComponent(eletricalComponent)==InputType.output)
-            {
-                return signalModifier.GetOutput(            //calculates output on signal modifer 
-                GetColliderByComponent(eletricalComponent)//gets specific colliderIO 
-                );            
-            }
-            else return 0;
-
+            if(GetInputTypeByComponent(eletricalComponent)==InputType.output) return 10;
+            else return 1;
         }else return 0;
         
+    }
+
+    public void SetSignal(int value)
+    {
+        if(signalModifier==null)return;
+
+        signalModifier.SetSignal(value);
+    }
+
+    public List<IEletricalComponent> GetAdjacencies()
+    {
+        return adjencency_dictionary.Keys.ToList();
     }
 }

@@ -31,6 +31,10 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     void OnTriggerExit(Collider other)
     {
         signal = 0;
-    }   
+    }
 
+    public int GetOutput(ColliderIO input)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -54,6 +54,8 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
         signal =0;
     }
 
-
-
+    public List<IEletricalComponent> GetAdjacencies()
+    {
+        throw new System.NotImplementedException();
+    }
 }

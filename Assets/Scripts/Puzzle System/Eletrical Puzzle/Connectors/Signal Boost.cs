@@ -11,7 +11,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
     bool is_over_base, is_docked;
     
-
     private float rayDistance = 10.0f;
     DragNDrop dragNDrop;
     ModuleBase base_t;    
@@ -71,7 +70,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
             base_t = moduleBase;
             is_over_base = true;
             base_t.SetComponent(this);
-            Debug.Log("module!");
 
         }
 

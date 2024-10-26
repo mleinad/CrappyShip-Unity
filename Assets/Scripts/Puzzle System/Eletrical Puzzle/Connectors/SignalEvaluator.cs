@@ -95,4 +95,9 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     {   
        Collider_value_list[current] = 0;
     }
+
+    public int GetOutput(ColliderIO input)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor.Formats.Fbx.Exporter;
 using UnityEngine;
 
-
-[System.Serializable]
 public class Cable : MonoBehaviour, IEletricalComponent
 {
 
@@ -25,10 +25,10 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
 
     public int GetSignal()=>signal;
-
-    void Start()
-    {
+    public List<IEletricalComponent> GetAdjacencies() => adjecent_components;
     
+    void Start()
+    {    
         adjecent_components = new List<IEletricalComponent>();
     }
     void OnTriggerEnter(Collider other)
@@ -68,7 +68,7 @@ public class Cable : MonoBehaviour, IEletricalComponent
     void Update()
     {
         
-        signal =0;
+      //  signal =0;
   
         SetAdjacenciesSignal();
   
@@ -78,23 +78,11 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     void SetAdjacenciesSignal()
     {
-        foreach(IEletricalComponent eletricalComponent in adjecent_components)
-        {   
-            if(eletricalComponent is Cable cable)
-            {
-                signal = cable.GetSignal();
-            }
-            else if(eletricalComponent is ModuleBase moduleBase)
-            {
-                signal = moduleBase.GetSignal(this);
-            }
-            else if(eletricalComponent is Battery battery)
-            {
-                signal = battery.GetSignal();
-            }
-            else throw new ArgumentException("nem sim nem sopas... ->" + this.ToSafeString());
-        }
+
     }
 
-
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
+    }
 }
