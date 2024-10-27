@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
-public class ModuleBase : MonoBehaviour, IEletricalComponent
+public class ModuleBase : MonoBehaviour, IEletricalComponent    
 {
 
     public string component_name;
@@ -16,7 +16,7 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
     ISignalModifier signalModifier;
 
-    int signal;
+   public int signal;
 
 
     void Awake(){
@@ -27,22 +27,19 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
 
         colliders = GetComponentsInChildren<ColliderIO>();
     }
-    public void Hover()
-    {
-
-
-
-    }
 
     void Update()
     {
         CheckAdjacencies();
         DrawVectors();
 
-        if(signalModifier==null) component_name = "no attachements";
-        else component_name = signalModifier.ToString();    
+        component_name = signalModifier == null ? "no attachments" : signalModifier.ToString();
+
+        SetSignal(0);
     }
 
+
+#region Snap in place
     void DrawVectors()  //also updates them
     {
 
@@ -59,7 +56,6 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         Debug.DrawLine(transform.position, left, Color.yellow);  // Left (yellow)
 
     }
-    
     public void SetComponent(ISignalModifier modifier){
 
       signalModifier = modifier;
@@ -83,6 +79,10 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     return vectorList; 
     }
 
+
+#endregion
+  
+#region Trigger logic
     public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
     {
         if(current_collider==null) return;
@@ -115,7 +115,9 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         }
    }
     
-
+#endregion
+    
+    
     void CheckAdjacencies()
     {
         cable_names = new List<string>();
@@ -126,7 +128,6 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         } 
     }
 
-
     public InputType GetInputTypeByComponent(IEletricalComponent eletricalComponent)
     {
         if(adjencency_dictionary.ContainsKey(eletricalComponent)) return adjencency_dictionary[eletricalComponent].GetInputType();
@@ -136,28 +137,38 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     private ColliderIO GetColliderByComponent(IEletricalComponent eletricalComponent){
         return adjencency_dictionary[eletricalComponent];
     }
-    public int GetSignal()=>1;
-    public int GetSignal(IEletricalComponent eletricalComponent)
-    {
-        if(signalModifier == null) return 0; 
-
-        if(adjencency_dictionary.ContainsKey(eletricalComponent))
-        {
-            if(GetInputTypeByComponent(eletricalComponent)==InputType.output) return 10;
-            else return 1;
-        }else return 0;
-        
-    }
-
+    public int GetSignal()=>signal;
     public void SetSignal(int value)
     {
-        if(signalModifier==null)return;
+       if (signalModifier == null)
+        {
+            signal = 0;
+        }
+        else
+        {
+            signalModifier.SetSignal(adjencency_dictionary); // Modify signal if modifier present
 
-        signalModifier.SetSignal(value);
+            signal = signalModifier.GetOutput(); // Update signal after modification
+        }
+
+        PropagateSignal();
     }
 
     public List<IEletricalComponent> GetAdjacencies()
     {
         return adjencency_dictionary.Keys.ToList();
+    }
+
+     private void PropagateSignal()
+    {
+        foreach (var pair in adjencency_dictionary)
+        {
+            if (pair.Value.GetInputType() == InputType.output)
+            {
+                pair.Key.SetSignal(signal);
+            
+                Debug.Log($"Setting signal of {pair.Key} to {signal}");
+            }
+        }
     }
 }

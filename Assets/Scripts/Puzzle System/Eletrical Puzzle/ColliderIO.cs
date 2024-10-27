@@ -37,6 +37,11 @@ public class ColliderIO : MonoBehaviour
 
     public Collider GetCollider() => this.GetComponent<Collider>();
 
+    public void SwitchType(InputType new_type)
+    {
+        type = new_type;
+
+    }
 
     void OnTriggerEnter(Collider other) //delegates enter trigger logic to module base
     {

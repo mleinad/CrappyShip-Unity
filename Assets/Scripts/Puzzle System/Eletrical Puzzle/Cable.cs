@@ -25,6 +25,15 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
 
     public int GetSignal()=>signal;
+
+    public void SetSignal(int newSignal)
+    {
+        signal = newSignal;
+        PropagateSignal();
+    }
+
+
+
     public List<IEletricalComponent> GetAdjacencies() => adjecent_components;
     
     void Start()
@@ -43,7 +52,6 @@ public class Cable : MonoBehaviour, IEletricalComponent
         }
 
     }
-
     void OnTriggerExit(Collider other)
     {    
         IEletricalComponent eletricalComponent;
@@ -55,7 +63,6 @@ public class Cable : MonoBehaviour, IEletricalComponent
             adjecent_components.Remove(eletricalComponent);
         }
     }
-
     void CheckAdjacencies()
     {
         adj_comp_names = new List<string>();
@@ -67,22 +74,35 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     void Update()
     {
-        
-      //  signal =0;
+        /*
+        int maxSignal = 0;                                   // suspected problem: module base sets the signal at the same time, randomly overlaps 
+        foreach (var component in adjecent_components)
+        {
+              if(component is not ModuleBase)
+            {
+                maxSignal = Mathf.Max(maxSignal, component.GetSignal());
+            }
+        }
+        SetSignal(maxSignal);
   
-        SetAdjacenciesSignal();
-  
+    */
+
         CheckAdjacencies(); //debug only
         //Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
     }
 
-    void SetAdjacenciesSignal()
+    public void PropagateSignal()
     {
-
+        foreach (var component in adjecent_components)
+        {
+           if(component is not ModuleBase)
+           {
+                if (component.GetSignal() < signal)
+                {
+                    component.SetSignal(signal);
+                }   
+           }
+        }
     }
 
-    private string GetDebuggerDisplay()
-    {
-        return ToString();
-    }
 }

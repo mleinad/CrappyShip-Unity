@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface ISignalModifier
 {
-    public int GetOutput(ColliderIO input);
-    public void SetSignal(int signal);
+    public int GetOutput();
+    public void SetSignal(Dictionary<IEletricalComponent, ColliderIO> pair);
 
 }
     

@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
 
 public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 {
@@ -55,6 +51,11 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
     }
 
     public List<IEletricalComponent> GetAdjacencies()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetSignal(int value)
     {
         throw new System.NotImplementedException();
     }

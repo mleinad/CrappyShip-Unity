@@ -14,13 +14,17 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     private float rayDistance = 10.0f;
     DragNDrop dragNDrop;
     ModuleBase base_t;    
+    Rigidbody rigidbody;
     void Awake()
     {
+        rigidbody = GetComponent<Rigidbody>();
         dragNDrop = GetComponent<DragNDrop>();
+
     }
 
     void Update()
     {
+        if(is_docked) rigidbody.isKinematic =true;
         
         if(dragNDrop.IsPickedUp())
         {
@@ -43,7 +47,7 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     }
 
 
-    public int GetOutput(ColliderIO input)
+    public int GetOutput()
     {
         return signal * boost;
     }
@@ -75,7 +79,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
         Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
     } 
-
 
     void SnapToBase(Transform base_transform)
     {
@@ -122,8 +125,15 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
     }
 
-    public void SetSignal(int value)
+    public void SetSignal(Dictionary<IEletricalComponent, ColliderIO> adj_comp)
     {
-        signal = value;
+
+        int maxSignal = 0;
+        foreach (var component in adj_comp)
+        {
+            if(component.Value.GetInputType() == InputType.input)
+                maxSignal = Mathf.Max(maxSignal, component.Key.GetSignal());
+        }
+        signal = maxSignal;
     }
 }
