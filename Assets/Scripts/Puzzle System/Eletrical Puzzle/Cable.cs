@@ -97,10 +97,14 @@ public class Cable : MonoBehaviour, IEletricalComponent
         {
            if(component is not ModuleBase)
            {
+                if(component is FuseBox) component.SetSignal(signal);
+                
                 if (component.GetSignal() < signal)
                 {
                     component.SetSignal(signal);
-                }   
+                }
+
+
            }
         }
     }

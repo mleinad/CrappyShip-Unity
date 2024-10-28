@@ -71,6 +71,8 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     {
         
          Collider_value_list = new Dictionary<ColliderIO, int>();
+        inputSignals = new List<int>();
+
 
          foreach (var pair in comp)
         {
@@ -83,15 +85,8 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
                 int componentSignal = component.GetSignal();
                 
                 // Store or update the signal for each input-type collider
-                if (Collider_value_list.ContainsKey(collider))
-                {
-                    Collider_value_list[collider] = componentSignal;
-                }
-                else
-                {
-                    Collider_value_list.Add(collider, componentSignal);
-                }
-            }
+                inputSignals.Add(componentSignal);
+          }
         }
 
     }
@@ -102,7 +97,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         int output = 0;
 
         // Collect all input signals into a list
-        inputSignals = new List<int>(Collider_value_list.Values);
+       // inputSignals = new List<int>(Collider_value_list.Values);
 
         if (inputSignals.Count == 0)
             return 0;  // No inputs, return 0
