@@ -107,7 +107,10 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         if (inputSignals.Count == 0)
             return 0;  // No inputs, return 0
 
-        switch (mode)           //requires reworking... or gate is altering signal;
+    
+
+
+        switch (mode)           //requires reworking... OR gate is altering signal;
         {
             case 0: // AND gate
                 output = inputSignals[0];  // Start with 1 for AND logic   
