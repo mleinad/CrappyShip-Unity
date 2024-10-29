@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -134,6 +135,8 @@ public class Player : MonoBehaviour
         {
             velocityX += Time.deltaTime * acceleration;
         }
+
+        
 
         // Decrease velocity when keys are not pressed
         if (!forwardPressed && !backwardPressed && velocityZ != 0)
