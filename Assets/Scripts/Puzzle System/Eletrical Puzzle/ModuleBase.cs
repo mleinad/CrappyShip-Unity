@@ -167,7 +167,7 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
             {
                 pair.Key.SetSignal(signal);
             
-                Debug.Log($"Setting signal of {pair.Key} to {signal}");
+              //  Debug.Log($"Setting signal of {pair.Key} to {signal}");
             }
         }
     }

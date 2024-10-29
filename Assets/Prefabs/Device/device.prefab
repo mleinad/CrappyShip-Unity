@@ -4601,7 +4601,6 @@ GameObject:
   - component: {fileID: 296536830684101796}
   - component: {fileID: 4836394616573985546}
   - component: {fileID: 8920349599249218343}
-  - component: {fileID: 7463396233995114602}
   m_Layer: 6
   m_Name: Monitor
   m_TagString: Untagged
@@ -4675,25 +4674,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7463396233995114602
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9133430773070729181}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43367478111479016, guid: 4741a5e7f7f4a1f48b216e8f7f5589ae, type: 2}
