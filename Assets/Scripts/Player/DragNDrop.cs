@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class DragNDrop : MonoBehaviour
+public class    DragNDrop : MonoBehaviour
 {
     private bool interactable, pickedup;
     private Rigidbody objRigidbody;
@@ -54,12 +55,11 @@ public class DragNDrop : MonoBehaviour
             {
                 transform.parent = null;
                 objRigidbody.useGravity = true;
-                 objRigidbody.isKinematic = false;
+                objRigidbody.isKinematic = false;
                 pickedup = false;
             }
         }
     }
 
     public bool IsPickedUp()=> pickedup;
-
 }

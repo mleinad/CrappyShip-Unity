@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QFSW.QC;
 
 namespace MoodMe
 {
@@ -31,7 +32,12 @@ namespace MoodMe
         // Start is called before the first frame update
         void Start()
         {
-            //Webcam select
+           StartWebcam();         
+
+        }
+
+         private void InitializeWebcam()
+        {
             try
             {
                 Debug.Log("DEVICES LIST");
@@ -39,39 +45,26 @@ namespace MoodMe
                 {
                     Debug.Log(cameraIndex + " name " + WebCamTexture.devices[cameraIndex].name + " isFrontFacing " + WebCamTexture.devices[cameraIndex].isFrontFacing);
                 }
-                DeviceIndex = (int)Mathf.Clamp(DeviceIndex, 0, WebCamTexture.devices.Length);
-                if (DeviceIndex > WebCamTexture.devices.Length - 1)
-                {
-                    DeviceIndex = WebCamTexture.devices.Length - 1;
-                }
-                //Debug.Log("DEVICE CHOICE");
+                DeviceIndex = (int)Mathf.Clamp(DeviceIndex, 0, WebCamTexture.devices.Length - 1);
+
                 string camName = WebCamTexture.devices[DeviceIndex].name;
                 CameraTexture = new WebCamTexture(camName, _width, _height, 30);
             }
             catch (Exception)
             {
-
                 Debug.Log("Camera not ready");
             }
 
-            //Webcam start
             if (VideoTexure == null)
             {
-                //Debug.Log("DEVICES START");
                 CameraTexture.Play();
-                //Debug.Log("DEVICES WAIT");
                 StartCoroutine(WaitForWebCamAndInitialize(CameraTexture));
-                //Debug.Log("Camera Texture size " + CameraTexture.width + " x " + CameraTexture.height);
-
             }
             else
             {
-                  ExportWebcamTexture = new Texture2D(VideoTexure.width, VideoTexure.height, TextureFormat.RGBA32, false);
+                ExportWebcamTexture = new Texture2D(VideoTexure.width, VideoTexure.height, TextureFormat.RGBA32, false);
                 _webcamSet = true;
             }
-            //RGBA buffer creation
-         
-
         }
 
         public static bool WebcamReady
@@ -133,7 +126,50 @@ namespace MoodMe
                 }
             }
             
+            
+        }
+    
 
+        // New function to stop the webcam
+       
+
+        void OnEnable()
+        {
+            Debug.Log("enabled webcam!");
+            StartWebcam();
+        }
+
+        void OnDisable()
+        {
+            StopWebcam();
+            Debug.Log("disabled webcam!");
+        }
+
+        [Command]
+        public void StopWebcam()
+        {
+            if (CameraTexture != null && CameraTexture.isPlaying)
+            {
+                CameraTexture.Stop();
+                _webcamSet = false;
+                Debug.Log("Webcam stopped");
+                VideoTexure = null;
+            }
+        }
+
+         public void StartWebcam()
+        {
+            if (CameraTexture == null || !_webcamSet)
+            {
+                InitializeWebcam();
+                Debug.Log("Webcam started");
+            }
+            else if (!CameraTexture.isPlaying)
+            {
+                CameraTexture.Play();
+                _webcamSet = true;
+                Debug.Log("Webcam resumed");
+            }
         }
     }
 }

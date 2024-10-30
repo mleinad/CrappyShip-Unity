@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-
+using DG.Tweening;
 public class keycard : MonoBehaviour, IPuzzleComponent
 {
     // Start is called before the first frame update
@@ -12,9 +13,7 @@ public class keycard : MonoBehaviour, IPuzzleComponent
     bool state;
 
     public bool CheckCompletion()=> state;
-
     public void ResetPuzzle()=> state = false;
-
     void Start()
     {
         dragNDrop = GetComponent<DragNDrop>();
@@ -41,7 +40,26 @@ public class keycard : MonoBehaviour, IPuzzleComponent
 
 
     void CollectCard()
-    {
+    {  
+
+        
+
+        if(state == false)
+        {
+        transform.GetComponent<Rigidbody>().isKinematic =true;
+        dragNDrop.enabled = false;
+        transform.DOMove(Player.Instance.GetPlayerRightHand(),2f);//improve
+        StartCoroutine(TurnOffCrosshairAfterDelay(0.2f));
         state = true;
+
+        }
+        // transform.position = new Vector3 (0,0,0);
+        //add animation
+
+    }
+     IEnumerator TurnOffCrosshairAfterDelay(float delay)
+        {
+        yield return new WaitForSeconds(delay);
+        Player.Instance.CrosshairOff();
     }
 }

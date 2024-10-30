@@ -10,7 +10,9 @@ public class Player : MonoBehaviour
 {
     // Static instance for Singleton
     public static Player Instance { get; private set; }
-    
+    public Transform right_hand;
+
+
     [SerializeField]
     private GameObject crosshair1, crosshair2, message;
 
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour
     public float maxWalkSpeed = 0.5f;
     public float maxRunSpeed = 1.2f;
     bool forwardPressed, backwardPressed, leftPressed, rightPressed, runPressed;
+
+
 
     int velocityZHash;
     int velocityXHash;
@@ -212,19 +216,22 @@ public class Player : MonoBehaviour
         return playerCamera.transform;
     }
 
-    
-
+    public Vector3 GetPlayerPositon() => transform.position;
+    public Vector3 GetPlayerRightHand()=> right_hand.position;
 #region UI
     
     public void CrosshairOn(){
         
         crosshair1.SetActive(false);
         crosshair2.SetActive(true);
+     //   Debug.Log("crosshair on");
     }
     public void CrosshairOff(){
 
+
         crosshair1.SetActive(true);
         crosshair2.SetActive(false);
+       // Debug.Log("crosshair off");
     }
 
 

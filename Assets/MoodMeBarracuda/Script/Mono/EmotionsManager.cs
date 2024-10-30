@@ -196,6 +196,13 @@ namespace MoodMe
 
             return target;
         }
+
+
+        void DisableWebcam()
+        {
+
+            
+        }
     }
 
 }
