@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236463f64a6ec594784632ae6f4e30b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &1775507086559889731
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236463f64a6ec594784632ae6f4e30b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &3095956387617057951
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236463f64a6ec594784632ae6f4e30b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &5203055300125171660
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +465,7 @@ GameObject:
   - component: {fileID: 3799889927361418134}
   - component: {fileID: 8352103556142345826}
   m_Layer: 0
-  m_Name: Signal Evaluator
+  m_Name: Signal Evaluator AND
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +481,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7311402, z: -0, w: 0.6822273}
   m_LocalPosition: {x: 46.86, y: 9.515, z: -43.14}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6944079187153901055}
@@ -611,11 +614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  i1: 0
-  i2: 0
-  e1: 0
-  o1: 0
   count: 0
+  inputSignals: 
 --- !u!1 &6300429128920925035
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236463f64a6ec594784632ae6f4e30b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &6538827326456314052
 GameObject:
   m_ObjectHideFlags: 0

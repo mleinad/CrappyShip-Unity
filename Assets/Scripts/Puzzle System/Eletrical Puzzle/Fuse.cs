@@ -51,7 +51,7 @@ public class Fuse : MonoBehaviour
         rigidbody.isKinematic= false;
         transform.SetParent(null);
         dragNDrop.enabled = true;
-        rigidbody.AddExplosionForce(50f, Vector3.up, 20f);
+        rigidbody.AddExplosionForce(500f, Vector3.up, 2000f);
         Debug.Log("detatched");
 
     }
