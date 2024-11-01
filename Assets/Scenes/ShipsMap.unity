@@ -4473,6 +4473,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4373991969907444, guid: 1c3a468e1cdbae84c88c1ae6d5fcfccb, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16238,6 +16242,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 859238214529558503, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: message
+      value: 
+      objectReference: {fileID: 1061378072}
+    - target: {fileID: 859238214529558503, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: crosshair1
+      value: 
+      objectReference: {fileID: 402268669}
+    - target: {fileID: 859238214529558503, guid: 5aaf778a898193e40b91c72ace6acd6e,
+        type: 3}
+      propertyPath: crosshair2
+      value: 
+      objectReference: {fileID: 771954508}
     - target: {fileID: 955233371947824188, guid: 5aaf778a898193e40b91c72ace6acd6e,
         type: 3}
       propertyPath: m_Layer
