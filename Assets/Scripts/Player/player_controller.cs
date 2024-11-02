@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
         if(movement_locked) return;
         HandleInput();
         HandleMovementAndAnimations();
+        if(is_rotation_locked) return;
         HandleCameraRotation();
 
     }

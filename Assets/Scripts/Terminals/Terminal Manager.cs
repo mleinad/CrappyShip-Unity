@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using QFSW.QC.Utilities;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +14,16 @@ public class TerminalManager : MonoBehaviour
     public GameObject user_input_line;
     public ScrollRect sr;
     public GameObject msgList;
+    Iinterperter interperter;
+
+
+    //teste
+   // public List<>
+
+    private void Start()
+    {
+        interperter = GetComponent<Iinterperter>();    
+    }
 
     private void OnGUI()
     {
@@ -25,6 +37,11 @@ public class TerminalManager : MonoBehaviour
 
             //Instanciate GameObject with a directory prefix
             AddDirectoryLine(user_input);
+
+
+            int lines = AddInterperterLines(interperter.Interpert(user_input));
+
+            ScrollToBottom(lines);
 
             user_input_line.transform.SetAsLastSibling();
             terminal_input.ActivateInputField();
@@ -51,4 +68,41 @@ public class TerminalManager : MonoBehaviour
     {
         terminal_input.text ="";
     }
+
+
+
+    int AddInterperterLines(List<string> interpertation)
+    {
+        for(int i=0; i<interpertation.Count; i++)
+        {
+            GameObject res = Instantiate(response_line, msgList.transform);
+
+            res.transform.SetAsLastSibling();
+
+            Vector2 list_size = msgList.GetComponent<RectTransform>().sizeDelta;
+            msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(list_size.x, list_size.y + 35.0f);
+            res.GetComponentInChildren<TMP_Text>().text = interpertation[i];
+        }
+
+        return interpertation.Count;
+    }
+
+
+    void ScrollToBottom(int lines)
+    {
+        if(lines > 4)
+        {
+            sr.velocity = new Vector2(0, 450);
+        }else
+        {
+            sr.verticalNormalizedPosition = 0;
+        }
+    }
+
+    public void UserInputState(bool state)
+    {
+        user_input_line.gameObject.SetActive(state);
+    }
+
+
 }
