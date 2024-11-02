@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     Animator playerAnim;
 
     private bool is_rotation_locked = false;    
+     private bool movement_locked = false;    
 
 #region Player Variables 
     public float walking_speed = 3.5f;
@@ -49,6 +50,8 @@ public class Player : MonoBehaviour
     public Camera playerCamera;
 
     private float rotation_X = 0;
+
+
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(movement_locked) return;
         HandleInput();
         HandleMovementAndAnimations();
         HandleCameraRotation();
@@ -209,7 +212,7 @@ public class Player : MonoBehaviour
 
 
     public void LockCamera(bool state) => is_rotation_locked = state;
-
+    public void LockMovement(bool locked) => movement_locked = locked;
     public void SetCameraSpeed(float speed)=> look_speed = speed;
 
     public Transform GetMainCameraTransform(){
@@ -218,6 +221,9 @@ public class Player : MonoBehaviour
 
     public Vector3 GetPlayerPositon() => transform.position;
     public Vector3 GetPlayerRightHand()=> right_hand.position;
+
+
+
 #region UI
     
     public void CrosshairOn(){

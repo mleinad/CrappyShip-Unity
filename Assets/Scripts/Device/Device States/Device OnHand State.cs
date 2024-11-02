@@ -21,7 +21,6 @@ public class DeviceOnHandState : DeviceBaseState
     }
 
    public override void ExitState(DeviceStateManager context){
-         Debug.Log("exit hand");
 
     }
 }
