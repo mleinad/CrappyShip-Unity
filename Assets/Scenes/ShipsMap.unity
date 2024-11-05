@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 13780514}
   - component: {fileID: 13780516}
   - component: {fileID: 13780517}
+  - component: {fileID: 13780518}
   m_Layer: 0
   m_Name: USB_Interactable
   m_TagString: Untagged
@@ -218,6 +219,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4352903, y: 1.5683479, z: 1.1282568}
   m_Center: {x: -0.08346653, y: 0.28417397, z: -0.000091552734}
+--- !u!114 &13780518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13780513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d021cb4341e830746b3e831fc7f8c891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &20482204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3632,7 +3645,7 @@ Transform:
   m_GameObject: {fileID: 280126857}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.434214, y: 1.947, z: 14.663}
+  m_LocalPosition: {x: -18.434214, y: 0.52, z: 14.663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13734,6 +13747,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.086
       objectReference: {fileID: 0}
+    - target: {fileID: 8219432050881462381, guid: 6d18daee68747504ca93cc2de4c69e8e,
+        type: 3}
+      propertyPath: valve_transform
+      value: 
+      objectReference: {fileID: 1046372051}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13742,6 +13760,12 @@ PrefabInstance:
 --- !u!4 &1046372051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7155558630169184793, guid: 6d18daee68747504ca93cc2de4c69e8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1046372050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1046372052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7155558630168761913, guid: 6d18daee68747504ca93cc2de4c69e8e,
     type: 3}
   m_PrefabInstance: {fileID: 1046372050}
   m_PrefabAsset: {fileID: 0}
@@ -23488,6 +23512,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4863837781750850679, guid: 4fd589940511e3043b08f3a682d1f0e2,
+        type: 3}
+      propertyPath: signal
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25323,8 +25352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjects:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1046372052}
   state: 0
 --- !u!1001 &1909908371
 PrefabInstance:
