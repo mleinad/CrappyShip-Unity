@@ -2,31 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ValveData
+{
+    public ValvePuzzle valveController; // Reference to the ValveController script
+    public float angleThreshold = 500.0f;   // Angle threshold for this specific valve
+}
+
 public class CounterScript : MonoBehaviour
 {
+    public List<ValveData> valves;
     public List<GameObject> numberObjects;
 
     public Vector3 centerPosition = Vector3.zero;
 
     private int currentNumber = 0;
     private int previousNumber = -1;
-    public ValvePuzzle valvePuzzle;
+
+    private Dictionary<ValvePuzzle, int> previousNumbers = new Dictionary<ValvePuzzle, int>();
 
     private void Start()
     {
-        // Ensure only the starting number is shown in the center
-        ShowNumber(currentNumber);
+        foreach (var valveData in valves)
+        {
+            previousNumbers[valveData.valveController] = -1;
+        }
     }
     private void Update()
     {
-        // Check if the valveController is assigned
-        if (valvePuzzle != null)
+        foreach (var valveData in valves)
         {
-            // Get the current angle from the ValveController
-            float valveAngle = valvePuzzle.GetCurrentAngle();
+            // Ensure the valveController is valid
+            if (valveData.valveController != null)
+            {
+                // Get the current angle from the ValveController
+                float valveAngle = valveData.valveController.GetCurrentAngle();
 
-            // Update the number based on the angle
-            UpdateNumberBasedOnAngle(valveAngle);
+                // Calculate the displayed number based on the angle and specific threshold
+                int calculatedNumber = Mathf.Clamp((int)(valveAngle / valveData.angleThreshold), 0, numberObjects.Count - 1);
+
+                // Only update if the number has changed for this specific valve
+                if (calculatedNumber != previousNumbers[valveData.valveController])
+                {
+                    ShowNumber(calculatedNumber);
+                    previousNumbers[valveData.valveController] = calculatedNumber;
+                }
+            }
         }
     }
     public void ShowNumber(int number)
@@ -44,18 +65,6 @@ public class CounterScript : MonoBehaviour
         numberObjects[number].SetActive(true);
         numberObjects[number].transform.localPosition = centerPosition;
     }
-    public void UpdateNumberBasedOnAngle(float valveAngle)
-    {
-        // Calculate the number based on the angle (500 degrees per number)
-        int calculatedNumber = Mathf.Clamp((int)(valveAngle / 60), 0, numberObjects.Count - 1);
-
-        // Only update if the number has changed
-        if (calculatedNumber != previousNumber)
-        {
-            currentNumber = calculatedNumber;
-            ShowNumber(currentNumber);
-            previousNumber = currentNumber;
-        }
-    }
+    
 
 }
