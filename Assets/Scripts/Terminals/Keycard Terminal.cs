@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using MoodMe;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class KeycardTerminal : MonoBehaviour, IPuzzleComponent
     public float targetTime = 1.0f;
     public float surprised__factor=0.0f;
     IPuzzleComponent keycard;
+    public Camera camera;
     void Start()
     {
         interactable = GetComponent<Interactable>();
@@ -30,29 +32,26 @@ public class KeycardTerminal : MonoBehaviour, IPuzzleComponent
 
         if(interactable.WasTriggered())
         {
-           face_camera.SetActive(true); 
-           EmotionHandling(); 
-        }
-        else
-        {
-            face_camera.SetActive(false);
-        }
-    }
-
-    void EmotionHandling()
-    {
-        surprised__factor = EmotionsManager.Emotions.surprised;
-        if(surprised__factor>6.0f)
-        {
-            targetTime -= Time.deltaTime;
-        }
-        else
-        {
-            targetTime = 1.0f;
+            camera.enabled = true;
+            Player.Instance.LockMovement(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
-//        Debug.Log(targetTime);
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            camera.enabled = false;
+            Player.Instance.LockMovement(false);
+                 Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            interactable.SetTrigger(false);
+        }
+
+
     }
+
 
     public bool CheckCompletion() => state;
 
@@ -60,4 +59,20 @@ public class KeycardTerminal : MonoBehaviour, IPuzzleComponent
     {
         state = false;
     }
+
+
+
+    IEnumerator ScanFace()
+    {
+        face_camera.SetActive(true); 
+
+        surprised__factor = EmotionsManager.Emotions.surprised;
+        if(surprised__factor>6.0f)
+        {
+
+        }
+        yield return 2f;
+        face_camera.SetActive(false);
+    }
+
 }

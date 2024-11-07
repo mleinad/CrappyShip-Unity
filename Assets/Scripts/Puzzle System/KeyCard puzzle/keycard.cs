@@ -11,6 +11,7 @@ public class keycard : MonoBehaviour, IPuzzleComponent
     DragNDrop dragNDrop;
     Interactable interactable;
     bool state;
+     bool onHand = false;
 
     public bool CheckCompletion()=> state;
     public void ResetPuzzle()=> state = false;
@@ -26,6 +27,7 @@ public class keycard : MonoBehaviour, IPuzzleComponent
     // Update is called once per frame
     void Update()
     {
+        if(onHand) return;
         if(dragNDrop.IsPickedUp())
         {
             sphere_collider.enabled = true;
@@ -38,24 +40,46 @@ public class keycard : MonoBehaviour, IPuzzleComponent
         }
     }
 
-
     void CollectCard()
     {  
-
         
 
         if(state == false)
         {
         transform.GetComponent<Rigidbody>().isKinematic =true;
         dragNDrop.enabled = false;
-        transform.DOMove(Player.Instance.GetPlayerRightHand(),2f);//improve
+
+        Player.Instance.RaiseRightArm(1f);
+
+        SetLayerRecursively(transform, 9);
+
+        transform.SetParent(Player.Instance.GetPlayerRightHand());
+        
+        transform.localPosition = new Vector3(0.204f, 0.074f, 0.003f);
+        transform.localRotation = Quaternion.Euler(-255.281f, 261.311f, 91.676f);
+
+        dragNDrop.enabled = false;
+        sphere_collider.enabled = false;
+        interactable.enabled = false;
+        
+
         StartCoroutine(TurnOffCrosshairAfterDelay(0.2f));
         state = true;
 
+        onHand = true;
         }
         // transform.position = new Vector3 (0,0,0);
         //add animation
 
+    }
+
+     void SetLayerRecursively(Transform transform, int layer)
+    {
+        transform.gameObject.layer = layer;
+        foreach (Transform child in transform)
+        {
+            SetLayerRecursively(child, layer);
+        }
     }
      IEnumerator TurnOffCrosshairAfterDelay(float delay)
         {
