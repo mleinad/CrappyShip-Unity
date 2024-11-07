@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -11,6 +14,9 @@ public class Player : MonoBehaviour
     // Static instance for Singleton
     public static Player Instance { get; private set; }
     public Transform right_hand;
+
+    public TwoBoneIKConstraint right_arm;
+    public TwoBoneIKConstraint left_arm;
 
 
     [SerializeField]
@@ -47,7 +53,7 @@ public class Player : MonoBehaviour
     public float look_X_limit = 45.0f;
 #endregion
 
-    public Camera playerCamera;
+    public Transform playerCamera;
 
     private float rotation_X = 0;
 
@@ -79,6 +85,10 @@ public class Player : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+
+        left_arm.weight =0;
+        right_arm.weight =0;
     }
 
     // Update is called once per frame
@@ -221,7 +231,18 @@ public class Player : MonoBehaviour
     }
 
     public Vector3 GetPlayerPositon() => transform.position;
-    public Vector3 GetPlayerRightHand()=> right_hand.position;
+    public Transform GetPlayerRightHand()=> right_hand;
+
+
+    public void RaiseLeftArm(float y)
+    {
+        DOTween.To(()=> left_arm.weight, x => left_arm.weight = x, y, 1f);
+    }
+
+    public void RaiseRightArm(float y)
+    {
+         DOTween.To(()=> left_arm.weight, x => left_arm.weight = x, y, 1f);
+    }
 
 
 

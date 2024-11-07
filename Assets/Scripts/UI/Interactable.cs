@@ -54,4 +54,5 @@ public class Interactable : MonoBehaviour
 
     public bool WasTriggered()=> triggered;
 
+    public void SetTrigger(bool b) => triggered = b;
 }

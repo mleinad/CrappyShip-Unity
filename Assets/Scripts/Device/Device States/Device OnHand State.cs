@@ -6,8 +6,9 @@ public class DeviceOnHandState : DeviceBaseState
 {
     string trigger = "position1";
     public override void EnterState(DeviceStateManager context){
-    context.animator.SetTrigger(trigger);
 
+
+    context.animator.SetTrigger(trigger);
     }
 
    public override void UpdateState(DeviceStateManager context){
@@ -21,7 +22,6 @@ public class DeviceOnHandState : DeviceBaseState
     }
 
    public override void ExitState(DeviceStateManager context){
-
     }
 }
 

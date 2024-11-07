@@ -28,6 +28,8 @@ public class TypingPuzzle : MonoBehaviour
     {
         if(interactable.WasTriggered())
         {   
+
+            //temporary solution: on trigger Player's crosshair bust be disabled in order to press the Terminal UI elemets
              Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 

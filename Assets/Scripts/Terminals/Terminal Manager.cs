@@ -16,12 +16,9 @@ public class TerminalManager : MonoBehaviour
     public GameObject msgList;
     Iinterperter interperter;
 
-
-    //teste
-   // public List<>
-
+    private List<TMP_Text> dynamic_lines;
     private void Start()
-    {
+    {   dynamic_lines = new List<TMP_Text>();
         interperter = GetComponent<Iinterperter>();    
     }
 
@@ -53,7 +50,7 @@ public class TerminalManager : MonoBehaviour
     {
         //resize the command line container -> weird stuff on scroll rect other wise
        Vector2 msgListSize = msgList.GetComponent<RectTransform>().sizeDelta;
-       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y+ 35.0f);
+       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y+ 70.0f);
 
        //instantiate the directory line
        GameObject msg = Instantiate(directory_line, msgList.transform);
@@ -73,6 +70,7 @@ public class TerminalManager : MonoBehaviour
 
     int AddInterperterLines(List<string> interpertation)
     {
+        dynamic_lines = new List<TMP_Text>();
         for(int i=0; i<interpertation.Count; i++)
         {
             GameObject res = Instantiate(response_line, msgList.transform);
@@ -80,8 +78,10 @@ public class TerminalManager : MonoBehaviour
             res.transform.SetAsLastSibling();
 
             Vector2 list_size = msgList.GetComponent<RectTransform>().sizeDelta;
-            msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(list_size.x, list_size.y + 35.0f);
+            msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(list_size.x, list_size.y + 70.0f);
             res.GetComponentInChildren<TMP_Text>().text = interpertation[i];
+            
+            dynamic_lines.Add(res.GetComponentInChildren<TMP_Text>());
         }
 
         return interpertation.Count;
@@ -93,7 +93,8 @@ public class TerminalManager : MonoBehaviour
         if(lines > 4)
         {
             sr.velocity = new Vector2(0, 450);
-        }else
+        }
+        else
         {
             sr.verticalNormalizedPosition = 0;
         }
@@ -103,6 +104,9 @@ public class TerminalManager : MonoBehaviour
     {
         user_input_line.gameObject.SetActive(state);
     }
+
+
+    public List<TMP_Text> GetDynamicLines() => dynamic_lines;
 
 
 }
