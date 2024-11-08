@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 5710952751725700694}
   - component: {fileID: 5217153678589881053}
   - component: {fileID: 4825580674698158800}
+  - component: {fileID: 3958090013280463914}
   m_Layer: 0
   m_Name: Sample responce line
   m_TagString: Untagged
@@ -342,6 +343,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3958090013280463914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900409254004734290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ead7158aee3a94a802468aa3d1c678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBoxRect: {fileID: 3638972112502932601}
+  inputText: {fileID: 0}
 --- !u!1 &1055428630249349044
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +639,7 @@ GameObject:
   - component: {fileID: 5285768212951209905}
   - component: {fileID: 7862044160943384983}
   - component: {fileID: 8260311710531300294}
+  - component: {fileID: 1794801429864838986}
   m_Layer: 0
   m_Name: Sample directory line
   m_TagString: Untagged
@@ -716,6 +732,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1794801429864838986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080521215292827586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ead7158aee3a94a802468aa3d1c678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBoxRect: {fileID: 0}
+  inputText: {fileID: 0}
 --- !u!1 &5099394794832711874
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +894,7 @@ GameObject:
   - component: {fileID: 2372599210253839971}
   - component: {fileID: 4162860967572337815}
   - component: {fileID: 5515563964204820919}
+  - component: {fileID: 1208377347434216414}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -972,6 +1003,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!225 &1208377347434216414
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475763514932621924}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5577661609383508948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,7 +1487,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.0005493164, y: -0.0014648438}
+  m_AnchoredPosition: {x: 0.0005493164, y: 0.0005493164}
   m_SizeDelta: {x: 0, y: 123.391846}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6287884608766066218

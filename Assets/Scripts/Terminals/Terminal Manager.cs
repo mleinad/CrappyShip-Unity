@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using QFSW.QC.Utilities;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +17,11 @@ public class TerminalManager : MonoBehaviour
     private List<TMP_Text> dynamic_lines;
     private void Start()
     {   dynamic_lines = new List<TMP_Text>();
-        interperter = GetComponent<Iinterperter>();    
+        interperter = GetComponent<Iinterperter>();   
+        if(interperter == null)
+        {
+            throw new Exception("NO INTERPERTER ATTACHED!");
+        } 
     }
 
     private void OnGUI()

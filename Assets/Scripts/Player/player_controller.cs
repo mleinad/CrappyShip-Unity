@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(CharacterController))]
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject crosshair1, crosshair2, message;
 
+    [SerializeField]
+    Camera main_camera;
     CharacterController controller;
     Vector3 movement_vec = Vector3.zero;
 
@@ -56,8 +59,6 @@ public class Player : MonoBehaviour
     public Transform playerCamera;
 
     private float rotation_X = 0;
-
-
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
         HandleMovementAndAnimations();
         if(is_rotation_locked) return;
         HandleCameraRotation();
-
+        HandleFocus();
     }
     void HandleMovementAndAnimations()
     {
@@ -220,7 +221,18 @@ public class Player : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * look_speed, 0);
     }
 
-
+    private void HandleFocus()
+    {
+        if(Input.GetMouseButton(1))
+        {
+            DOTween.To(()=> main_camera.fieldOfView, x => main_camera.fieldOfView = x, 30, 1f);
+        }else
+        {
+        
+            DOTween.To(()=> main_camera.fieldOfView, x => main_camera.fieldOfView = x, 60, 0.2f);
+        
+        }
+    }
 
     public void LockCamera(bool state) => is_rotation_locked = state;
     public void LockMovement(bool locked) => movement_locked = locked;

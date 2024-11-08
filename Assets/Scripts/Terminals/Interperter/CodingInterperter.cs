@@ -10,9 +10,9 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
     {"orange", "#FA4224"},
     {"yellow", "#FDDC5C"},
     {"blue", "#475F94"},
-    {"green", "00ff1b"},
-    {"red", "ff0000"},
-    {"white", "ffffff"}
+    {"green", "#00ff1b"},
+    {"red", "#ff0000"},
+    {"white", "#ffffff"}
     };
 
 
@@ -136,7 +136,7 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
     {
         LoadTitle("Code.txt", "white", 0);
         coding = true;
-       // currentString = code_template[lineIndex];
+
         remainingString = code_template[lineIndex];
         terminalManager.UserInputState(false);
     }

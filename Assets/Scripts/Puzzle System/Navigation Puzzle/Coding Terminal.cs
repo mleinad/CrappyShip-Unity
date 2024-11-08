@@ -1,46 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
-using MoodMe;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class KeycardTerminal : MonoBehaviour, IPuzzleComponent
+public class TypingPuzzle : MonoBehaviour, IPuzzleComponent
 {
     Interactable interactable;
-    public GameObject face_camera;
+   public Camera camera;
+    public Text word_output;
 
-    bool state = false;
-
-    
     [SerializeField]
     CanvasGroup canvasGroup;
-
-
-    public float targetTime = 1.0f;
-    public float surprised__factor=0.0f;
-    IPuzzleComponent keycard;
-    public Camera camera;
     void Start()
     {
         EnableTerminal(false);
         interactable = GetComponent<Interactable>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if(interactable.WasTriggered())
-        {
+        {   
+
+            //temporary solution: on trigger Player's crosshair bust be disabled in order to press the Terminal UI elemets
             camera.enabled = true;
             Player.Instance.LockMovement(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
-            EnableTerminal(true);
+            EnableTerminal(true); 
         }
-
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -52,36 +43,22 @@ public class KeycardTerminal : MonoBehaviour, IPuzzleComponent
 
             interactable.SetTrigger(false);
         }
-
-
     }
+
 
     void EnableTerminal(bool state)
     {
-        canvasGroup.interactable = state;
+         canvasGroup.interactable = state;
         canvasGroup.blocksRaycasts = state;
     }
 
-    public bool CheckCompletion() => state;
+    public bool CheckCompletion()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void ResetPuzzle()
     {
-        state = false;
+        throw new System.NotImplementedException();
     }
-
-
-
-    IEnumerator ScanFace()
-    {
-        face_camera.SetActive(true); 
-
-        surprised__factor = EmotionsManager.Emotions.surprised;
-        if(surprised__factor>6.0f)
-        {
-
-        }
-        yield return 2f;
-        face_camera.SetActive(false);
-    }
-
 }

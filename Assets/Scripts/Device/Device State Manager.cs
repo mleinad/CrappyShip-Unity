@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.iOS;
 
 public class DeviceStateManager : MonoBehaviour
 {
@@ -34,4 +35,5 @@ public class DeviceStateManager : MonoBehaviour
         state.EnterState(this);
     }
 
+    public DeviceBaseState GetCurrentDeviceState()=>current_state;
 }
