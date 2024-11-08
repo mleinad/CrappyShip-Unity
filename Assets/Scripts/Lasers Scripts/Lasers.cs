@@ -5,55 +5,70 @@ using UnityEngine;
 public class Lasers : MonoBehaviour
 {
 
-    int maxBounces= 5;
-    private LineRenderer lr;
-    [SerializeField]
-    private Transform startPoint;
-    [SerializeField]
-    private bool reflectionOnlyMirror;
+    public LayerMask layerMask;
+    public float defaultLength = 50;
+    public int numberOfReflections = 2;
+
+    private LineRenderer lineRenderer;
+    private RaycastHit hit;
+    private Ray ray;
+    private Vector3 direction;
 
     void Start()
     {
-        lr = GetComponent<LineRenderer>();
-        lr.SetPosition(0, startPoint.position);
-
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     void Update()
     {
-        CastLaser(transform.position,-transform.forward);
+        ReflectLaser();
     }
 
 
-    private void CastLaser(Vector3 position,Vector3 direction)
-    {   
-        lr.SetPosition(0, startPoint.position);
+    private void NormalLaser()
+    {
+        lineRenderer.SetPosition(0,transform.position);
 
-        for(int i = 0; i < maxBounces; i++) 
+        if(Physics.Raycast(transform.position, transform.forward,out hit, defaultLength, layerMask))
         {
-            Ray ray = new Ray(position, direction);
-            RaycastHit hit;
+            lineRenderer.SetPosition(1, hit.point);
+        }
+        else
+        {
+            lineRenderer.SetPosition(1, transform.position + (transform.forward * defaultLength));
+        }
 
-            if(Physics.Raycast(ray, out hit, 300, 1))
+    }
+
+    private void ReflectLaser()
+    {
+        ray = new Ray(transform.position, transform.forward);
+
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0,transform.position);
+
+        float remainLength = defaultLength;
+
+        for (int i = 0; i < numberOfReflections; i++)
+        {   
+            if(Physics.Raycast(ray.origin, ray.direction, out hit, remainLength, layerMask))
             {
-                position = hit.point;
-                direction = Vector3.Reflect(direction, hit.normal);
-                lr.SetPosition(i+1, hit.point);
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+                remainLength -= Vector3.Distance(ray.origin, hit.point);
 
-                if(hit.transform.name != "Mirror" && reflectionOnlyMirror)
-                {
-                    for(int j = (i+1); j <= 5; j++)
-                    {
-                        lr.SetPosition(j, hit.point);
-
-                    } 
-                    break;
-
-                }
-
+                ray = new Ray(hit.point, Vector3.Reflect(ray.direction,hit.normal));
             }
+            else
+            {
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, ray.origin + (ray.direction * remainLength));
+            }
+
 
         }
 
     }
+
+    
 }
