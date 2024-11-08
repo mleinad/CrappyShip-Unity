@@ -50,13 +50,13 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
 
     private void ActivatePlate()
     {
-        Debug.Log("Placa de Pressao Ativada.");
+       // Debug.Log("Placa de Pressao Ativada.");
         SetDoorState(true);
     }
 
     private void DeactivatePlate()
     {
-        Debug.Log("Placa de Pressao Desativada.");
+       // Debug.Log("Placa de Pressao Desativada.");
         SetDoorState(false);
     }
 
