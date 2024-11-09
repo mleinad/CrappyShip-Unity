@@ -6,13 +6,14 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
 {
     
     private int numberOfObjects = 8;
+    bool state = false;
 
     [SerializeField]
     private Animator doorAnimator;
 
     private List<GameObject> objectsOnPlate = new List<GameObject>();
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("PlateObject"))
         {
@@ -51,12 +52,14 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     private void ActivatePlate()
     {
        // Debug.Log("Placa de Pressao Ativada.");
+       state = true;
         SetDoorState(true);
     }
 
     private void DeactivatePlate()
     {
        // Debug.Log("Placa de Pressao Desativada.");
+        state = false;
         SetDoorState(false);
     }
 

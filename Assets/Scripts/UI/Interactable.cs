@@ -9,10 +9,15 @@ public class Interactable : MonoBehaviour
     bool interactable = false;
     bool isOn;
     bool triggered;
+
+    [SerializeField]
+    Animator animator;
+
+    public bool repeat;
+    bool beenTriggerd;
     void Awake(){
         isOn = false;
         triggered = false;
-    
     }
     void OnTriggerEnter(Collider other){
         if(other.GetComponent<CharacterController>()){
@@ -43,16 +48,29 @@ public class Interactable : MonoBehaviour
         if(interactable)
         {
 
-            if(Input.GetKeyDown(KeyCode.E)){
+            if(Input.GetKeyDown(KeyCode.E))
+            {   
+                beenTriggerd = true;
+                Animate();
                 isOn = false;
                 triggered = true;
             }
 
-             Player.Instance.MessageOn(isOn);
+            Player.Instance.MessageOn(isOn);
         }
     }
 
     public bool WasTriggered()=> triggered;
 
     public void SetTrigger(bool b) => triggered = b;
+
+    void Animate()
+    {
+        if(animator!=null)
+        {
+
+            animator.SetBool("interaction", beenTriggerd);
+            beenTriggerd = false;
+        } 
+    }
 }

@@ -50,6 +50,7 @@ public class    DragNDrop : MonoBehaviour
                 objRigidbody.useGravity = false;
                 objRigidbody.isKinematic = true;
                 pickedup = true;
+
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -57,6 +58,7 @@ public class    DragNDrop : MonoBehaviour
                 objRigidbody.useGravity = true;
                 objRigidbody.isKinematic = false;
                 pickedup = false;
+
             }
         }
     }

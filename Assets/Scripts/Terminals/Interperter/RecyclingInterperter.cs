@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecyclingInterperter : MonoBehaviour
+public class RecyclingInterperter : MonoBehaviour, Iinterperter
 {
     
     

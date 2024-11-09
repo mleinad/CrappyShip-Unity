@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using MoodMe;
 using UnityEngine;
 
-public class FaceIDInterperter : MonoBehaviour, Iinterperter
+public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 {
        Dictionary<string, string> colors = new Dictionary<string, string>{
     {"orange", "#FA4224"},
@@ -14,25 +15,24 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter
     {"white", "ffffff"}
     };
 
-
+    bool state = false;
     public List<string> code_template;
     List<string> response = new List<string>();
     TerminalManager terminalManager;
     
-    
+     public float surprised__factor=0.0f;
     public PuzzleComposite puzzleComposite;
     
-    
+    public GameObject face_camera;
     public GameObject _keycard;
     public GameObject _faceID;
 
     IPuzzleComponent keycard;
-    IPuzzleComponent faceID;
+    
 
     void Start()
     {
         keycard = _keycard.GetComponent<IPuzzleComponent>();
-        faceID = _faceID.GetComponent<IPuzzleComponent>();
 
         terminalManager = GetComponent<TerminalManager>();
         code_template = new List<string>();
@@ -66,10 +66,7 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter
                 }
                 else
                 {
-                    if(faceID.CheckCompletion())
-                    {
-                        response.Add("facial recognition failed, access denied!");
-                    }
+                   
                 }
 
 
@@ -143,4 +140,27 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter
         file.Close();
     }
 
+    public bool CheckCompletion()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ResetPuzzle()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+     IEnumerator ScanFace()
+    {
+        face_camera.SetActive(true); 
+
+        surprised__factor = EmotionsManager.Emotions.surprised;
+        if(surprised__factor>6.0f)
+        {
+
+        }
+        yield return 2f;
+        face_camera.SetActive(false);
+    }
 }
