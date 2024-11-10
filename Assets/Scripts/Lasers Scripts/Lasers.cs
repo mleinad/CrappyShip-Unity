@@ -57,6 +57,9 @@ public class Lasers : MonoBehaviour
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
                 remainLength -= Vector3.Distance(ray.origin, hit.point);
 
+                // Verifica se o laser atingiu o alvo
+                CheckForTarget(hit);
+
                 ray = new Ray(hit.point, Vector3.Reflect(ray.direction,hit.normal));
             }
             else
@@ -68,6 +71,23 @@ public class Lasers : MonoBehaviour
 
         }
 
+    }
+
+    // Função para verificar e acionar o alvo específico
+    private void CheckForTarget(RaycastHit hit)
+    {
+        // Checa se o objeto atingido tem a tag "Target"
+        if (hit.collider.CompareTag("Target"))
+        {
+            // Ação desejada ao atingir o alvo
+            TriggerActionOnTarget(hit.collider.gameObject);
+        }
+    }
+
+    private void TriggerActionOnTarget(GameObject target)
+    {
+        Debug.Log("Laser atingiu o alvo: " + target.name);
+        // Insira a ação desejada aqui, como ativar um efeito, mover o objeto, etc.
     }
 
     
