@@ -13,7 +13,7 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
 
     private List<GameObject> objectsOnPlate = new List<GameObject>();
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.CompareTag("PlateObject"))
         {
@@ -25,7 +25,7 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     }
 
 
-    private void OnCollisionExit(Collision collision)
+    void OnTriggerExit(Collider collision)
     {
         if(collision.gameObject.CompareTag("PlateObject"))
         {

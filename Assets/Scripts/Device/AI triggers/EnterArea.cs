@@ -27,4 +27,14 @@ public class EnterArea : MonoBehaviour, IPuzzleComponent
             EventManager.Instance.OnAiInteraction(this);
         }
     }
+
+    
+    void OnTriggerExit(Collider other)
+    {   
+        if(other==null) return;
+        if(other.transform == Player.Instance.transform)
+        {
+           ResetPuzzle();
+        }
+    }
 }

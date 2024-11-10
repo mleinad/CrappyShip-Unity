@@ -2,17 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookedAt : MonoBehaviour
+public class LookedAt : MonoBehaviour, IPuzzleComponent
 {
-    // Start is called before the first frame update
+    bool state;
+    public bool CheckCompletion()=> state;
+
+    public void ResetPuzzle()
+    {
+        state = false;
+    }
     void Start()
     {
-        
+        state = false;        
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
+    {   
+        if(other==null) return;
+        if(other.CompareTag("MainCamera"))
+        {
+            state = true;
+            EventManager.Instance.OnAiInteraction(this);
+            Debug.Log("looked at door");
+        }
+    }
+    
+    void OnTriggerExit(Collider other)
     {
-        
+         if(other==null) return;
+        if(other.CompareTag("MainCamera"))
+        {
+            ResetPuzzle();
+        }
     }
 }

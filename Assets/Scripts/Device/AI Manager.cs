@@ -8,24 +8,24 @@ public class AIManager : MonoBehaviour
 {
 
     Dictionary <IPuzzleComponent, List<string>> speech_dictionary; //might need to create costume speech bouble object 
-    public GameObject go;
+    public List<GameObject> gOlist;
     public AI_Interperter interperter;
-    IPuzzleComponent key;
     public Notification notification;
 
     void Start()
     {
         EventManager.Instance.onAiInteraction += Perform;
 
-        key = go.GetComponent<IPuzzleComponent>();
-        if(key!=null)
-        {
-            speech_dictionary = new Dictionary<IPuzzleComponent, List<string>>
-            {
-                { key, new List<string> { "hello, player", "look at this new room", "pretty nice!" } }
-            };
+            speech_dictionary = new Dictionary<IPuzzleComponent, List<string>>();
 
-            Debug.Log(key);
+            foreach(GameObject @object in gOlist)
+            {
+                IPuzzleComponent key = @object.GetComponent<IPuzzleComponent>();
+                if(key!=null)
+                {
+                    speech_dictionary.Add(key, new List<string>{"hello", "player", "how are you"});
+                    Debug.Log(key);
+                }
         }
     }
 
