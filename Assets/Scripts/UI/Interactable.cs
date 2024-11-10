@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Interactable : MonoBehaviour
     Animator animator;
 
     public bool repeat;
+
     bool beenTriggerd;
     void Awake(){
         isOn = false;
@@ -23,7 +25,6 @@ public class Interactable : MonoBehaviour
         if(other.GetComponent<CharacterController>()){
             interactable = true;
             isOn = true;
-        Debug.Log("entered");
         }
     }
 
@@ -40,24 +41,32 @@ public class Interactable : MonoBehaviour
 
     void Update()
     {
-        if (!GetComponent<Collider>().enabled)
+
+        if(repeat)
         {
-            isOn = false;
+            if(triggered)
+            {
+                return; //instead of this.enabled = false
+            }
         }
-
-        if(interactable)
-        {
-
-            if(Input.GetKeyDown(KeyCode.E))
-            {   
-                beenTriggerd = true;
-                Animate();
+            if (!GetComponent<Collider>().enabled)
+            {
                 isOn = false;
-                triggered = true;
             }
 
-            Player.Instance.MessageOn(isOn);
-        }
+            if(interactable)
+            {
+
+                if(Input.GetKeyDown(KeyCode.E))
+                {   
+                    beenTriggerd = !beenTriggerd;
+                    Animate();
+                    isOn = false;
+                    triggered = true;
+                }
+
+                Player.Instance.MessageOn(isOn);
+            }
     }
 
     public bool WasTriggered()=> triggered;
@@ -70,7 +79,6 @@ public class Interactable : MonoBehaviour
         {
 
             animator.SetBool("interaction", beenTriggerd);
-            beenTriggerd = false;
         } 
     }
 }

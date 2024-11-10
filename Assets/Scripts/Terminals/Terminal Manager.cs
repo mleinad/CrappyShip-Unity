@@ -110,5 +110,19 @@ public class TerminalManager : MonoBehaviour
 
     public List<TMP_Text> GetDynamicLines() => dynamic_lines;
 
+    public void NoUserInputLines(List<string> interpertation)
+    {
+            //clear the input field
+            ClearInputField();
+
+            //Instanciate GameObject with a directory prefix
+            int lines = AddInterperterLines(interpertation);
+
+            ScrollToBottom(lines);
+
+            user_input_line.transform.SetAsLastSibling();
+            terminal_input.ActivateInputField();
+            terminal_input.Select();
+    }
 
 }

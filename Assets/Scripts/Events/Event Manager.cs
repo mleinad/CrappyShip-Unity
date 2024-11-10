@@ -9,8 +9,10 @@ public class EventManager : MonoBehaviour
     
     public event Action<int> onTriggerOpenDoor; //future proof for multiple doors
     public event Action <string> onTriggerDebug;
-
     public event Action <PuzzleComposite> onTriggerSolved;
+
+  
+    public event Action <IPuzzleComponent> onAiInteraction;
 
 
 
@@ -50,6 +52,9 @@ public class EventManager : MonoBehaviour
         onTriggerSolved?.Invoke(puzzleComposite);
     }
 
-
+    public void OnAiInteraction(IPuzzleComponent puzzleComp)
+    {
+        onAiInteraction?.Invoke(puzzleComp);
+    }
     
 }

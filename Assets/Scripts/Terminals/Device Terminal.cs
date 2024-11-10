@@ -20,11 +20,9 @@ public class DeviceTerminal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(deviceStateManager.GetCurrentDeviceState());
         if(deviceStateManager.GetCurrentDeviceState() is DeviceFullScreenState)
         {
             EnableTerminal(true);
-            Debug.Log("full screen state");
         }
         else
         {

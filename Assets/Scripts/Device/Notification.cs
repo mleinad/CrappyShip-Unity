@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Notification : MonoBehaviour
 {
-    public float startY = -500f;          
+    public float startY = -100f;          
     public float endY = 19f;               
     public float duration = 0.5f;         
 
@@ -28,19 +28,18 @@ public class Notification : MonoBehaviour
         originalPosition = rectTransform.position;
         play = false;
     }
-
-    void Update()
+    public IEnumerator Appear(string msg, float time)
     {
-        if(play) Appear();
-    }
-    void Appear()
-    {
-        
+        text.text = msg;
+        rectTransform.DOAnchorPosY(endY, duration);
+        yield return new WaitForSeconds(time);
+        Disappear();
     }
 
-    void Disappear()
+    private void Disappear()
     {
-
+        rectTransform.DOAnchorPosY(startY, duration);
+        text.text = string.Empty;
     }
 
       public void ResetPosition()
