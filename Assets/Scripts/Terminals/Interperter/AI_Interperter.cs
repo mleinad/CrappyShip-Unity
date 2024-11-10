@@ -27,20 +27,11 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
         terminalManager = GetComponent<TerminalManager>();      
         terminalManager.UserInputState(false);  
         print = false;
+
+        terminalManager.NoUserInputLines(LoadTitle("Ship.txt","white",3));
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(print)
-        {
-            response.Clear();
-            LoadTitle("Code.txt", "white", 0);
-            terminalManager.NoUserInputLines(response);
-
-            print = false;
-        }
-    }
     public List<string> Interpert(string input)
     {
         response.Clear();
@@ -61,7 +52,7 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
     }
 
 
-    void LoadTitle(string path, string color, int spacing)
+    List<string> LoadTitle(string path, string color, int spacing)
     {
         StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
         for(int i =0; i< spacing; i++)
@@ -86,6 +77,8 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
             response.Add("");
         }
         file.Close();
+
+        return response;
     }
 
     
@@ -121,6 +114,18 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
     public void PushLines(List<string> msgs, float delay)
     {
         //manage ASCII prints, delay, color, etc
+
+        for(int i=0; i<msgs.Count; i++)
+        {
+            if (msgs[i].StartsWith("/ASCII "))
+            {
+                string file = msgs[i].Substring("/ASCII ".Length);
+                
+                //define programmatically later
+                LoadTitle(file, "white", 3);
+                msgs.Remove(msgs[i]);
+            }
+        }
         terminalManager.NoUserInputLines(msgs);
     }
 }

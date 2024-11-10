@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     {
         rigidbody = GetComponent<Rigidbody>();
         dragNDrop = GetComponent<DragNDrop>();
-
     }
 
     void Update()
@@ -73,8 +73,6 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
             }
             base_t = moduleBase;
             is_over_base = true;
-            base_t.SetComponent(this);
-
         }
 
         Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
@@ -84,6 +82,9 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     {
         transform.position = base_transform.GetChild(0).position;
         is_docked =true;
+        base_t.SetComponent(this);
+        SwitchInputs();
+
     }
     
     void SnapRotation()
@@ -136,4 +137,32 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         }
         signal = maxSignal;
     }
+
+
+    void SwitchInputs()
+    {
+        
+        if(base_t!=null)
+        {
+            ColliderIO[] col_list = base_t.GetColliders();
+            
+            ColliderIO strongest_input = null;
+            int max =0;
+
+            for(int i=0; i<col_list.Count(); i++)
+            {
+                col_list[i].SwitchType(InputType.output);
+                int input_singal =  base_t.GetSignalByInput(col_list[i]);
+                if(input_singal>max)
+                {
+                    max = input_singal;
+                    strongest_input = col_list[i];
+                }                
+            }
+            strongest_input.SwitchType(InputType.input);
+            
+        }
+    }
+
+
 }

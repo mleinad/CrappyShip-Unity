@@ -71,13 +71,10 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
         }
     }
 
-    public bool CheckCompletion()
-    {
-        throw new System.NotImplementedException();
-    }
+    public bool CheckCompletion()=> state;
 
     public void ResetPuzzle()
     {
-        throw new System.NotImplementedException();
+       state = false;
     }
 }

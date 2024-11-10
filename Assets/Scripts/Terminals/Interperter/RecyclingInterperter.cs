@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class RecyclingInterperter : MonoBehaviour, Iinterperter
 {
     
-    
+    [SerializeField]
+    GameObject puzzle_component_gameobject;
+    IPuzzleComponent garbage_bin;
     List<string> response = new List<string>();
     TerminalManager terminalManager;
     Dictionary<string, string> colors = new Dictionary<string, string>{
@@ -17,39 +20,36 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
     {"white", "#ffffff"}
     };
 
+    
+    void Start()
+    {
+        garbage_bin = puzzle_component_gameobject.GetComponent<IPuzzleComponent>();
+    }
+
     public List<string> Interpert(string input)
     {
         response.Clear();
 
         string[] args = input.Split();
 
-
-        if(args[0]=="code")
-        {
-
-            return response;
-
-        }
-        if(args[0]=="ascii")
-        {
-            return response;
-        }
         if(args[0] == "help")
         {
           
             ListEntry("help", "returns a list of commands");
-            ListEntry("stop", "pauses the game");
-            ListEntry("run", "resumes the game");
-            ListEntry("four", "bla bla bla");
+            ListEntry("open", "opens door");
             return response;
         
         }
-        if(args[0]=="boop")
+        if(args[0]=="open")
         {
 
-            response.Add("Thank you for using the terminal");
-            response.Add("---------------------------------");
-
+            if(!garbage_bin.CheckCompletion())
+            {
+                response.Add("checking room contamination...");
+                //LoadTitle("","",2);
+                response.Add(BoldString("Unable to open door, contamination risk too high!"));
+            }
+            
             return response;
         }
         else
@@ -63,6 +63,7 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
 
 
     #region style
+
     public string BoldString(string s)
     {
         return "<b>" + s + "</b>";
@@ -88,5 +89,31 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
     void ListEntry(string a, string b)
     {
         response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
+    }
+
+    void LoadTitle(string path, string color, int spacing)
+    {
+        StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
+        for(int i =0; i< spacing; i++)
+        {
+            response.Add("");
+        }
+        while(!file.EndOfStream)
+        {   
+            string temp_line = file.ReadLine();
+            if(color == string.Empty) 
+            {
+                response.Add(temp_line);
+            }
+            else 
+            {
+                response.Add(ColorString(temp_line, colors[color]));
+            }
+        }
+        for(int i=0; i< spacing; i++)
+        {
+            response.Add("");
+        }
+        file.Close();
     }
 }

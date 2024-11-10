@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using QFSW.QC;
 using Unity.Mathematics;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 [RequireComponent(typeof(DragNDrop))]
@@ -59,7 +60,7 @@ public class Fuse : MonoBehaviour
     void AttachFuse(FuseBox fuseBox)
     {
         transform.SetParent(fuseBox.transform);
-        transform.rotation = Quaternion.identity;
+        transform.localRotation = Quaternion.identity;
         transform.localPosition = new Vector3 (0, 1.705668f, 0);
         capsuleCollider.enabled = false;
         fuseBox.fuse = this;
