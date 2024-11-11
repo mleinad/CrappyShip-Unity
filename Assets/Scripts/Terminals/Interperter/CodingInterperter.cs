@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CodingInterperter : MonoBehaviour, Iinterperter
+public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 {
     Dictionary<string, string> colors = new Dictionary<string, string>{
     {"orange", "#FA4224"},
@@ -20,11 +21,22 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
     List<string> response = new List<string>();
     TerminalManager terminalManager;
 
+    [SerializeField]
+    Cable cable;
+
+    [SerializeField]
+    Interactable interactable;
     bool coding = false;
+
+    bool locked = true;
+
+    bool state;
     void Start()
     {
         terminalManager = GetComponent<TerminalManager>();
         code_template = new List<string>();
+        state = false;
+        interactable.enabled = false;
     }
 
     public List<string> Interpert(string input)
@@ -33,38 +45,71 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
 
         string[] args = input.Split();
 
+        if(locked)
+        {
+            if(args[0] == "help")
+            {
+            ListEntry("ove", "returns a list of commands");
+            ListEntry("override", "pauses the game");
 
-        if(args[0]=="code")
-        {
-            Code();
-            return response;
-
-        }
-        if(args[0]=="ascii")
-        {
-            LoadTitle("ASCII.txt","blue", 2);
-            return response;
-        }
-        if(args[0] == "help")
-        {
-            ListEntry("help", "returns a list of commands");
-            ListEntry("stop", "pauses the game");
-            ListEntry("run", "resumes the game");
-            ListEntry("four", "bla bla bla");
             return response;
         
-        }
-        if(args[0]=="boop")
-        {
-            response.Add("Thank you for using the terminal");
-            response.Add("---------------------------------");
-
-            return response;
+            }
+            if(args[0]=="password")
+            {
+                if(args[1]=="1234password")
+                {
+                    response.Add("correct password, developer mode on");
+                    locked = false;
+                    return response;
+                }
+                else
+                {
+                    response.Add("incorrect password");
+                    return response;
+                }
+            }
+            else
+            {
+                response.Add("Command not recognized. Type help for a list of commands");
+                return response;
+            }
         }
         else
         {
-            response.Add("Command not recognized. Type help for a list of commands");
-            return response;
+            if(args[0]=="code")
+            {
+                Code();
+                return response;
+
+            }
+            if(args[0]=="ascii")
+            {
+                LoadTitle("ASCII.txt","blue", 2);
+                return response;
+            }
+            if(args[0] == "help")
+            {
+                ListEntry("help", "returns a list of commands");
+                ListEntry("stop", "pauses the game");
+                ListEntry("run", "resumes the game");
+                ListEntry("four", "bla bla bla");
+                return response;
+            
+            }
+            if(args[0]=="boop")
+            {
+                response.Add("Thank you for using the terminal");
+                response.Add("---------------------------------");
+
+                return response;
+            }
+            else
+            {
+                response.Add("Command not recognized. Type help for a list of commands");
+                return response;
+            }
+
         }
     }
 
@@ -144,6 +189,13 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
  
     public void Update()
     {
+        if(cable.GetSignal()>0)
+        {
+            interactable.enabled = true;
+        }
+        else interactable.enabled = false;
+
+
         if(coding)
         {   
             if(terminalManager.GetDynamicLines().Count>0)
@@ -229,6 +281,16 @@ public class CodingInterperter : MonoBehaviour, Iinterperter
     {
         return remainingString.Length == 0;
     }
-#endregion
+
+    public bool CheckCompletion()
+    {
+        return state;
+    }
+
+    public void ResetPuzzle()
+    {
+        state=false;
+    }
+    #endregion
 
 }

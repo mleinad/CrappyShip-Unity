@@ -110,6 +110,10 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
         response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
     }
 
+    string ConvertToSpeech(string s)
+    {
+        return ColorString("AI-> ", "red") + ColorString(s, "white");
+    }
     
     public void PushLines(List<string> msgs, float delay)
     {
@@ -125,6 +129,7 @@ public class AI_Interperter : MonoBehaviour, Iinterperter
                 LoadTitle(file, "white", 3);
                 msgs.Remove(msgs[i]);
             }
+            msgs[i] = ConvertToSpeech(msgs[i]);
         }
         terminalManager.NoUserInputLines(msgs);
     }

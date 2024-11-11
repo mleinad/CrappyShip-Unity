@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.CSharp;
 using UnityEngine;
 
-public class MicrophoneDetector : MonoBehaviour
+public class MicrophoneDetector : MonoBehaviour, IPuzzleComponent
 {
     public string microphoneDevice; // Optional: specify the microphone device name
     public float volumeThreshold = 0.1f; // Set the volume threshold
@@ -12,6 +13,8 @@ public class MicrophoneDetector : MonoBehaviour
     private int sampleWindow = 128; // Number of samples to analyze for volume detection
 
     [SerializeField] private Interactable interactable;
+
+    public bool active, state;
 
     private void Start()
     {
@@ -30,13 +33,16 @@ public class MicrophoneDetector : MonoBehaviour
         {
             Debug.LogError("No microphone found!");
         }
+
+        active = false;
+        state = false;
     }
 
     private void Update()
     {
         if (interactable != null)
         {
-            if (interactable.WasTriggered())
+            if (active)
             {
                 if (microphoneClip != null)
                 {
@@ -45,7 +51,7 @@ public class MicrophoneDetector : MonoBehaviour
                 }
                 if (isLoudEnough)
                 {
-                    Debug.Log("Volume threshold exceeded!");
+
                 }
 
             }
@@ -84,5 +90,12 @@ public class MicrophoneDetector : MonoBehaviour
         {
             Microphone.End(microphoneDevice);
         }
+    }
+
+    public bool CheckCompletion()=> state;
+
+    public void ResetPuzzle()
+    {
+        state = false;
     }
 }

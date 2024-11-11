@@ -10,11 +10,10 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     {"orange", "#FA4224"},
     {"yellow", "#FDDC5C"},
     {"blue", "#475F94"},
-    {"green", "00ff1b"},
-    {"red", "ff0000"},
-    {"white", "ffffff"}
+    {"green", "#00ff1b"},
+    {"red", "#ff0000"},
+    {"white", "#ffffff"}
     };
-
     bool state = false;
     public List<string> code_template;
     List<string> response = new List<string>();
@@ -48,7 +47,7 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
         {
             ListEntry("help", "returns a list of commands");
             ListEntry("open", "opens door");
-            ListEntry("scan id", "reads user's id card");
+            ListEntry("scan id", "scans user's id card");
             return response;
         
         }
@@ -66,9 +65,9 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
                 }
                 else
                 {
-                   
+                    response.Add("facial recognition...");
+                    StartCoroutine(ScanFace());
                 }
-
 
             }
 
@@ -142,16 +141,16 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 
     public bool CheckCompletion()
     {
-        throw new System.NotImplementedException();
+       return state;
     }
 
     public void ResetPuzzle()
     {
-        throw new System.NotImplementedException();
+        state = false;
     }
 
 
-     IEnumerator ScanFace()
+    IEnumerator ScanFace()
     {
         face_camera.SetActive(true); 
 
@@ -160,7 +159,7 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
         {
 
         }
-        yield return 2f;
+        yield return new WaitForSeconds(10);
         face_camera.SetActive(false);
     }
 }

@@ -7,7 +7,6 @@ public class Terminal : MonoBehaviour
     Interactable interactable;
     public Camera camera;
 
-
     [SerializeField]
     CanvasGroup canvasGroup;
     void Start()
@@ -18,6 +17,7 @@ public class Terminal : MonoBehaviour
 
     void Update()
     {
+
         if(interactable.WasTriggered())
         {   
 
