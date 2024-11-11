@@ -14,6 +14,7 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
     
     ColliderIO[] colliders;
     Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
+
     ISignalModifier signalModifier;
 
    public int signal;
@@ -133,6 +134,17 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         if(adjencency_dictionary.ContainsKey(eletricalComponent)) return adjencency_dictionary[eletricalComponent].GetInputType();
         else return InputType.error;
     }
+    public int GetSignalByInput(ColliderIO co)
+    {
+        foreach(var pair in adjencency_dictionary)
+        {
+            if(pair.Value == co)
+            {
+                return pair.Key.GetSignal();
+            }
+        }
+        return 0;  
+    }
 
     private ColliderIO GetColliderByComponent(IEletricalComponent eletricalComponent){
         return adjencency_dictionary[eletricalComponent];
@@ -171,4 +183,7 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
             }
         }
     }
+
+
+    public ColliderIO[] GetColliders()=> colliders;
 }

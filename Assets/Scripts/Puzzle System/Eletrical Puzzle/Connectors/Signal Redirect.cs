@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,8 +30,8 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
 
         if(dragNDrop.IsPickedUp())
         {
-        is_docked =false;
-        GetClosestBase();
+            is_docked = false;
+            GetClosestBase();
         }
 
         DrawVectors();
@@ -39,8 +41,12 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
 
             if(!is_docked)
             {
+                Debug.Log("inst docked");
+                if(base_t!=null) 
+                {
                 SnapToBase(base_t.transform);
                 SnapRotation();
+                }
             }
         }
     }
@@ -75,10 +81,11 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
             {
                 is_over_base = false;
                 return;
-            }
+            }else
+            {
             base_t = moduleBase;
             is_over_base = true;
-            base_t.SetComponent(this);
+            }
 
         }
 
@@ -88,7 +95,9 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     void SnapToBase(Transform base_transform)
     {
         transform.position = base_transform.GetChild(0).position;
-        is_docked =true;
+        is_docked = true;
+        base_t.SetComponent(this);
+        SwitchInputs();
     }
     
     void SnapRotation()
@@ -110,8 +119,10 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
                 closestDirection = direction;
             }
         }
-
-        transform.rotation = Quaternion.LookRotation(closestDirection);
+        Quaternion targetRotation = Quaternion.LookRotation(closestDirection);
+        transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+    
+        Debug.Log("snaped!");
     }
 
     void DrawVectors(){
@@ -139,5 +150,36 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
             maxSignal = Mathf.Max(maxSignal, component.Key.GetSignal());
         }
         signal = maxSignal;
+    }
+
+
+
+    void SwitchInputs()
+    {
+        
+        if(base_t!=null)
+        {
+            ColliderIO[] col_list = base_t.GetColliders();
+            
+            float max = 0;
+            Transform closest_collider = null;
+
+            for(int i=0; i<col_list.Count(); i++)
+            {
+                float dot =Vector3.Dot(transform.forward,col_list[i].transform.forward);
+
+                col_list[i].SwitchType(InputType.input);               
+                if(dot>max)
+                {
+                    max = dot;
+                    closest_collider = col_list[i].transform;
+                    col_list[i].SwitchType(InputType.output);   
+                } 
+                
+                Debug.Log(closest_collider.name);
+            }
+
+            
+        }
     }
 }

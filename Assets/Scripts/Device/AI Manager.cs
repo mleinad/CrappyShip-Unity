@@ -7,7 +7,7 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
 
-    Dictionary <IPuzzleComponent, List<string>> speech_dictionary; //might need to create costume speech bouble object 
+    Dictionary <IPuzzleComponent, DialogContent> speech_dictionary; //might need to create costume speech bouble object 
     public List<GameObject> gOlist;
     public AI_Interperter interperter;
     public Notification notification;
@@ -16,14 +16,15 @@ public class AIManager : MonoBehaviour
     {
         EventManager.Instance.onAiInteraction += Perform;
 
-            speech_dictionary = new Dictionary<IPuzzleComponent, List<string>>();
+            speech_dictionary = new Dictionary<IPuzzleComponent, DialogContent>();
 
             foreach(GameObject @object in gOlist)
             {
                 IPuzzleComponent key = @object.GetComponent<IPuzzleComponent>();
-                if(key!=null)
+                DialogContent content = @object.GetComponent<DialogContent>();
+                if(key!=null && content!=null)
                 {
-                    speech_dictionary.Add(key, new List<string>{"hello", "player", "how are you"});
+                    speech_dictionary.Add(key, content);
                     Debug.Log(key);
                 }
         }
@@ -55,9 +56,9 @@ public class AIManager : MonoBehaviour
 
         if(speech_dictionary.ContainsKey(component))
         {
-            interperter.PushLines(speech_dictionary[component], 0f);
+            interperter.PushLines(speech_dictionary[component].GetLines(), 0f);
 
-            StartCoroutine(notification.Appear(speech_dictionary[component][0],3));
+            StartCoroutine(notification.Appear(speech_dictionary[component].GetLines()[0],3));
         
             speech_dictionary.Remove(component);
         }
