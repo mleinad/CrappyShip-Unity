@@ -153,13 +153,17 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     IEnumerator ScanFace()
     {
         face_camera.SetActive(true); 
-
+        
         surprised__factor = EmotionsManager.Emotions.surprised;
-        if(surprised__factor>6.0f)
+        if(surprised__factor>.3f)
         {
-
+            state = true;
         }
         yield return new WaitForSeconds(10);
         face_camera.SetActive(false);
+
+        if(state)
+            terminalManager.NoUserInputLines(new List<string>{"access granted!"});
+        else terminalManager.NoUserInputLines(new List<string>{"access denied!"});
     }
 }

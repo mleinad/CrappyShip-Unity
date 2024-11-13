@@ -40,7 +40,7 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
             return response;
         
         }
-        if(args[0]=="open")
+        if(args[0]=="print")
         {
 
             if(!garbage_bin.CheckCompletion())

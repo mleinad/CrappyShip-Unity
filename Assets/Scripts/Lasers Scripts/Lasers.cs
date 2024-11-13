@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lasers : MonoBehaviour
+public class Lasers : MonoBehaviour, IPuzzleComponent
 {
 
     public LayerMask layerMask;
@@ -14,9 +14,11 @@ public class Lasers : MonoBehaviour
     private Ray ray;
     private Vector3 direction;
 
+    bool state;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        state = false;
     }
 
     void Update()
@@ -87,8 +89,18 @@ public class Lasers : MonoBehaviour
     private void TriggerActionOnTarget(GameObject target)
     {
         Debug.Log("Laser atingiu o alvo: " + target.name);
+
+        state = true;
         // Insira a ação desejada aqui, como ativar um efeito, mover o objeto, etc.
     }
 
-    
+    public bool CheckCompletion()
+    {
+        return state;
+    }
+
+    public void ResetPuzzle()
+    {
+        state = false;
+    }
 }

@@ -9,10 +9,12 @@ public class MicrophoneInterperter : MonoBehaviour, Iinterperter
     List<string> response = new List<string>();
     TerminalManager terminalManager;
     
+    [SerializeField]
     MicrophoneDetector microphoneDetector;
     IPuzzleComponent mic;
     void Start()
     {
+         microphoneDetector.active = false;
         terminalManager = GetComponent<TerminalManager>();
         microphoneDetector = GetComponent<MicrophoneDetector>();
         mic = microphoneDetector.GetComponent<IPuzzleComponent>();
@@ -41,7 +43,7 @@ public class MicrophoneInterperter : MonoBehaviour, Iinterperter
         }
         else 
         {
-            response.Add("Command not recognized. Type help for a list of commands");
+            response.Add("Keyboard malfunction, please use voice commands");
             return response;
         }
     }

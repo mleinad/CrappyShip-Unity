@@ -184,6 +184,8 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 
         remainingString = code_template[lineIndex];
         terminalManager.UserInputState(false);
+
+        StartCoroutine(Timer());
     }
 
  
@@ -293,4 +295,15 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     }
     #endregion
 
+    IEnumerator Timer()
+    {
+
+        yield return new  WaitForSeconds(8);
+
+        foreach(var line in terminalManager.GetDynamicLines())
+        {
+            line.text = ColorString("!!!!!!!!____I WON____!!!!!!!!!!!", "red");
+        }
+    
+    }
 }
