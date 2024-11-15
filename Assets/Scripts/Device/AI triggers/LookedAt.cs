@@ -23,7 +23,7 @@ public class LookedAt : MonoBehaviour, IPuzzleComponent
         {
             state = true;
             EventManager.Instance.OnAiInteraction(this);
-            Debug.Log("looked at door");
+//            Debug.Log("looked at door");
         }
     }
     

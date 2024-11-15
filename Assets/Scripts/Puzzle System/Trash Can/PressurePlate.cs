@@ -54,6 +54,8 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
        // Debug.Log("Placa de Pressao Ativada.");
        state = true;
         SetDoorState(true);
+
+        EventManager.Instance.OnAiInteraction(this);
     }
 
     private void DeactivatePlate()

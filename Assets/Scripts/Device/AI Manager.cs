@@ -25,7 +25,7 @@ public class AIManager : MonoBehaviour
                 if(key!=null && content!=null)
                 {
                     speech_dictionary.Add(key, content);
-                    Debug.Log(key);
+//                      Debug.Log(key);
                 }
         }
     }

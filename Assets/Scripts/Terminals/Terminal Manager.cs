@@ -29,25 +29,25 @@ public class TerminalManager : MonoBehaviour
         if(terminal_input.isFocused && terminal_input.text != "" && Input.GetKeyDown(KeyCode.Return))
         {
             //store whatever the user typed
-            string user_input = terminal_input.text; 
-
-            //clear the input field
-            ClearInputField();
-
-            //Instanciate GameObject with a directory prefix
-            AddDirectoryLine(user_input);
+            string user_input = terminal_input.text;
 
 
-            int lines = AddInterperterLines(interperter.Interpert(user_input));
+                //clear the input field
+                ClearInputField();
 
-            ScrollToBottom(lines);
+                //Instanciate GameObject with a directory prefix
+                AddDirectoryLine(user_input);
 
-            user_input_line.transform.SetAsLastSibling();
-            terminal_input.ActivateInputField();
-            terminal_input.Select();
+
+                int lines = AddInterperterLines(interperter.Interpert(user_input));
+
+                ScrollToBottom(lines);
+
+                user_input_line.transform.SetAsLastSibling();
+                terminal_input.ActivateInputField();
+                terminal_input.Select();
         }
     }
-
     private void AddDirectoryLine(string user_input)
     {
         //resize the command line container -> weird stuff on scroll rect other wise
