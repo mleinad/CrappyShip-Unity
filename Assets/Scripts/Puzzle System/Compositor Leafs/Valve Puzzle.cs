@@ -17,14 +17,14 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
 
     public bool interactable, pickedup;
     private bool state = false;
-    public float rotation_speed = 1f; 
-    
+    public float rotation_speed = 1f;
+
 
     [SerializeField]
     private float current_angle;
     [SerializeField]
     private float target_angle;
-    
+
     private Vector2 C;
 
 
@@ -38,7 +38,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
 
     void Start()
     {
-        current_angle = 1;        
+        current_angle = 1;
     }
 
     public bool CheckCompletion() => state;
@@ -46,69 +46,72 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
     public void ResetPuzzle()
     {
         state = false;
-    }  
+    }
 
-    public float GetCurrentAngle()=> current_angle;
+    public float GetCurrentAngle() => current_angle;
 
     // Update is called once per frame
     void Update()
     {
-        if(interactable)
+        if (interactable)
         {
-            if(Input.GetMouseButtonDown(0)){
+            if (Input.GetMouseButtonDown(0))
+            {
                 change = collision_point;
             }
 
-            if(Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
-                  
+
                 Player.Instance.SetCameraSpeed(0.5f);
                 HandleRotation();
 
             }
         }
-        if(Input.GetMouseButtonUp(0)) Player.Instance.SetCameraSpeed(2.0f); //maybe bad for performance
+        if (Input.GetMouseButtonUp(0)) Player.Instance.SetCameraSpeed(2.0f); //maybe bad for performance
 
 
         //checks when true
-        if(Mathf.Abs(current_angle - target_angle) <= 5f){
+        if (Mathf.Abs(current_angle - target_angle) <= 5f)
+        {
             state = true;
         }
 
 
     }
 
-    void HandleRotation(){
-      
+    void HandleRotation()
+    {
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3 current = collision_point;      
+        Vector3 current = collision_point;
 
 
 
         C.x = valve_transform.position.x; C.y = valve_transform.position.z;
 
 
-        Vector3 center_to_mouseA = current - valve_transform.position; 
+        Vector3 center_to_mouseA = current - valve_transform.position;
         Vector3 center_to_mouseB = change - valve_transform.position;
 
         float rotation_angle = Vector3.SignedAngle(center_to_mouseA, center_to_mouseB, Vector3.forward);
-        
-#region debug
+
+        #region debug
         Debug.DrawLine(valve_transform.position, current, Color.red);
         Debug.DrawLine(valve_transform.position, change, Color.green);
-        Debug.DrawRay(ray.origin, ray.direction*10, Color.yellow);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
-#endregion
+        #endregion
 
 
-        valve_transform.Rotate(0, rotation_angle* rotation_speed,0);
+        valve_transform.Rotate(0, rotation_angle * rotation_speed, 0);
 
         current_angle += rotation_angle * rotation_speed;
         change = current;
     }
 
 
-#region interaction
+    #region interaction
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("MainCamera"))
@@ -117,7 +120,7 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
             interactable = true;
 
             collision_point = other.ClosestPoint(transform.position);
-            
+
         }
     }
     void OnTriggerExit(Collider other)
@@ -128,6 +131,6 @@ public class ValvePuzzle : MonoBehaviour, IPuzzleComponent
             interactable = false;
         }
     }
-#endregion
+    #endregion
 
 }

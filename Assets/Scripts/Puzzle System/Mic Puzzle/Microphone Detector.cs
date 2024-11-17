@@ -1,94 +1,90 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Mono.CSharp;
+using System.IO;
 using UnityEngine;
+using HuggingFace.API;
 
 public class MicrophoneDetector : MonoBehaviour, IPuzzleComponent
 {
-    public string microphoneDevice; // Optional: specify the microphone device name
-    public float volumeThreshold = 0.1f; // Set the volume threshold
-    public bool isLoudEnough = false; // Boolean to track if volume is above threshold
-
-    private AudioClip microphoneClip;
-    private int sampleWindow = 128; // Number of samples to analyze for volume detection
-
-    [SerializeField] private Interactable interactable;
-
-    public bool active, state;
-
-    private void Start()
-    {
-        // Start microphone recording with the specified device, if available
-        if (microphoneDevice == "")
-        {
-            microphoneDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
-        }
-
-        if (microphoneDevice != null)
-        {
-            microphoneClip = Microphone.Start(microphoneDevice, true, 1, 44100);
-            Debug.Log("Mic->" + microphoneDevice);
-        }
-        else
-        {
-            Debug.LogError("No microphone found!");
-        }
-
-        active = false;
-        state = false;
-    }
+    private AudioClip clip;
+    private byte[] bytes;
+    public bool active, state=false;
+    public string audioresult;
+    public string phrase;
+    
 
     private void Update()
     {
-        if (interactable != null)
+       if (active && Microphone.GetPosition(null) >= clip.samples)
         {
-            if (active)
-            {
-                if (microphoneClip != null)
-                {
-                    isLoudEnough = DetectLoudness();
-                    Debug.Log("STARTED");
-                }
-                if (isLoudEnough)
-                {
-
-                }
-
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Interactable reference is not assigned in MicrophoneDetector.");
+            StopRecording();
         }
         
     }
 
-    private bool DetectLoudness()
+    public void StartRecording()
     {
-        float[] audioData = new float[sampleWindow];
-        int micPosition = Microphone.GetPosition(microphoneDevice) - sampleWindow + 1;
-        if (micPosition < 0) return false;
-
-        microphoneClip.GetData(audioData, micPosition);
-
-        // Calculate RMS (Root Mean Square) volume of the audio sample
-        float sum = 0f;
-        for (int i = 0; i < sampleWindow; i++)
-        {
-            sum += audioData[i] * audioData[i];
-        }
-        float rmsValue = Mathf.Sqrt(sum / sampleWindow);
-
-        // Check if the volume exceeds the threshold
-        return rmsValue >= volumeThreshold;
+        clip = Microphone.Start(null, false, 5, 44100);
+        active = true;
+    }
+ 
+    private void StopRecording()
+    {
+        var position = Microphone.GetPosition(null);
+        Microphone.End(null);
+        var samples = new float[position * clip.channels];
+        clip.GetData(samples, 0);
+        bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);
+        active = false;
+        SendRecording();
     }
 
-    private void OnDestroy()
+    private void SendRecording()
     {
-        // Stop the microphone when the object is destroyed
-        if (microphoneDevice != null)
+        HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response =>
         {
-            Microphone.End(microphoneDevice);
+            audioresult = response;
+            Debug.Log("Audio-> "+ audioresult);
+            if (audioresult == phrase)
+            {
+                state = true;
+                Debug.Log("The door is now open.");
+
+            }
+        }, error =>
+        {
+            audioresult = null;
+        
+        });
+    }
+
+    private byte[] EncodeAsWAV(float[] samples, int frequency, int channels)
+    {
+        using (var memoryStream = new MemoryStream(44 + samples.Length * 2))
+        {
+            using (var writer = new BinaryWriter(memoryStream))
+            {
+                writer.Write("RIFF".ToCharArray());
+                writer.Write(36 + samples.Length * 2);
+                writer.Write("WAVE".ToCharArray());
+                writer.Write("fmt ".ToCharArray());
+                writer.Write(16);
+                writer.Write((ushort)1);
+                writer.Write((ushort)channels);
+                writer.Write(frequency);
+                writer.Write(frequency * channels * 2);
+                writer.Write((ushort)(channels * 2));
+                writer.Write((ushort)16);
+                writer.Write("data".ToCharArray());
+                writer.Write(samples.Length * 2);
+
+                foreach (var sample in samples)
+                {
+                    writer.Write((short)(sample * short.MaxValue));
+                }
+            }
+            return memoryStream.ToArray();
         }
     }
 
