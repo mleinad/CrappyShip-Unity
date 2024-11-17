@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,9 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     DragNDrop dragNDrop;
     ModuleBase base_t;    
     Rigidbody rigidbody;
+    private bool isSnapping = false;
 
+    public string currentBase;
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -25,7 +28,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     }
     void Update()
     {
-
+        currentBase = "no base";
         if(is_docked) rigidbody.isKinematic =true;
 
         if(dragNDrop.IsPickedUp())
@@ -36,16 +39,15 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
 
         DrawVectors();
 
-        if(is_over_base && !dragNDrop.IsPickedUp())
+        if(is_over_base && !dragNDrop.IsPickedUp() && !isSnapping)
         {
 
             if(!is_docked)
             {
-                Debug.Log("inst docked");
-                if(base_t!=null) 
+                if(base_t) 
                 {
-                SnapToBase(base_t.transform);
-                SnapRotation();
+                SnapToBase();
+                StartCoroutine(SnapRoutine());
                 }
             }
         }
@@ -92,17 +94,36 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
         Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
     } 
 
-    void SnapToBase(Transform base_transform)
+    void SnapToBase()
     {
-        transform.position = base_transform.GetChild(0).position;
+        transform.position = base_t.transform.GetChild(0).position;
         is_docked = true;
         base_t.SetComponent(this);
         SwitchInputs();
     }
     
+    private IEnumerator SnapRoutine()
+    {
+        isSnapping = true;
+
+        if (base_t)
+        {
+            SnapToBase();
+            SnapRotation();
+        }
+        else
+        {
+            Debug.LogError("Cannot snap: base_t is null.");
+        }
+
+        yield return new WaitForSeconds(0.1f); // Small delay to prevent overlapping calls
+        isSnapping = false;
+    }
+    
     void SnapRotation()
     {
-
+        if (!base_t) return;
+        
         List<Vector3> vectors = base_t.GetRotationAngles();
     
         Vector3 currentForward = Player.Instance.transform.forward; //ALTERNATIVE: transform.forward / relative to this object
@@ -157,7 +178,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
     void SwitchInputs()
     {
         
-        if(base_t!=null)
+        if(base_t)
         {
             ColliderIO[] col_list = base_t.GetColliders();
             
@@ -174,9 +195,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
                     max = dot;
                     closest_collider = col_list[i].transform;
                     col_list[i].SwitchType(InputType.output);   
-                } 
-                
-                Debug.Log(closest_collider.name);
+                }
             }
 
             

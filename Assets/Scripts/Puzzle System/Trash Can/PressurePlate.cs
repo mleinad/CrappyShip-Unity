@@ -5,7 +5,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour, IPuzzleComponent
 {
     
-    private int numberOfObjects = 8;
+    public int numberOfObjects = 2;
     bool state = false;
 
     [SerializeField]

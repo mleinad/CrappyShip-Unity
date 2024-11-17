@@ -28,8 +28,8 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         
         if(dragNDrop.IsPickedUp())
         {
-        is_docked =false;
-        GetClosestBase();
+             is_docked =false; 
+             GetClosestBase();
         }
 
         DrawVectors();
@@ -63,10 +63,10 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         {
             
          
-            if(base_t!=null) base_t.SetComponent(null);
+            if(base_t) base_t.SetComponent(null);
             
             ModuleBase moduleBase = hitInfo.collider.GetComponent<ModuleBase>();
-            if(moduleBase==null)
+            if(!moduleBase)
             {
                 is_over_base = false;
                 return;
@@ -106,7 +106,7 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
                 closestDirection = direction;
             }
         }
-
+        Debug.Log("snaped to base!");
         transform.rotation = Quaternion.LookRotation(closestDirection);
     }
 

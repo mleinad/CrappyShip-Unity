@@ -5,4 +5,5 @@ using UnityEngine;
 public interface Iinterperter
 {
     public List<string> Interpert(string input);
+    
 }

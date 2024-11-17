@@ -115,7 +115,7 @@ public class TerminalManager : MonoBehaviour
             //clear the input field
             ClearInputField();
 
-            //Instanciate GameObject with a directory prefix
+            //Instantiate GameObject with a directory prefix
             int lines = AddInterperterLines(interpertation);
 
             ScrollToBottom(lines);

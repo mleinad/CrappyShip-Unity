@@ -7,7 +7,8 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
    public bool state= false;
     public int signal;
     public int signal_needed;
-
+    
+    public Light light;
 
     List<IEletricalComponent> adjecent_components;
     public List<string> adj_comp_names;
@@ -31,22 +32,23 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 
     void Update()
     {
-        if(signal<signal_needed){
-        if(signal >0) state = true; 
-        else ResetPuzzle();         
+        if(signal<signal_needed)
+        {
+            if(signal >0) state = true; 
+            else ResetPuzzle();         
 
-        if(fuse!=null)
-       fuse.transform.Rotate(0, 0, signal * Time.deltaTime); 
+            if(fuse) fuse.transform.Rotate(0, 0, signal * Time.deltaTime); 
 
         }
         else
         {
-            if(fuse!=null)
+            if(fuse)
             {
-            ShortFuse();
+                ShortFuse();
             }
         }
-        CheckAdjacencies();
+        PropagateSignal();
+
     }
 
     void ShortFuse()
@@ -66,6 +68,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
             adjecent_components.Add(electricalComponent);
             adj_comp_names.Add(electricalComponent.ToString());
         }
+        Debug.Log(other.gameObject.name);
 
     }
     void OnTriggerExit(Collider other)
@@ -80,26 +83,17 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
             adj_comp_names.Remove(eletricalComponent.ToString());
         }
     }
-    void CheckAdjacencies()
-    {
-        adj_comp_names = new List<string>();
-
-        foreach(IEletricalComponent comp in adjecent_components){
-            adj_comp_names.Add(comp.ToString());
-        } 
-    }
 
     public List<IEletricalComponent> GetAdjacencies()=> adjecent_components;
 
     public void SetSignal(int newSignal)
     {
         signal = newSignal;
-        PropagateSignal();
     }
 
      public void PropagateSignal()
     {
-        if(fuse == null) return;
+        if(!fuse) return;
         foreach (var component in adjecent_components)
         {
            if(component is not ModuleBase)

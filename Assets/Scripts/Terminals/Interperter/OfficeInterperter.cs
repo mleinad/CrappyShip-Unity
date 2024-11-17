@@ -12,6 +12,20 @@ public class OfficeInterperter : MonoBehaviour, Iinterperter
 
         string[] args = input.Split();
 
-        if(args == "help"){}
+        if (args[0] == "help")
+        {
+            response.Add("help");
+            return response;
+        }
+        if (args[0] == "example")
+        {
+            response.Add("....");
+            return response;
+        }
+        else
+        {
+            response.Add("command not recognized");
+            return response;
+        }
     }
 }
