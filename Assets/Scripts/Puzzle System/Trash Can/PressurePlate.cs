@@ -10,14 +10,9 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     bool state = false;
 
     [SerializeField]
-    private Interactable interactable;
+    private List<Interactable> interactable;
 
     private List<GameObject> objectsOnPlate = new List<GameObject>();
-
-    private void Awake()
-    {
-        interactable.enabled = false;
-    }
 
     void OnTriggerEnter(Collider collision)
     {
@@ -59,7 +54,6 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     {
        // Debug.Log("Placa de Pressao Ativada.");
        state = true;
-        SetDoorState(true);
 
         EventManager.Instance.OnAiInteraction(this);
     }
@@ -68,16 +62,8 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     {
        // Debug.Log("Placa de Pressao Desativada.");
         state = false;
-        SetDoorState(false);
     }
-
-    private void SetDoorState(bool isOpen)
-    {
-        if (interactable != null)
-        {
-            interactable.enabled = true; 
-        }
-    }
+    
 
     public bool CheckCompletion()=> state;
 

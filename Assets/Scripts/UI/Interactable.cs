@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -7,21 +8,21 @@ using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour
 {
+    private static readonly int Triggered = Animator.StringToHash("triggered");
+    private static readonly int Interaction = Animator.StringToHash("interaction");
+    
     bool interactable = false;
     bool isOn;
     bool triggered;
-
-    [SerializeField]
-    Animator animator;
-
+    
     public bool repeat;
-    public bool timed;
     bool beenTriggerd;
     void Awake(){
         isOn = false;
         triggered = false;
     }
     void OnTriggerEnter(Collider other){
+        
         if(other.GetComponent<CharacterController>()){
             interactable = true;
             isOn = true;
@@ -41,14 +42,13 @@ public class Interactable : MonoBehaviour
 
     void Update()
     {
-
-        if(repeat)
-        {
-            if(triggered)
+            if(!repeat)
             {
-                return; //instead of this.enabled = false
+                if(triggered)
+                {
+                    return; //instead of this.enabled = false
+                }
             }
-        }
             if (!GetComponent<Collider>().enabled)
             {
                 isOn = false;
@@ -60,7 +60,7 @@ public class Interactable : MonoBehaviour
                 if(Input.GetKeyDown(KeyCode.E))
                 {   
                     beenTriggerd = !beenTriggerd;
-                    Animate();
+                    Action();
                     isOn = false;
                     triggered = true;
                 }
@@ -73,11 +73,9 @@ public class Interactable : MonoBehaviour
 
     public void SetTrigger(bool b) => triggered = b;
 
-    void Animate()
+    void Action()
     {
-        if(animator)
-        {
-            animator.SetBool("interaction", beenTriggerd);
-        } 
+        EventManager.Instance.OnTriggerInteraction(this);   
     }
+
 }

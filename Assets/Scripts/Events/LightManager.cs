@@ -9,6 +9,8 @@ public class LightManager : MonoBehaviour
    [SerializeField]
    Material environmentMaterial;
    
+   [SerializeField]
+   List<Light> eletrical_lights;
    public static LightManager Instance { get; private set; }
 
    private void Awake()
@@ -37,5 +39,11 @@ public class LightManager : MonoBehaviour
    {
       if(state) environmentMaterial.EnableKeyword("_EMISSION");
       else environmentMaterial.DisableKeyword("_EMISSION");
+   }
+
+
+   public void EnableEletricalLights(int index)
+   {
+      eletrical_lights[index].enabled = true;
    }
 }

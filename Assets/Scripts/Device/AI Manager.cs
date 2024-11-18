@@ -22,15 +22,24 @@ public class AIManager : MonoBehaviour
     {
         if(speech_list==null) return;
 
+        List<DialogContent> itemsToRemove = new List<DialogContent>();
+        
         foreach (var content in speech_list)
         {
-            Debug.Log("event component -> " + content.GetType());
             if (content.GetTrigger() == component)
             {
-            interperter.PushLines(content.GetLines(), 0f);
-            StartCoroutine(notification.Appear(content.GetLines()[0], 3));
-            content.HandleRepetition(ref speech_list);
+                if (content.CanPlay() && content.GetTrigger().CheckCompletion())
+                {
+                    interperter.PushLines(content.GetLines(), 0f);
+                    StartCoroutine(notification.Appear(content.GetLines()[0], 3));
+                    content.HandleRepetition(ref itemsToRemove);
+                }
             }
+        }
+
+        foreach (var item in itemsToRemove)
+        {
+            speech_list.Remove(item);
         }
     }
 

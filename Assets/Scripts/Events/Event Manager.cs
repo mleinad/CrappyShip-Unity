@@ -7,7 +7,7 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
     
-    public event Action<int> onTriggerOpenDoor; //future proof for multiple doors
+    public event Action<Interactable> onTriggerInteraction;
     public event Action <string> onTriggerDebug;
     public event Action <PuzzleComposite> onTriggerSolved;
 
@@ -35,9 +35,9 @@ public class EventManager : MonoBehaviour
 
 
     //test function
-    public void OnTriggerOpenDoor()
+    public void OnTriggerInteraction(Interactable obj)
     {
-        onTriggerOpenDoor?.Invoke(1);
+        onTriggerInteraction?.Invoke(obj);
     }
 
 

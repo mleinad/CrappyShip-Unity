@@ -9,7 +9,7 @@ public class DialogContent : MonoBehaviour
 {
     public List<string> dialog;
 
-    public bool isRepeated;
+    public bool isRepeated = false;
     int repCount;
     private int _count;
 
@@ -28,8 +28,9 @@ public class DialogContent : MonoBehaviour
     {
         if (previousDialog != null)
         {
-        return previousDialog.trigger.CheckCompletion();
-        }else return true; 
+            return previousDialog.trigger.CheckCompletion();
+        }
+        return true;
     }
     public List<string> GetLines()
     {
@@ -40,7 +41,7 @@ public class DialogContent : MonoBehaviour
 
     public void HandleRepetition(ref List<DialogContent> list)
     {
-        if(!isRepeated) list.Remove(this);
+        if(!isRepeated) list.Add(this);
         else repCount++;
     }
 }

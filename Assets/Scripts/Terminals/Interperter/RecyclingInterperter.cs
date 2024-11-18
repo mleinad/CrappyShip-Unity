@@ -11,7 +11,10 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
     List<string> response = new List<string>();
     TerminalManager terminalManager;
     public List<string> code_template;
-
+    
+    [SerializeField]
+    private List<Interactable> interactable;
+    
     Dictionary<string, string> colors = new Dictionary<string, string>
     {
         { "orange", "#FA4224" },
@@ -28,6 +31,12 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
         terminalManager = GetComponent<TerminalManager>();
         garbage_bin = puzzle_component_gameobject.GetComponent<IPuzzleComponent>();
         terminalManager.NoUserInputLines(LoadTitle("garbageUI.txt", "white", 3));
+        
+        foreach (Interactable i in interactable)
+        {
+            i.enabled = false;
+        }
+        
     }
 
     public List<string> Interpert(string input)
@@ -53,6 +62,11 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
                 response.Add("checking room contamination...");
                 //LoadTitle("","",2);
                 response.Add(BoldString("Unable to open door, contamination risk too high!"));
+            }
+            else
+            {
+                response.Add("Room unlocked...");
+                Solved();
             }
 
             return response;
@@ -127,5 +141,14 @@ public class RecyclingInterperter : MonoBehaviour, Iinterperter
         file.Close();
 
         return response;
+    }
+
+
+    void Solved()
+    {
+        foreach (Interactable i in interactable)
+        {
+            i.enabled = true;
+        }
     }
 }

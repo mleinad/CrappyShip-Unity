@@ -27,7 +27,9 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     public GameObject _faceID;
 
     IPuzzleComponent keycard;
-    
+
+    [SerializeField]
+    private List<Interactable> interactables;
 
     void Start()
     {
@@ -35,6 +37,11 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 
         terminalManager = GetComponent<TerminalManager>();
         code_template = new List<string>();
+        
+        foreach (var i in interactables)
+        {
+            i.enabled = false; 
+        }
     }
 
     public List<string> Interpert(string input)
@@ -56,6 +63,7 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
             if(puzzleComposite.CheckCompletion())
             {
                 response.Add("opening door!");  //add ascii
+                Solved();
             }
             else
             {
@@ -111,7 +119,13 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     }
 
 
-
+    void Solved()
+    {
+        foreach (var i in interactables)
+        {
+           i.enabled = true; 
+        }
+    }
     void LoadTitle(string path, string color, int spacing)
     {
         StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));

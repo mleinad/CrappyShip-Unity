@@ -497,6 +497,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!4 &13780515
 Transform:
   m_ObjectHideFlags: 0
@@ -8791,6 +8792,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!4 &490629442
 Transform:
   m_ObjectHideFlags: 0
@@ -24049,6 +24051,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!114 &1170479495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26707,6 +26710,7 @@ MonoBehaviour:
   animator: {fileID: 1298495799}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!65 &1298495802
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33224,6 +33228,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!1001 &1644804404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39936,7 +39941,7 @@ PrefabInstance:
     - target: {fileID: 248294044067372502, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0059814453
+      value: 0.0095825195
       objectReference: {fileID: 0}
     - target: {fileID: 666355206846727229, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
@@ -40672,6 +40677,7 @@ MonoBehaviour:
   animator: {fileID: 1935331480}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!1 &1938884427
 GameObject:
   m_ObjectHideFlags: 0
@@ -41599,6 +41605,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!114 &1971369013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45308,8 +45315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2111634362}
-  repeat: 0
-  timed: 0
+  repeat: 1
+  timed: 1
+  timer: 1
 --- !u!1001 &2112350561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46451,6 +46459,7 @@ MonoBehaviour:
   animator: {fileID: 2145453177295813895}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!95 &2145453177295813895
 Animator:
   serializedVersion: 5
@@ -48054,6 +48063,7 @@ MonoBehaviour:
   animator: {fileID: 7133092606132155804}
   repeat: 1
   timed: 0
+  timer: 0
 --- !u!95 &7133092606132155804
 Animator:
   serializedVersion: 5
@@ -51263,6 +51273,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   repeat: 0
   timed: 0
+  timer: 0
 --- !u!4 &8793447638901043216
 Transform:
   m_ObjectHideFlags: 0

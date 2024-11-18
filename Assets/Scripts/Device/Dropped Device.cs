@@ -58,6 +58,7 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         
         lightDevice.enabled = false;
         meshRenderer.enabled = false;
+        transform.GetComponentInChildren<Canvas>().enabled = false;
         //meshRenderer.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
         StartCoroutine(SetUp(1f));
     }
