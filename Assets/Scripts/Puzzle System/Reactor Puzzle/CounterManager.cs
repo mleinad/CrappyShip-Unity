@@ -5,7 +5,9 @@ using UnityEngine;
 public class CounterManager : MonoBehaviour
 {
     public List<Counter> counters;   
-    private bool allCountersReached = false; 
+    public bool allCountersReached = false; 
+
+
 
     private void Update()
     {
@@ -13,7 +15,8 @@ public class CounterManager : MonoBehaviour
         if (!allCountersReached && AreAllCountersReached())
         {
             Debug.Log("done");
-            allCountersReached = true; 
+            allCountersReached = true;
+            
         }
     }
 
