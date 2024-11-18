@@ -11,7 +11,7 @@ public class keycard : MonoBehaviour, IPuzzleComponent
     DragNDrop dragNDrop;
     Interactable interactable;
     bool state;
-     bool onHand = false;
+    bool onHand = false;
 
     public bool CheckCompletion()=> state;
     public void ResetPuzzle()=> state = false;

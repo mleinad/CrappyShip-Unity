@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,14 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     bool state = false;
 
     [SerializeField]
-    private Animator doorAnimator;
+    private Interactable interactable;
 
     private List<GameObject> objectsOnPlate = new List<GameObject>();
+
+    private void Awake()
+    {
+        interactable.enabled = false;
+    }
 
     void OnTriggerEnter(Collider collision)
     {
@@ -67,9 +73,9 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
 
     private void SetDoorState(bool isOpen)
     {
-        if (doorAnimator != null)
+        if (interactable != null)
         {
-            doorAnimator.SetBool("isOpen", isOpen); 
+            interactable.enabled = true; 
         }
     }
 

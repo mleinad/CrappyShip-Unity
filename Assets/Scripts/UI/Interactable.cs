@@ -15,7 +15,7 @@ public class Interactable : MonoBehaviour
     Animator animator;
 
     public bool repeat;
-
+    public bool timed;
     bool beenTriggerd;
     void Awake(){
         isOn = false;
@@ -75,9 +75,8 @@ public class Interactable : MonoBehaviour
 
     void Animate()
     {
-        if(animator!=null)
+        if(animator)
         {
-
             animator.SetBool("interaction", beenTriggerd);
         } 
     }
