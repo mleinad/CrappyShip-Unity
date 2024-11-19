@@ -9,11 +9,15 @@ public class SpeechRecInterpreter : MonoBehaviour, Iinterperter
 {
     public MicrophoneDetector microphoneDetector;
     List<string> response = new List<string>();
+    TerminalManager terminalManager;
 
- 
+    private void Awake()
+    {
+        terminalManager = GetComponent<TerminalManager>();
+    }
+
     public List<string> Interpert(string input)
     {
-  
         response.Clear();
        
         string[] args = input.Split();
@@ -39,7 +43,7 @@ public class SpeechRecInterpreter : MonoBehaviour, Iinterperter
             return response;
 
         }
-        
-
     }
+    
+    
 }

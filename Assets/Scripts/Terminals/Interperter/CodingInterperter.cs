@@ -259,7 +259,7 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
                 }
                 else
                 {
-                coding = false; // Stop coding if all lines are complete
+                    coding = false; // Stop coding if all lines are complete
                 }
             }
         }

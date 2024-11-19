@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 5333632914937333765}
   - component: {fileID: 2727061029018920578}
   - component: {fileID: 5144481674344029658}
+  - component: {fileID: 7080756202806588696}
   m_Layer: 0
   m_Name: Signal Boost
   m_TagString: Untagged
@@ -189,13 +190,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4713432467688834006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f6f62b11a98fe45a06dab65e7b87b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   signal: 0
   boost: 10
+--- !u!114 &7080756202806588696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4713432467688834006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3cc12706a138734c80d8c2cdc71de1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7406783434991963111
 GameObject:
   m_ObjectHideFlags: 0

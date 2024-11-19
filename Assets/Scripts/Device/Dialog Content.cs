@@ -18,7 +18,6 @@ public class DialogContent : MonoBehaviour
     private void Awake()
     {
         trigger = GetComponent<IPuzzleComponent>();
-        Debug.Log(trigger);
         repCount = 0;
     }
     

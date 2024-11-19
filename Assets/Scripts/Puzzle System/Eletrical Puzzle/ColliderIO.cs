@@ -17,7 +17,7 @@ public class ColliderIO : MonoBehaviour
 
     IEletricalComponent component;
     int ID;
-   public InputType type;
+    public InputType type;
    
    void Awake()
    {
@@ -40,7 +40,7 @@ public class ColliderIO : MonoBehaviour
     public void SwitchType(InputType new_type)
     {
         type = new_type;
-
+        transform.name = type + "_" + ID;
     }
 
     void OnTriggerEnter(Collider other) //delegates enter trigger logic to module base

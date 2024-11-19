@@ -31,6 +31,7 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     [SerializeField]
     private List<Interactable> interactables;
 
+    private int n;
     void Start()
     {
         keycard = _keycard.GetComponent<IPuzzleComponent>();
@@ -48,14 +49,15 @@ public class FaceIDInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
     {
         response.Clear();
 
-        string[] args = input.Split();
+        string[] args = input.Split(); // help ffff ffff 
 
-        if(args[0] == "help")
+        if(args[0] == "help" )
         {
             ListEntry("help", "returns a list of commands");
             ListEntry("open", "opens door");
             ListEntry("scan id", "scans user's id card");
             return response;
+            
         
         }
         if(args[0]=="open")

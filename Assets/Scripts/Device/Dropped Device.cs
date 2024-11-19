@@ -10,6 +10,7 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
     DragNDrop dragNDrop;
     Interactable interactable;
     
+    AudioSource audioSource;
     
     [SerializeField]
     GameObject handDevice;
@@ -24,6 +25,7 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         dragNDrop = GetComponent<DragNDrop>();
         sphere_collider = GetComponent<CapsuleCollider>();
         interactable = GetComponent<Interactable>();
@@ -61,6 +63,8 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         transform.GetComponentInChildren<Canvas>().enabled = false;
         //meshRenderer.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
         StartCoroutine(SetUp(1f));
+        audioSource.Stop();
+
     }
     public bool CheckCompletion() => state;
 

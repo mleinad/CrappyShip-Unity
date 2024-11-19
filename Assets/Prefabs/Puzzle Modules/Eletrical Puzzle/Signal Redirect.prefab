@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9071193819070624465}
   - component: {fileID: 5763369349020706726}
   - component: {fileID: 4760647077360447266}
-  - component: {fileID: 2933423503978439237}
+  - component: {fileID: 4129768804245028791}
   m_Layer: 0
   m_Name: Signal Redirect
   m_TagString: Untagged
@@ -118,12 +118,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3026143265433656931}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 980605a58e63003478dd7f66aa0eec3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   signal: 0
+  currentBase: 
 --- !u!54 &5763369349020706726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
---- !u!114 &2933423503978439237
+--- !u!114 &4129768804245028791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,14 +174,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3026143265433656931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101d319b29939bd4abe9af42dfc53343, type: 3}
+  m_Script: {fileID: 11500000, guid: a3cc12706a138734c80d8c2cdc71de1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: bd9ea8f2f5e35784382fafaa0b8cce8f, type: 3}
-  element_prefab: {fileID: 300901414655311126, guid: 45a4484e03a42844ea35b3de877578b8,
-    type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  scale: 250
 --- !u!1 &4722718191913745152
 GameObject:
   m_ObjectHideFlags: 0

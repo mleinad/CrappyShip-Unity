@@ -35,5 +35,5 @@ public class DeviceStateManager : MonoBehaviour
         state.EnterState(this);
     }
 
-    public DeviceBaseState GetCurrentDeviceState()=>current_state;
+    public DeviceBaseState GetCurrentDeviceState() => current_state;
 }
