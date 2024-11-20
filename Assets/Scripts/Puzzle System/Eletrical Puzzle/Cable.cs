@@ -1,11 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
-using UnityEditor.Formats.Fbx.Exporter;
 using UnityEngine;
 
 public class Cable : MonoBehaviour, IEletricalComponent
@@ -74,21 +67,9 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     void Update()
     {
-        /*
-        int maxSignal = 0;                                   // suspected problem: module base sets the signal at the same time, randomly overlaps 
-        foreach (var component in adjecent_components)
-        {
-              if(component is not ModuleBase)
-            {
-                maxSignal = Mathf.Max(maxSignal, component.GetSignal());
-            }
-        }
-        SetSignal(maxSignal);
-  
-    */
+
 
         CheckAdjacencies(); //debug only
-        //Debug.DrawLine(transform.position, transform.forward,  Color.magenta);
     }
 
     public void PropagateSignal()

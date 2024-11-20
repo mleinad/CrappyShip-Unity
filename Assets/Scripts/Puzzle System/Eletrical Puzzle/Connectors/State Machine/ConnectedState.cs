@@ -11,6 +11,8 @@ public class ConnectedState : ConnectorBaseState
         SnapPosition(context);
         SnapRotation(context);
         SwitchInputs(context);
+        
+        context.GetCurrentBase().SetComponent(context.GetSignalModifier());
     }
 
     public override void UpdateState(ConnectorStateManager context)
@@ -22,7 +24,8 @@ public class ConnectedState : ConnectorBaseState
     }
     public override void ExitState(ConnectorStateManager context)
     {
-        
+        context.GetCurrentBase().SetComponent(null);
+
     }
 
     private void SnapPosition(ConnectorStateManager context)
@@ -57,24 +60,7 @@ public class ConnectedState : ConnectorBaseState
 
     private void SwitchInputs(ConnectorStateManager context)
     {
-        //requires checking
-        ColliderIO[] colList = context.GetCurrentBase().GetColliders();
-            
-        ColliderIO strongestInput = null;
-        int max =0;
-
-        for(int i=0; i<colList.Count(); i++)
-        {
-            colList[i].SwitchType(InputType.output);
-            int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
-            if(inputSignal>max)
-            {
-                max = inputSignal;
-                strongestInput = colList[i];
-            }                
-        }
-
-        if (strongestInput) strongestInput.SwitchType(InputType.input);
+       context.GetSignalModifier().HandleInputSwitching(context);
     }
     
 

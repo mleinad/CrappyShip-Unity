@@ -1,31 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SignalEvaluator : MonoBehaviour, ISignalModifier
 {
 
     int signal;
-    
-    
-    bool is_over_base, is_docked;
-    
     private float rayDistance = 10.0f;
-    DragNDrop dragNDrop;
-    ModuleBase base_t;  
     public int mode =0;
     public int count;
     Dictionary<ColliderIO, int> Collider_value_list;
     public List<int> inputSignals;
-    
-    Rigidbody rigidbody;
 
-    public void Awake(){
-        rigidbody = GetComponent<Rigidbody>();
-
-        dragNDrop = GetComponent<DragNDrop>();
-    }
 
 
     public int GetSignal() => signal;
@@ -33,27 +21,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     // Update is called once per frame
     void Update()
     {
-        
-        if(is_docked) rigidbody.isKinematic =true;
-
-        if(dragNDrop.IsPickedUp())
-        {
-        is_docked =false;
-        GetClosestBase();
-        }
-
         DrawVectors();
-
-        if(is_over_base && !dragNDrop.IsPickedUp())
-        {
-
-            if(!is_docked)
-            {
-                SnapToBase(base_t.transform);
-                SnapRotation();
-            }
-        }
-
     }
 
 
@@ -71,7 +39,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     {
         
          Collider_value_list = new Dictionary<ColliderIO, int>();
-        inputSignals = new List<int>();
+         inputSignals = new List<int>();
 
 
          foreach (var pair in comp)
@@ -83,56 +51,69 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
             if (collider.GetInputType() == InputType.input)
             {
                 int componentSignal = component.GetSignal();
-                
-                // Store or update the signal for each input-type collider
-                inputSignals.Add(componentSignal);
-          }
+                Collider_value_list.Add(collider, componentSignal);
+            }
         }
 
     }
 
+    public void HandleInputSwitching(ConnectorStateManager context)
+    {
+        ColliderIO[] colList = context.GetCurrentBase().GetColliders();
+            
+        ColliderIO output = null;
+        float maxDot = -Mathf.Infinity;
+    
+        for(int i=0; i<colList.Count(); i++)
+        {
+            colList[i].SwitchType(InputType.input);
+            int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
+            
+            float dot =  Vector3.Dot(transform.forward, colList[i].transform.forward);
 
-     private int EvaluateSignal()
+            if (dot > maxDot)
+            {
+                maxDot = dot;
+                output = colList[i];
+            }
+            
+            
+        }
+        
+        if(output) output.SwitchType(InputType.output);
+    }
+
+
+    private int EvaluateSignal()
     {
         int output = 0;
 
         // Collect all input signals into a list
-       // inputSignals = new List<int>(Collider_value_list.Values);
-
-        if (inputSignals.Count == 0)
-            return 0;  // No inputs, return 0
-
-    
 
 
+        if (Collider_value_list.Count() < 2)
+        {
+            return output;
+        }
+        inputSignals = Collider_value_list.Values.ToList();
+        
         switch (mode)           //requires reworking... OR gate is altering signal;
         {
             case 0: // AND gate
-                output = inputSignals[0];  // Start with 1 for AND logic   
 
-                foreach (int sig in inputSignals)
+                if (Collider_value_list.Values.Distinct().Count() == 1 && Collider_value_list.Values.First() != 0)
                 {
-                    output &= sig;
+                    output = Collider_value_list.Values.Max();
                 }
+                else output = 0;
                 break;
 
-            case 1: // OR gate
-                foreach (int sig in inputSignals)
-                {
-                    output |= sig;
-                }
-                break;
-
-            case 2: // XOR gate
-                foreach (int sig in inputSignals)
-                {
-                    output ^= sig;
-                }
-                break;
-
-            case 3: // EQUAL (all inputs must be the same to output 1)
-                bool allEqual = inputSignals.TrueForAll(x => x == inputSignals[0]);
-                output = allEqual ? 1 : 0;
+            case 1: // XOR gate
+               
+               if(Collider_value_list.Values.Distinct().Count() == Collider_value_list.Values.Count() && Collider_value_list.Values.First() != 0)
+               {
+                   
+               }
                 break;
 
             default:
@@ -142,69 +123,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
 
         return output;
     }
-
-
-    #region Snap in place
-  
-
-
-    void GetClosestBase()
-    {
-        Vector3 rayOrigin = transform.position;
-        Vector3 rayDirection = Vector3.down;
-
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(rayOrigin, rayDirection, out hitInfo, rayDistance))
-        {
-            
-         
-            if(base_t!=null) base_t.SetComponent(null);
-            
-            ModuleBase moduleBase = hitInfo.collider.GetComponent<ModuleBase>();
-            if(moduleBase==null)
-            {
-                is_over_base = false;
-                return;
-            }
-            base_t = moduleBase;
-            is_over_base = true;
-            base_t.SetComponent(this);
-
-        }
-
-        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
-    } 
-
-    void SnapToBase(Transform base_transform)
-    {
-        transform.position = base_transform.GetChild(0).position;
-        is_docked =true;
-    }
-    
-    void SnapRotation()
-    {
-
-        List<Vector3> vectors = base_t.GetRotationAngles();
-    
-        Vector3 currentForward = Player.Instance.transform.forward; //ALTERNATIVE: transform.forward / relative to this object
-
-        Vector3 closestDirection = vectors[0];
-        float maxDot = -Mathf.Infinity;
-
-        foreach (Vector3 direction in vectors)
-        {
-            float dot = Vector3.Dot(currentForward, direction);
-            if (dot > maxDot)
-            {
-                maxDot = dot;
-                closestDirection = direction;
-            }
-        }
-
-        transform.rotation = Quaternion.LookRotation(closestDirection);
-    }
-
+     
     void DrawVectors(){
 
         float vectorLength = 2.0f;
@@ -220,6 +139,4 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         Debug.DrawLine(transform.position, left, Color.yellow);  // Left (yellow)
 
     }
-
-    #endregion
 }

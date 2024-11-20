@@ -13,13 +13,13 @@ public class ConnectorStateManager : MonoBehaviour
    ModuleBase currentBaseModule;
    Rigidbody rigibody;
    DragNDrop dragNDrop;
-   ISignalModifier type;
+   ISignalModifier signalModifier;
 
    private void Awake()
    {
       rigibody = GetComponent<Rigidbody>();
       dragNDrop = GetComponent<DragNDrop>();
-     // type = GetComponent<ISignalModifier>();
+      signalModifier = GetComponent<ISignalModifier>();
    }
 
    void Start()
@@ -41,7 +41,7 @@ public class ConnectorStateManager : MonoBehaviour
    
    
    public DragNDrop GetDragNDrop() => dragNDrop;
-   public ISignalModifier GetType() => type;
+   public ISignalModifier GetSignalModifier() => signalModifier;
   
    public Rigidbody GetRigidbody() => rigibody;
    public ModuleBase GetCurrentBase() => currentBaseModule;

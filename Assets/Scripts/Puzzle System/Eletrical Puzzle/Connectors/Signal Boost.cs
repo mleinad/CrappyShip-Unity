@@ -3,27 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SignalBoost : MonoBehaviour, ISignalModifier
 {
     [SerializeField]
     int signal, boost;
-
-    bool is_over_base, is_docked;
     
     private float rayDistance = 10.0f;
-    DragNDrop dragNDrop;
-    ModuleBase base_t;    
-    Rigidbody rigidbody;
-    void Awake()
+
+    void Update()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        dragNDrop = GetComponent<DragNDrop>();
+        DrawVectors();
     }
-    
-
-
     public int GetOutput()
     {
         return signal * boost;
@@ -60,31 +53,25 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
         signal = maxSignal;
     }
 
-
-    void SwitchInputs()
+    public void HandleInputSwitching(ConnectorStateManager context)
     {
-        
-        if(base_t!=null)
+        //requires checking
+        ColliderIO[] colList = context.GetCurrentBase().GetColliders();
+            
+        ColliderIO strongestInput = null;
+        int maxSignal =0;
+    
+        for(int i=0; i<colList.Count(); i++)
         {
-            ColliderIO[] col_list = base_t.GetColliders();
+            colList[i].SwitchType(InputType.output);
+            int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
             
-            ColliderIO strongest_input = null;
-            int max =0;
-
-            for(int i=0; i<col_list.Count(); i++)
+            if(inputSignal>maxSignal)
             {
-                col_list[i].SwitchType(InputType.output);
-                int input_singal =  base_t.GetSignalByInput(col_list[i]);
-                if(input_singal>max)
-                {
-                    max = input_singal;
-                    strongest_input = col_list[i];
-                }                
-            }
-            strongest_input.SwitchType(InputType.input);
-            
+                maxSignal = inputSignal;
+                strongestInput = colList[i];
+            }          
         }
+        if (strongestInput) strongestInput.SwitchType(InputType.input);
     }
-
-
 }

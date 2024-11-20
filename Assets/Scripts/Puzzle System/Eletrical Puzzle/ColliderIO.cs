@@ -6,7 +6,7 @@ public enum InputType
 {
     input =0,
     output =1,
-    InOut =2,
+    off = 2,
     error =-1
 };
 
@@ -25,10 +25,12 @@ public class ColliderIO : MonoBehaviour
     ID = transform.GetSiblingIndex();
 
 
-    //checks automatically thru the name
-    if(transform.name.Contains("In")) type = InputType.input;
-    if(transform.name.Contains("Out")) type = InputType.output;
-    if(transform.name.Contains("I/O")) type = InputType.InOut;
+    //checks automatically through the name
+    if(transform.name.Contains("input")) type = InputType.input;
+    if(transform.name.Contains("output")) type = InputType.output;
+    if(transform.name.Contains("off")) type = InputType.off;
+
+    transform.name = transform.name + " " + ID;
    }
 
     public int GetID()=> ID;
@@ -40,7 +42,7 @@ public class ColliderIO : MonoBehaviour
     public void SwitchType(InputType new_type)
     {
         type = new_type;
-        transform.name = type + "_" + ID;
+        transform.name = type + " " + ID;
     }
 
     void OnTriggerEnter(Collider other) //delegates enter trigger logic to module base

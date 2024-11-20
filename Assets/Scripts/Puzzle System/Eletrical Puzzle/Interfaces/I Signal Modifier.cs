@@ -7,5 +7,6 @@ public interface ISignalModifier
     public int GetOutput();
     public void SetSignal(Dictionary<IEletricalComponent, ColliderIO> pair);
 
+    public void HandleInputSwitching(ConnectorStateManager context);
 }
     
