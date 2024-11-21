@@ -27,10 +27,21 @@ public class SpeechRecInterpreter : MonoBehaviour, Iinterperter
         if (args[0] == "open")
         {
             response.Add("Keyboard malfunction, please use voice commands");
+            //Add Delay and Clear Console
             response.Add("Voice Commands:");
             response.Add("-Open door");
             response.Add("-Close door");
+            //Add Delay
             microphoneDetector.StartRecording();
+            response.Add("Listening");
+            response.Add("...");
+            response.Add("...");
+            if (microphoneDetector.state)
+            {
+                response.Add("Open door command activated");
+                //AudioClip open the door
+                return response;
+            }
             return response;
         }
         else
