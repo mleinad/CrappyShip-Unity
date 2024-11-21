@@ -5,7 +5,8 @@ using UnityEngine;
 public class OfficeInterperter : MonoBehaviour, Iinterperter
 {
     List<string> response = new List<string>();
-    private string correctPassword = "earth"; // Palavra-passe correta
+    private string correctPassword = "earth";
+    [SerializeField] private Animator doorAnimator;
 
     public List<string> Interpert(string input)
     {
@@ -40,7 +41,15 @@ public class OfficeInterperter : MonoBehaviour, Iinterperter
 
     private void OpenDoor()
     {
-        // Realize a ação desejada aqui
         Debug.Log("Password is correct! Opening Door...");
+        
+        if (doorAnimator != null)
+        {
+            doorAnimator.SetTrigger("OpenDoor");
+        }
+        else
+        {
+            Debug.LogWarning("Animator not assigned to OfficeInterperter script!");
+        }
     }
 }
