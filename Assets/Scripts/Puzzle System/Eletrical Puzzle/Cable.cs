@@ -28,36 +28,44 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
 
     public List<IEletricalComponent> GetAdjacencies() => adjecent_components;
-    
-    void Start()
-    {    
-        adjecent_components = new List<IEletricalComponent>();
-    }
-    void OnTriggerEnter(Collider other)
-    {   
-        IEletricalComponent electricalComponent;
-        electricalComponent = other.GetComponent<IEletricalComponent>();
+    public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
+    {
+        if(current_collider==null) return;
 
-        if(electricalComponent == null) return;
-
-        if(!adjecent_components.Contains(electricalComponent)){
-            adjecent_components.Add(electricalComponent);
-        }
-
-    }
-    void OnTriggerExit(Collider other)
-    {    
         IEletricalComponent eletricalComponent;
         eletricalComponent = other.GetComponent<IEletricalComponent>();
-
+        
         if(eletricalComponent == null) return;
 
         if(adjecent_components.Contains(eletricalComponent)){
             adjecent_components.Remove(eletricalComponent);
         }
     }
+
+    public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
+    {
+        
+        if(current_collider==null) return;
+
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
+        
+        if(eletricalComponent == null) return;
+        if(!adjecent_components.Contains(eletricalComponent)){
+            adjecent_components.Add(eletricalComponent);
+        }
+    }
+
+    void Start()
+    {    
+        adjecent_components = new List<IEletricalComponent>();
+    }
+
+    
     void CheckAdjacencies()
     {
+        
+        //debug only
         adj_comp_names = new List<string>();
 
         foreach(IEletricalComponent comp in adjecent_components){

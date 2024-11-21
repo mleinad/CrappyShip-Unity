@@ -49,10 +49,7 @@ public class ColliderIO : MonoBehaviour
     {
         if(component == null) return;
 
-        if(component is ModuleBase moduleBase)
-        {
-            moduleBase.OnChildrenTriggerEnter(this, other);
-        }
+        component.OnChildrenTriggerEnter(this, other);
     }
 
 
@@ -60,9 +57,6 @@ public class ColliderIO : MonoBehaviour
     {
         if(component == null) return;
 
-        if(component is ModuleBase moduleBase)
-        {
-            moduleBase.OnChildrenTriggerExit(this, other);
-        }
+        component.OnChildrenTriggerExit(this, other);
     }
 }

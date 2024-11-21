@@ -32,22 +32,27 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 
     void Update()
     {
-        if(signal<signal_needed)
+        if (fuse != null)
         {
-            if(signal >0) state = true; 
-            else ResetPuzzle();         
-
-            if(fuse) fuse.transform.Rotate(0, 0, signal * Time.deltaTime); 
-
-        }
-        else
-        {
-            if(fuse)
+            
+            if(signal<signal_needed)
             {
-                ShortFuse();
+                if(signal >0) state = true; 
+                else ResetPuzzle();         
+
+                if(fuse) fuse.transform.Rotate(0, 0, signal * Time.deltaTime); 
+
             }
+            else
+            {
+                if(fuse)
+                {
+                    ShortFuse();
+                }
+            }
+            PropagateSignal();
+            
         }
-        PropagateSignal();
 
     }
 
@@ -85,6 +90,15 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
     }
 
     public List<IEletricalComponent> GetAdjacencies()=> adjecent_components;
+    public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void SetSignal(int newSignal)
     {

@@ -7,4 +7,8 @@ public interface IEletricalComponent
         public int GetSignal();
         public void SetSignal(int value);
         public List<IEletricalComponent> GetAdjacencies();
+        public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other);
+        public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other);
+
+
 }

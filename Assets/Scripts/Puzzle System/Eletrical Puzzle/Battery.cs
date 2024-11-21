@@ -16,20 +16,26 @@ public class Battery : MonoBehaviour, IEletricalComponent
     {    
         adjecent_components = new List<IEletricalComponent>();
     }
-    void OnTriggerEnter(Collider other)
-    {   
-        IEletricalComponent electricalComponent;
-        electricalComponent = other.GetComponent<IEletricalComponent>();
 
-        if(electricalComponent == null) return;
+    public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
+    {
+        if(current_collider==null) return;
 
-        if(!adjecent_components.Contains(electricalComponent)){
-            adjecent_components.Add(electricalComponent);
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
+        
+        if(eletricalComponent == null) return;
+
+        if(!adjecent_components.Contains(eletricalComponent)){
+            adjecent_components.Add(eletricalComponent);
+
         }
-
     }
-    void OnTriggerExit(Collider other)
-    {    
+
+    public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
+    {
+        if(current_collider==null) return;
+
         IEletricalComponent eletricalComponent;
         eletricalComponent = other.GetComponent<IEletricalComponent>();
 
@@ -37,6 +43,7 @@ public class Battery : MonoBehaviour, IEletricalComponent
 
         if(adjecent_components.Contains(eletricalComponent)){
             adjecent_components.Remove(eletricalComponent);
+            
         }
     }
 
