@@ -17,6 +17,11 @@ public class ConnectedState : ConnectorBaseState
 
     public override void UpdateState(ConnectorStateManager context)
     {
+        if (context.GetSignalModifier() is SignalRedirect)
+        {
+            SwitchInputs(context);    
+        }
+        
         if (context.GetDragNDrop().IsPickedUp())
         {
             context.SwitchState(context.heldState);

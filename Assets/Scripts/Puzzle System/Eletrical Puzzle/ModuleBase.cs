@@ -96,7 +96,6 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
             
             adjencency_dictionary.Add(eletricalComponent, current_collider);
-           // Debug.Log(current_collider.ToString() + " -> " + eletricalComponent.ToString());
         }
     }
 
@@ -166,9 +165,9 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         PropagateSignal();
     }
 
-    public List<IEletricalComponent> GetAdjacencies()
+    public     Dictionary<IEletricalComponent, ColliderIO> GetAdjacencies()
     {
-        return adjencency_dictionary.Keys.ToList();
+        return adjencency_dictionary;
     }
 
      private void PropagateSignal()

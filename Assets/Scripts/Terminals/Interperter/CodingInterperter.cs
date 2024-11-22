@@ -300,7 +300,7 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
 
         yield return new  WaitForSeconds(8);
 
-        foreach(var line in terminalManager.GetDynamicLines())
+        foreach(var line in terminalManager.GetDynamicLines())      //upgrade
         {
             line.text = ColorString("!!!!!!!!____I WON____!!!!!!!!!!!", "red");
         }

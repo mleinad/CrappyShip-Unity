@@ -15,7 +15,7 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
 
     void Update()
     {
-        DrawVectors();
+       // DrawVectors();
     }
     public int GetOutput()
     {
@@ -42,8 +42,7 @@ public class SignalBoost : MonoBehaviour, ISignalModifier
     }
 
     public void SetSignal(Dictionary<IEletricalComponent, ColliderIO> adj_comp)
-    {
-
+    { 
         int maxSignal = 0;
         foreach (var component in adj_comp)
         {

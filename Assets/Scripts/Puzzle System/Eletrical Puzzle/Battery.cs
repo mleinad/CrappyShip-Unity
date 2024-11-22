@@ -8,13 +8,14 @@ public class Battery : MonoBehaviour, IEletricalComponent
     private int signal;
 
     
-    List<IEletricalComponent> adjecent_components;
+    Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
+
     public List<string> adj_comp_names;
-    public List<IEletricalComponent> GetAdjacencies() => adjecent_components;
+    public Dictionary<IEletricalComponent, ColliderIO> GetAdjacencies() => adjencency_dictionary;
     
     void Start()
     {    
-        adjecent_components = new List<IEletricalComponent>();
+        adjencency_dictionary = new Dictionary<IEletricalComponent, ColliderIO>();
     }
 
     public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
@@ -26,9 +27,9 @@ public class Battery : MonoBehaviour, IEletricalComponent
         
         if(eletricalComponent == null) return;
 
-        if(!adjecent_components.Contains(eletricalComponent)){
-            adjecent_components.Add(eletricalComponent);
-
+        if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
+            
+            adjencency_dictionary.Add(eletricalComponent, current_collider);
         }
     }
 
@@ -41,9 +42,9 @@ public class Battery : MonoBehaviour, IEletricalComponent
 
         if(eletricalComponent == null) return;
 
-        if(adjecent_components.Contains(eletricalComponent)){
-            adjecent_components.Remove(eletricalComponent);
+        if(adjencency_dictionary.ContainsKey(eletricalComponent)){
             
+            adjencency_dictionary.Remove(eletricalComponent);
         }
     }
 
@@ -51,7 +52,7 @@ public class Battery : MonoBehaviour, IEletricalComponent
     {
         adj_comp_names = new List<string>();
 
-        foreach(IEletricalComponent comp in adjecent_components){
+        foreach(IEletricalComponent comp in adjencency_dictionary.Keys){
             adj_comp_names.Add(comp.ToString());
         } 
     }
@@ -77,7 +78,7 @@ public class Battery : MonoBehaviour, IEletricalComponent
 
     public void PropagateSignal()
     {
-        foreach (var component in adjecent_components)
+        foreach (var component in adjencency_dictionary.Keys)
         {
            if(component is not ModuleBase)
            {

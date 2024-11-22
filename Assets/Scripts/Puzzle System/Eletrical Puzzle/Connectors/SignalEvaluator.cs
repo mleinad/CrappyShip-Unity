@@ -117,7 +117,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
                 break;
 
             default:
-                Debug.LogWarning("Unknown mode for SignalEvaluator");
+                Debug.Log("Unknown mode for SignalEvaluator");
                 break;
         }
 

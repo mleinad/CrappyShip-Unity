@@ -93,7 +93,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
         if(output) output.SwitchType(InputType.output);
 
 
-        if (output == strongestInput)//in case is pointing to stronggest input, make input second strongest input
+        if (output == strongestInput)//in case is pointing to the strongest input, make input second strongest input
         {
             maxSignal =0;
             strongestInput = null;

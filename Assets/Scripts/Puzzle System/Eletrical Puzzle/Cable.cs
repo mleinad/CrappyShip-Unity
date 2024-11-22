@@ -12,22 +12,24 @@ public class Cable : MonoBehaviour, IEletricalComponent
     [SerializeField]
     string t;
 
-    
-    List<IEletricalComponent> adjecent_components;
     public List<string> adj_comp_names;
+    Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
 
 
     public int GetSignal()=>signal;
 
     public void SetSignal(int newSignal)
     {
-        signal = newSignal;
-        PropagateSignal();
+        signal = newSignal; 
+    }
+
+    void Start()
+    {    
+        adjencency_dictionary = new Dictionary<IEletricalComponent, ColliderIO>();
     }
 
 
-
-    public List<IEletricalComponent> GetAdjacencies() => adjecent_components;
+    public Dictionary<IEletricalComponent, ColliderIO>GetAdjacencies() => adjencency_dictionary;
     public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
     {
         if(current_collider==null) return;
@@ -37,8 +39,9 @@ public class Cable : MonoBehaviour, IEletricalComponent
         
         if(eletricalComponent == null) return;
 
-        if(adjecent_components.Contains(eletricalComponent)){
-            adjecent_components.Remove(eletricalComponent);
+        if(adjencency_dictionary.ContainsKey(eletricalComponent)){
+            
+            adjencency_dictionary.Remove(eletricalComponent);
         }
     }
 
@@ -51,50 +54,70 @@ public class Cable : MonoBehaviour, IEletricalComponent
         eletricalComponent = other.GetComponent<IEletricalComponent>();
         
         if(eletricalComponent == null) return;
-        if(!adjecent_components.Contains(eletricalComponent)){
-            adjecent_components.Add(eletricalComponent);
+        if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
+            
+            adjencency_dictionary.Add(eletricalComponent, current_collider);
         }
     }
 
-    void Start()
-    {    
-        adjecent_components = new List<IEletricalComponent>();
-    }
 
     
     void CheckAdjacencies()
     {
-        
         //debug only
         adj_comp_names = new List<string>();
 
-        foreach(IEletricalComponent comp in adjecent_components){
+        foreach(IEletricalComponent comp in adjencency_dictionary.Keys){
             adj_comp_names.Add(comp.ToString());
         } 
     }
 
     void Update()
     {
-
-
+        signal = 0;
+        SwitchInputType();
+        PropagateSignal();
         CheckAdjacencies(); //debug only
     }
 
     public void PropagateSignal()
     {
-        foreach (var component in adjecent_components)
+        foreach (var adjecency in adjencency_dictionary)
         {
-           if(component is not ModuleBase)
-           {
-                if(component is FuseBox) component.SetSignal(signal);
-                
-                if (component.GetSignal() < signal)
+            if (adjecency.Value.GetInputType() == InputType.input)
+            {
+                signal = adjecency.Key.GetSignal();
+            }
+            else if (adjecency.Value.GetInputType() == InputType.output)
+            {
+                adjecency.Key.SetSignal(signal);
+            }
+        }
+    }
+
+
+    private void SwitchInputType()
+    {
+        
+        foreach (var adjecency in adjencency_dictionary)
+        {
+            var componentAdjList = adjecency.Key.GetAdjacencies();
+            if(componentAdjList.ContainsKey(this))
+            {
+                var adjCollider = componentAdjList[this];
+                switch (adjCollider.GetInputType())
                 {
-                    component.SetSignal(signal);
+                    case InputType.input:
+                        adjecency.Value.SwitchType(InputType.output);
+                        break;
+                    case InputType.output:
+                        adjecency.Value.SwitchType(InputType.input);
+                        break;
+                    case InputType.off:
+                        adjecency.Value.SwitchType(InputType.off);
+                        break;
                 }
-
-
-           }
+            }
         }
     }
 

@@ -29,7 +29,8 @@ public class ColliderIO : MonoBehaviour
     if(transform.name.Contains("input")) type = InputType.input;
     if(transform.name.Contains("output")) type = InputType.output;
     if(transform.name.Contains("off")) type = InputType.off;
-
+    if(transform.name.Contains("I/O")) type = InputType.off;
+    
     transform.name = transform.name + " " + ID;
    }
 

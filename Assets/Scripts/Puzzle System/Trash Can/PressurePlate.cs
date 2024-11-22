@@ -12,7 +12,7 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     [SerializeField]
     private List<Interactable> interactable;
 
-    private List<GameObject> objectsOnPlate = new List<GameObject>();
+    public List<GameObject> objectsOnPlate = new List<GameObject>();
 
     void OnTriggerEnter(Collider collision)
     {
@@ -64,7 +64,9 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
         state = false;
     }
     
-
+    
+    public int GetNumberOfObjects() => numberOfObjects;
+    public int GetCurrentObjects()=> objectsOnPlate.Count;
     public bool CheckCompletion()=> state;
 
     public void ResetPuzzle()

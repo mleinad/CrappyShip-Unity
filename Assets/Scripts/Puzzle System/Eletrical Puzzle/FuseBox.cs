@@ -10,7 +10,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
     
     public Light light;
 
-    List<IEletricalComponent> adjecent_components;
+    Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
     public List<string> adj_comp_names;
     public Fuse fuse;
     public bool CheckCompletion()=>state;
@@ -24,7 +24,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
      void Start()
     {    
         fuse = GetComponentInChildren<Fuse>();
-        adjecent_components = new List<IEletricalComponent>();
+        adjencency_dictionary = new Dictionary<IEletricalComponent, ColliderIO>();
         adj_comp_names = new List<string>();
     }
 
@@ -62,42 +62,37 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
          fuse.ShortFuse(); 
          fuse = null;
     }
-    void OnTriggerEnter(Collider other)
-    {   
-        IEletricalComponent electricalComponent;
-        electricalComponent = other.GetComponent<IEletricalComponent>();
+    
 
-        if(electricalComponent == null) return;
+    public Dictionary<IEletricalComponent, ColliderIO> GetAdjacencies()=> adjencency_dictionary;
+    public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
+    {
+        if(current_collider==null) return;
 
-        if(!adjecent_components.Contains(electricalComponent)){
-            adjecent_components.Add(electricalComponent);
-            adj_comp_names.Add(electricalComponent.ToString());
-        }
-        Debug.Log(other.gameObject.name);
-
-    }
-    void OnTriggerExit(Collider other)
-    {    
         IEletricalComponent eletricalComponent;
         eletricalComponent = other.GetComponent<IEletricalComponent>();
 
         if(eletricalComponent == null) return;
 
-        if(adjecent_components.Contains(eletricalComponent)){
-            adjecent_components.Remove(eletricalComponent);
-            adj_comp_names.Remove(eletricalComponent.ToString());
+        if(adjencency_dictionary.ContainsKey(eletricalComponent)){
+            
+            adjencency_dictionary.Remove(eletricalComponent);
         }
-    }
-
-    public List<IEletricalComponent> GetAdjacencies()=> adjecent_components;
-    public void OnChildrenTriggerExit(ColliderIO current_collider, Collider other)
-    {
-        throw new System.NotImplementedException();
     }
 
     public void OnChildrenTriggerEnter(ColliderIO current_collider, Collider other)
     {
-        throw new System.NotImplementedException();
+        if(current_collider==null) return;
+
+        IEletricalComponent eletricalComponent;
+        eletricalComponent = other.GetComponent<IEletricalComponent>();
+        
+        if(eletricalComponent == null) return;
+
+        if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
+            
+            adjencency_dictionary.Add(eletricalComponent, current_collider);
+        }
     }
 
     public void SetSignal(int newSignal)
@@ -108,7 +103,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
      public void PropagateSignal()
     {
         if(!fuse) return;
-        foreach (var component in adjecent_components)
+        foreach (var component in adjencency_dictionary.Keys)
         {
            if(component is not ModuleBase)
            {

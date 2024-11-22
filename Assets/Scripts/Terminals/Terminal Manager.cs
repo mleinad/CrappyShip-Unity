@@ -73,6 +73,7 @@ public class TerminalManager : MonoBehaviour
     int AddInterperterLines(List<string> interpertation)
     {
         dynamic_lines = new List<TMP_Text>();
+        dynamic_lines.Clear();
         for(int i=0; i<interpertation.Count; i++)
         {
             GameObject res = Instantiate(response_line, msgList.transform);
@@ -85,13 +86,15 @@ public class TerminalManager : MonoBehaviour
             
             dynamic_lines.Add(res.GetComponentInChildren<TMP_Text>());
         }
-
+        Debug.Log("Interpertation count: "+interpertation.Count);
+        Debug.Log("Dynamic lines count: "+dynamic_lines.Count);
         return interpertation.Count;
     }
 
 
     void ScrollToBottom(int lines)
     {
+        
         if(lines > 4)
         {
             sr.velocity = new Vector2(0, 450);
@@ -100,6 +103,8 @@ public class TerminalManager : MonoBehaviour
         {
             sr.verticalNormalizedPosition = 0;
         }
+
+        
     }
 
     public void UserInputState(bool state)
