@@ -50,8 +50,6 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
                     ShortFuse();
                 }
             }
-            PropagateSignal();
-            
         }
 
     }
@@ -74,8 +72,10 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 
         if(eletricalComponent == null) return;
 
-        if(adjencency_dictionary.ContainsKey(eletricalComponent)){
-            
+        if(adjencency_dictionary.ContainsKey(eletricalComponent))
+        {
+
+            adj_comp_names.Remove(eletricalComponent.ToString());
             adjencency_dictionary.Remove(eletricalComponent);
         }
     }
@@ -91,6 +91,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
 
         if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
             
+            adj_comp_names.Add(eletricalComponent.ToString());
             adjencency_dictionary.Add(eletricalComponent, current_collider);
         }
     }
@@ -99,19 +100,5 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
     {
         signal = newSignal;
     }
-
-     public void PropagateSignal()
-    {
-        if(!fuse) return;
-        foreach (var component in adjencency_dictionary.Keys)
-        {
-           if(component is not ModuleBase)
-           {
-                if (component.GetSignal() < signal)
-                {
-                    component.SetSignal(signal);
-                }   
-           }
-        }
-    }
+    
 }

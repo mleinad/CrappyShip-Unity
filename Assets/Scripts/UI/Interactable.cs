@@ -61,7 +61,7 @@ public class Interactable : MonoBehaviour
                 {   
                     beenTriggerd = !beenTriggerd;
                     Action();
-                    isOn = false;
+                    StartCoroutine(OffDelay());
                     triggered = true;
                 }
 
@@ -69,6 +69,12 @@ public class Interactable : MonoBehaviour
             }
     }
 
+    IEnumerator OffDelay()
+    {
+        isOn = false;
+        yield return new WaitForSeconds(1f);
+        isOn = true;
+    }
     public bool WasTriggered()=> triggered;
 
     public void SetTrigger(bool b) => triggered = b;

@@ -29,8 +29,8 @@ public class ConnectedState : ConnectorBaseState
     }
     public override void ExitState(ConnectorStateManager context)
     {
+        TurnOffInputs(context);
         context.GetCurrentBase().SetComponent(null);
-
     }
 
     private void SnapPosition(ConnectorStateManager context)
@@ -66,6 +66,16 @@ public class ConnectedState : ConnectorBaseState
     private void SwitchInputs(ConnectorStateManager context)
     {
        context.GetSignalModifier().HandleInputSwitching(context);
+    }
+
+    private void TurnOffInputs(ConnectorStateManager context)
+    {
+        ColliderIO[] colList = context.GetCurrentBase().GetColliders();
+            
+        for(int i=0; i<colList.Count(); i++)
+        {
+            colList[i].SwitchType(InputType.off);
+        }
     }
     
 

@@ -15,7 +15,8 @@ public class Cable : MonoBehaviour, IEletricalComponent
     public List<string> adj_comp_names;
     Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
 
-
+    [SerializeField] private bool isPrinting=false;
+    
     public int GetSignal()=>signal;
 
     public void SetSignal(int newSignal)
@@ -74,7 +75,6 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     void Update()
     {
-        signal = 0;
         SwitchInputType();
         PropagateSignal();
         CheckAdjacencies(); //debug only
@@ -82,17 +82,27 @@ public class Cable : MonoBehaviour, IEletricalComponent
 
     public void PropagateSignal()
     {
+        int inputCount = 0;
         foreach (var adjecency in adjencency_dictionary)
         {
             if (adjecency.Value.GetInputType() == InputType.input)
             {
-                signal = adjecency.Key.GetSignal();
+                int tempSignal = adjecency.Key.GetSignal();
+                
+                signal = inputCount == 0 ? tempSignal : Mathf.Max(signal, tempSignal);
+                inputCount++;
             }
             else if (adjecency.Value.GetInputType() == InputType.output)
             {
                 adjecency.Key.SetSignal(signal);
+            
+                if (isPrinting)
+                {
+                    Debug.Log("base: " + adjecency.Key + " set to " + signal.ToString());
+                }
             }
-        }
+        } 
+        if(inputCount == 0) signal = 0;
     }
 
 

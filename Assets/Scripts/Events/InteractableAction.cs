@@ -14,7 +14,7 @@ public class InteractableAction : MonoBehaviour   //possibly play animation acti
     [SerializeField]
     Interactable interactable;
     
-    public bool timed = false;
+    public bool timed;
     public float timer;
     bool beenTriggerd;
     void Awake()
@@ -31,16 +31,11 @@ public class InteractableAction : MonoBehaviour   //possibly play animation acti
 
     private void Perform(Interactable obj)
     {
-        beenTriggerd = !beenTriggerd;
         if (obj == interactable)
         {
+             beenTriggerd = !beenTriggerd;
             animator.SetBool(Interaction, beenTriggerd);
             animator.SetTrigger(Triggered);
-            if (timed)
-            {
-                StartCoroutine(DelayedAnimation(timer));
-            }
-
         }
     }
     

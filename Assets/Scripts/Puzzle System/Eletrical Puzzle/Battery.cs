@@ -70,7 +70,7 @@ public class Battery : MonoBehaviour, IEletricalComponent
     void Update()
     {
         
-        PropagateSignal();
+      //  PropagateSignal();
         
         CheckAdjacencies();
 
@@ -82,8 +82,7 @@ public class Battery : MonoBehaviour, IEletricalComponent
         {
            if(component is not ModuleBase)
            {
-             
-                    component.SetSignal(signal);  
+                component.SetSignal(signal);  
            }
         }
     }

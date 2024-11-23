@@ -86,8 +86,7 @@ public class TerminalManager : MonoBehaviour
             
             dynamic_lines.Add(res.GetComponentInChildren<TMP_Text>());
         }
-        Debug.Log("Interpertation count: "+interpertation.Count);
-        Debug.Log("Dynamic lines count: "+dynamic_lines.Count);
+     
         return interpertation.Count;
     }
 

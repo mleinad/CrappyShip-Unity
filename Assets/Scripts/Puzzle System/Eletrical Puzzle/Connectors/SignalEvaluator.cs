@@ -14,7 +14,10 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     Dictionary<ColliderIO, int> Collider_value_list;
     public List<int> inputSignals;
 
-
+    private void Start()
+    {
+        Collider_value_list = new Dictionary<ColliderIO, int>();
+    }
 
     public int GetSignal() => signal;
 
@@ -38,9 +41,8 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     public void SetSignal(Dictionary<IEletricalComponent, ColliderIO> comp)
     {
         
-         Collider_value_list = new Dictionary<ColliderIO, int>();
-         inputSignals = new List<int>();
-
+         Collider_value_list.Clear();
+         inputSignals.Clear();
 
          foreach (var pair in comp)
         {
@@ -51,7 +53,12 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
             if (collider.GetInputType() == InputType.input)
             {
                 int componentSignal = component.GetSignal();
-                Collider_value_list.Add(collider, componentSignal);
+                if (componentSignal > 0)
+                {
+                    Collider_value_list.Add(collider, componentSignal);
+                    inputSignals.Add(componentSignal);  //debug            
+                }
+        
             }
         }
 
@@ -67,7 +74,7 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         for(int i=0; i<colList.Count(); i++)
         {
             colList[i].SwitchType(InputType.input);
-            int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
+            int inputSignal =  context.GetCurrentBase().GetSignalByColliderIO(colList[i]);
             
             float dot =  Vector3.Dot(transform.forward, colList[i].transform.forward);
 
@@ -88,14 +95,14 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     {
         int output = 0;
 
-        // Collect all input signals into a list
+        inputSignals = Collider_value_list.Values.ToList();
+
 
 
         if (Collider_value_list.Count() < 2)
         {
             return output;
         }
-        inputSignals = Collider_value_list.Values.ToList();
         
         switch (mode)           //requires reworking... OR gate is altering signal;
         {
@@ -112,9 +119,9 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
                
                if(Collider_value_list.Values.Distinct().Count() == Collider_value_list.Values.Count() && Collider_value_list.Values.First() != 0)
                {
-                   
+                output = Collider_value_list.Values.Max();    
                }
-                break;
+               break;
 
             default:
                 Debug.Log("Unknown mode for SignalEvaluator");

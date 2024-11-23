@@ -21,25 +21,23 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
 
 
     void Awake(){
-        
-        
+        cable_names = new List<string>();
         adjencency_dictionary = new Dictionary<IEletricalComponent, ColliderIO>();
-
-
         colliders = GetComponentsInChildren<ColliderIO>();
     }
 
     void Update()
     {
-        CheckAdjacencies();
         DrawVectors();
-
         component_name = signalModifier == null ? "no attachments" : signalModifier.ToString();
-
-        SetSignal(0);
+        ResetSignal();
     }
 
-
+    void ResetSignal()
+    {
+        int count = colliders.Count(col => col.GetInputType() == InputType.input);
+        if(count == 0) signal = 0;
+    }
 #region Snap in place
     void DrawVectors()  //also updates them
     {
@@ -96,6 +94,7 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         if(!adjencency_dictionary.ContainsKey(eletricalComponent)){
             
             adjencency_dictionary.Add(eletricalComponent, current_collider);
+            cable_names.Add(eletricalComponent.ToString());
         }
     }
 
@@ -112,28 +111,13 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         if(adjencency_dictionary.ContainsKey(eletricalComponent)){
             
             adjencency_dictionary.Remove(eletricalComponent);
+            cable_names.Remove(eletricalComponent.ToString());
         }
    }
     
 #endregion
-    
-    
-    void CheckAdjacencies()
-    {
-        cable_names = new List<string>();
 
-        foreach(KeyValuePair<IEletricalComponent,ColliderIO> key_pair in adjencency_dictionary)
-        {
-            cable_names.Add(key_pair.ToString());
-        } 
-    }
-
-    public InputType GetInputTypeByComponent(IEletricalComponent eletricalComponent)
-    {
-        if(adjencency_dictionary.ContainsKey(eletricalComponent)) return adjencency_dictionary[eletricalComponent].GetInputType();
-        else return InputType.error;
-    }
-    public int GetSignalByInput(ColliderIO co)
+    public int GetSignalByColliderIO(ColliderIO co)
     {
         foreach(var pair in adjencency_dictionary)
         {
@@ -144,45 +128,15 @@ public class ModuleBase : MonoBehaviour, IEletricalComponent
         }
         return 0;  
     }
-
-    private ColliderIO GetColliderByComponent(IEletricalComponent eletricalComponent){
-        return adjencency_dictionary[eletricalComponent];
-    }
     public int GetSignal()=>signal;
     public void SetSignal(int value)
     {
-       if (signalModifier == null)
-        {
-            signal = 0;
-        }
-        else
-        {
-            signalModifier.SetSignal(adjencency_dictionary); // Modify signal if modifier present
-
-            signal = signalModifier.GetOutput(); // Update signal after modification
-        }
-
-        PropagateSignal();
+        signalModifier.SetSignal(adjencency_dictionary);
+        signal = signalModifier.GetOutput(); // Update signal after modification
     }
-
-    public     Dictionary<IEletricalComponent, ColliderIO> GetAdjacencies()
+    public Dictionary<IEletricalComponent, ColliderIO> GetAdjacencies()
     {
         return adjencency_dictionary;
     }
-
-     private void PropagateSignal()
-    {
-        foreach (var pair in adjencency_dictionary)
-        {
-            if (pair.Value.GetInputType() == InputType.output)
-            {
-                pair.Key.SetSignal(signal);
-            
-              //  Debug.Log($"Setting signal of {pair.Key} to {signal}");
-            }
-        }
-    }
-
-
     public ColliderIO[] GetColliders()=> colliders;
 }

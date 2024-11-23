@@ -21,7 +21,6 @@ public class DeviceStoredState : DeviceBaseState
     }
 
     public override void ExitState(DeviceStateManager context){
-        Debug.Log("exit stored");
     }
 }
 

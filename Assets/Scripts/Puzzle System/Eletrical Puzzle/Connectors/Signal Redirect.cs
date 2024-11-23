@@ -71,7 +71,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
         for(int i=0; i<colList.Count(); i++)
         {
             colList[i].SwitchType(InputType.off);
-            int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
+            int inputSignal =  context.GetCurrentBase().GetSignalByColliderIO(colList[i]);
             
             float dot =  Vector3.Dot(transform.forward, colList[i].transform.forward);
 
@@ -102,7 +102,7 @@ public class SignalRedirect : MonoBehaviour, ISignalModifier
             {
                 if (colList[i].GetInputType() == InputType.off)
                 {
-                    int inputSignal =  context.GetCurrentBase().GetSignalByInput(colList[i]);
+                    int inputSignal =  context.GetCurrentBase().GetSignalByColliderIO(colList[i]);
                     if(inputSignal>maxSignal)
                     {
                         maxSignal = inputSignal;
