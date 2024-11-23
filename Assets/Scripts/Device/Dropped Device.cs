@@ -79,7 +79,7 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         handDevice.SetActive(true);
         yield return new WaitForSeconds(time);
         
-        EventManager.Instance.OnAiInteraction(this);
+        EventManager.Instance.OnAiTrigger(this);
         
         
         yield return new WaitForSeconds(time + 3f);

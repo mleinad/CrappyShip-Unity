@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Lasers : MonoBehaviour, IPuzzleComponent
 {
@@ -91,7 +92,8 @@ public class Lasers : MonoBehaviour, IPuzzleComponent
         Debug.Log("Laser atingiu o alvo: " + target.name);
 
         state = true;
-        // Insira a ação desejada aqui, como ativar um efeito, mover o objeto, etc.
+        
+        EventManager.Instance.OnTriggerSolved(this);
     }
 
     public bool CheckCompletion()

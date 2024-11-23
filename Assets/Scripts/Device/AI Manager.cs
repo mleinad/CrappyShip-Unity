@@ -13,7 +13,7 @@ public class AIManager : MonoBehaviour
 
     void Start()
     {
-             EventManager.Instance.onAiInteraction += Perform;
+             EventManager.Instance.onAiTrigger += Perform;
     }
 
     // Update is called once per frame

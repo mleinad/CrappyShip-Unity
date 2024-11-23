@@ -12,12 +12,12 @@ public class TerminalManager : MonoBehaviour
     public GameObject user_input_line;
     public ScrollRect sr;
     public GameObject msgList;
-    Iinterperter interperter;
+    BaseInterperter interperter;
 
     private List<TMP_Text> dynamic_lines;
     private void Start()
     {   dynamic_lines = new List<TMP_Text>();
-        interperter = GetComponent<Iinterperter>();   
+        interperter = GetComponent<BaseInterperter>();   
         if(interperter == null)
         {
             throw new Exception("NO INTERPERTER ATTACHED!");

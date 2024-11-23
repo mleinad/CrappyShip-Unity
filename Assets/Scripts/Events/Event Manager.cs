@@ -9,10 +9,8 @@ public class EventManager : MonoBehaviour
     
     public event Action<Interactable> onTriggerInteraction;
     public event Action <string> onTriggerDebug;
-    public event Action <PuzzleComposite> onTriggerSolved;
-
-  
-    public event Action <IPuzzleComponent> onAiInteraction;
+    public event Action <IPuzzleComponent> onTriggerSolved;
+    public event Action <IPuzzleComponent> onAiTrigger;
 
 
 
@@ -47,14 +45,14 @@ public class EventManager : MonoBehaviour
     }
     
 
-    public void OnTriggerSolved(PuzzleComposite puzzleComposite)
+    public void OnTriggerSolved(IPuzzleComponent puzzleComp)
     {
-        onTriggerSolved?.Invoke(puzzleComposite);
+        onTriggerSolved?.Invoke(puzzleComp);
     }
 
-    public void OnAiInteraction(IPuzzleComponent puzzleComp)
+    public void OnAiTrigger(IPuzzleComponent puzzleComp)
     {
-        onAiInteraction?.Invoke(puzzleComp);
+        onAiTrigger?.Invoke(puzzleComp);
     }
     
 }

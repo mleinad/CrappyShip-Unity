@@ -24,7 +24,7 @@ public class EnterArea : MonoBehaviour, IPuzzleComponent
         {
             state = true;
             IPuzzleComponent comp = this.GetComponent<IPuzzleComponent>();
-            EventManager.Instance.OnAiInteraction(this);
+            EventManager.Instance.OnAiTrigger(this);
         }
     }
 

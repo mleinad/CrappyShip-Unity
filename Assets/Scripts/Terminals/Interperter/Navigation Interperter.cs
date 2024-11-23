@@ -5,19 +5,16 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class NavigationInterperter : MonoBehaviour, Iinterperter
+public class NavigationInterperter : BaseInterperter
 {
-     List<string> response = new List<string>();
-    TerminalManager terminalManager;
-    Dictionary<string, string> colors = new Dictionary<string, string>
+    private List<string> _response = new List<string>();
+    public override List<string> response
     {
-        { "orange", "#FA4224" },
-        { "yellow", "#FDDC5C" },
-        { "blue", "#475F94" },
-        { "green", "#00ff1b" },
-        { "red", "#ff0000" },
-        { "white", "#ffffff" }
-    };
+        get { return _response; }
+        set { _response = value; }
+    }
+    TerminalManager terminalManager;
+
     IPuzzleComponent superComputer;
     public List<TMP_Text> page1;
     public List<TMP_Text> page2;
@@ -38,7 +35,7 @@ public class NavigationInterperter : MonoBehaviour, Iinterperter
         }
     }
 
-    public List<string> Interpert(string input)
+    public override List<string> Interpert(string input)
     {
             response.Clear();
 
@@ -72,37 +69,6 @@ public class NavigationInterperter : MonoBehaviour, Iinterperter
 
     }
     
-    List<string> LoadTitle(string path, string color, int spacing)
-    {
-        StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
-        for (int i = 0; i < spacing; i++)
-        {
-            response.Add("");
-        }
-
-        while (!file.EndOfStream)
-        {
-            string temp_line = file.ReadLine();
-            if (color == string.Empty)
-            {
-                response.Add(temp_line);
-            }
-            else
-            {
-                response.Add(ColorString(temp_line, colors[color]));
-            }
-        }
-
-        for (int i = 0; i < spacing; i++)
-        {
-            response.Add("");
-        }
-
-        file.Close();
-
-        return response;
-    }
-
 
     private void EnableUI(List<TMP_Text> layout, bool enable)
     {
@@ -126,30 +92,7 @@ public class NavigationInterperter : MonoBehaviour, Iinterperter
         }
     }
 
-    #region style
-
-    public string BoldString(string s)
-    {
-        return "<b>" + s + "</b>";
-    }
-
-    public string HighlightString(string s, string color)
-    {
-        string leftTag = "<mark=" + color + ">";
-        string rightTag = "</mark>";
-
-        return leftTag + s + rightTag;
-    }
-
-    public string ColorString(string s, string color)
-    {
-        string leftTag = "<color=" + color + ">";
-        string rightTag = "</color>";
-
-        return leftTag + s + rightTag;
-    }
-
-    #endregion
+    
 }
 
 

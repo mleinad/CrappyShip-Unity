@@ -5,21 +5,17 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
+public class CodingInterperter : BaseInterperter, IPuzzleComponent
 {
-    Dictionary<string, string> colors = new Dictionary<string, string>{
-    {"orange", "#FA4224"},
-    {"yellow", "#FDDC5C"},
-    {"blue", "#475F94"},
-    {"green", "#00ff1b"},
-    {"red", "#ff0000"},
-    {"white", "#ffffff"}
-    };
 
-
-    public List<string> code_template;
-    List<string> response = new List<string>();
+    private List<string> _response = new List<string>();
+    public override List<string> response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
     TerminalManager terminalManager;
+    public List<string> code_template;
 
     [SerializeField]
     Cable cable;
@@ -39,7 +35,7 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
         interactable.enabled = false;
     }
 
-    public List<string> Interpert(string input)
+    public override List<string> Interpert(string input)
     {
         response.Clear();
 
@@ -113,34 +109,8 @@ public class CodingInterperter : MonoBehaviour, Iinterperter, IPuzzleComponent
         }
     }
 
-
-    #region style
-    public string BoldString(string s)
-    {
-        return "<b>" + s + "</b>";
-    }
     
-    public string HighlightString(string s, string color)
-    {
-        string leftTag = "<mark=" + color + ">";
-        string rightTag = "</mark>";
-        
-        return leftTag + s + rightTag;
-    }
 
-    public string ColorString(string s, string color)
-    {
-        string leftTag = "<color=" + color + ">";
-        string rightTag ="</color>";
-
-        return leftTag + s + rightTag;
-    }
-
-    #endregion
-    void ListEntry(string a, string b)
-    {
-        response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
-    }
 
     void LoadTitle(string path, string color, int spacing)
     {

@@ -22,7 +22,7 @@ public class LookedAt : MonoBehaviour, IPuzzleComponent
         if(other.CompareTag("MainCamera"))
         {
             state = true;
-            EventManager.Instance.OnAiInteraction(this);
+            EventManager.Instance.OnAiTrigger(this);
 //            Debug.Log("looked at door");
         }
     }

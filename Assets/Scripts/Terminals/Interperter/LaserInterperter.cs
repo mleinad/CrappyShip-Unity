@@ -4,28 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class FireExtinguisherInterper : MonoBehaviour, Iinterperter
+public class LaserInterper : BaseInterperter, IPuzzleComponent
 {
-    readonly List<string> response = new List<string>();
+    
+    private List<string> _response = new List<string>();
+    public override List<string> response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
     TerminalManager terminalManager;
     private string garbledText = "";
     private Dictionary<char, char> charMap; // Mapping for consistent scrambling
     private readonly string allCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+    bool state = false;
     public string typedWord;
-   
-    public Interactable fe_case;
-    public DragNDrop fe_gun;
+    
     void Start()
     {
         terminalManager = GetComponent<TerminalManager>();
+        
+        
         terminalManager.terminal_input.onValueChanged.AddListener(OnInputChanged);
         GenerateCharacterMap(3);
-        fe_case.enabled = false;
-        fe_gun.enabled = false;
     }
 
-    public List<string> Interpert(string input)
+    public override List<string> Interpert(string input)
     {
         response.Clear();
         string[] args = input.Split();
@@ -37,8 +42,8 @@ public class FireExtinguisherInterper : MonoBehaviour, Iinterperter
         if (args[0] == "open")
         {
             response.Add("opened door...");
-            fe_case.enabled = true;
-
+            state = true;
+            EventManager.Instance.OnTriggerSolved(this);
             return response;
         }
         else
@@ -72,10 +77,6 @@ public class FireExtinguisherInterper : MonoBehaviour, Iinterperter
     private void Update()
     {
         typedWord = terminalManager.terminal_input.text;
-        if (fe_case.WasTriggered())
-        {
-            fe_gun.enabled = true;
-        }
     }
 
     void OnInputChanged(string input)
@@ -118,6 +119,15 @@ public class FireExtinguisherInterper : MonoBehaviour, Iinterperter
 
         terminalManager.terminal_input.caretPosition = input.Length;
     }
-    
+
+    public bool CheckCompletion()
+    {
+        return state;
+    }
+
+    public void ResetPuzzle()
+    {
+       state = false;
+    }
 }
 
