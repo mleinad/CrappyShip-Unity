@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OfficeInterperter : MonoBehaviour, Iinterperter
+public class OfficeInterperter : BaseInterperter
 {
-    List<string> response = new List<string>();
+    List<string> _response = new List<string>();
+    public override List<string> response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
     private string correctPassword = "earth";
     [SerializeField] private Animator doorAnimator;
 
-    public List<string> Interpert(string input)
+    public override List<string> Interpert(string input)
     {
         response.Clear();
 

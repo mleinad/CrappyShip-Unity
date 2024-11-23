@@ -11,7 +11,7 @@ public class MicrophoneDetector : MonoBehaviour, IPuzzleComponent
     private byte[] bytes;
     public bool active, state=false;
     public string audioresult;
-    public string phrase;
+    public bool midcheck =false;
     
 
     private void Update()
@@ -42,16 +42,19 @@ public class MicrophoneDetector : MonoBehaviour, IPuzzleComponent
 
     private void SendRecording()
     {
+        midcheck = true;
         HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response =>
         {
             audioresult = response;
             Debug.Log("Audio-> "+ audioresult);
-            if (audioresult == phrase)
-            {
-                state = true;
-                Debug.Log("The door is now open.");
-
-            }
+          
+                if (!string.IsNullOrEmpty(audioresult) &&
+             (audioresult.IndexOf(" open door", StringComparison.OrdinalIgnoreCase) >= 0 ||
+              audioresult.IndexOf(" open the door", StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    state = true;
+                    Debug.Log("The door is now open.");
+                }
         }, error =>
         {
             audioresult = null;

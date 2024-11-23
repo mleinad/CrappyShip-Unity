@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuizzInterpreter : MonoBehaviour, Iinterperter
+public class QuizzInterpreter : BaseInterperter
 {
-    public quizzdetector quizz;
-    List<string> response = new List<string>();
+    private List<string> _response = new List<string>();
+    public override List<string> response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
 
-
-    public List<string> Interpert(string input)
+    public override List<string> Interpert(string input)
     {
 
         response.Clear();
