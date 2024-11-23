@@ -8,11 +8,9 @@ public class EventManager : MonoBehaviour
     public static EventManager Instance { get; private set; }
     
     public event Action<Interactable> onTriggerInteraction;
-    public event Action <string> onTriggerDebug;
     public event Action <IPuzzleComponent> onTriggerSolved;
     public event Action <IPuzzleComponent> onAiTrigger;
-
-
+    public event Action <bool> onTurnOnLights;
 
 
     private void Awake()
@@ -38,12 +36,10 @@ public class EventManager : MonoBehaviour
         onTriggerInteraction?.Invoke(obj);
     }
 
-
-    public void OnTriggerDebug(string message)
+    public void OnTurnOnLights(bool state)
     {
-        onTriggerDebug?.Invoke(message);
+        onTurnOnLights?.Invoke(state);
     }
-    
 
     public void OnTriggerSolved(IPuzzleComponent puzzleComp)
     {

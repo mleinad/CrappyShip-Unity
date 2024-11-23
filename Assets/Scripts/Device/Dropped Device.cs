@@ -33,9 +33,9 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         handDevice.SetActive(false);
         state = false;
         meshRenderer = GetComponent<MeshRenderer>(); 
-        LightManager.Instance.EnablePlayerLight(false);
-        LightManager.Instance.EnableEnviormentLight(false);
 
+        //turn off enviorment lights
+        //turn off player lights
     
     }
 
@@ -84,8 +84,8 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         
         yield return new WaitForSeconds(time + 3f);
         
-        LightManager.Instance.EnableEnviormentLight(true);
-        LightManager.Instance.EnablePlayerLight(true);
+       //turn on player lights
+       //turn on enviorment lights
         
         gameObject.SetActive(false);
 

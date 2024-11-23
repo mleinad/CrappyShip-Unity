@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public TwoBoneIKConstraint right_arm;
     public TwoBoneIKConstraint left_arm;
 
-
+    
     [SerializeField]
     private GameObject crosshair1, crosshair2, message;
 

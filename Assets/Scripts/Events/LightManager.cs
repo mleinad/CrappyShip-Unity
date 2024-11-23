@@ -4,35 +4,15 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour
 {
-   [SerializeField]
-   Light playerLight;
+
    [SerializeField]
    Material environmentMaterial;
-   
    [SerializeField]
-   List<Light> eletrical_lights;
-   public static LightManager Instance { get; private set; }
+   List<Light> lights;
 
-   private void Awake()
+   private void Start()
    {
-
-         // Implement Singleton Pattern
-         if (Instance == null)
-         {
-            Instance = this;  // Set this instance as the singleton instance
-         }
-         else if (Instance != this)
-         {
-            Destroy(gameObject);  // Destroy the extra instance to ensure there is only one
-         }
-
-         DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
-  }
-
-
-   public void EnablePlayerLight(bool state)
-   {
-      playerLight.enabled = state;
+      EventManager.Instance.onTurnOnLights += TurnOnLights;
    }
 
    public void EnableEnviormentLight(bool state)
@@ -41,9 +21,11 @@ public class LightManager : MonoBehaviour
       else environmentMaterial.DisableKeyword("_EMISSION");
    }
 
-
-   public void EnableEletricalLights(int index)
-   {
-      eletrical_lights[index].enabled = true;
+   void TurnOnLights(bool state)
+   { 
+      foreach(var light in lights)
+      {
+         light.enabled = state;
+      }
    }
 }
