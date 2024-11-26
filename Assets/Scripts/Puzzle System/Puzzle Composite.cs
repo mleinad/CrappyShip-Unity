@@ -11,10 +11,28 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     private bool been_solved = false;
      
      
-    public bool state = false; 
+    private bool state = false; 
     
     private readonly List<IPuzzleComponent> _components = new List<IPuzzleComponent>();
 
+    public bool State
+    {
+        get => state;
+        set
+        {
+            if (state != value)
+            {
+            state = value;
+            Debug.Log($"State changed to: {state}");
+            if (state)
+            {
+                Debug.Log("solved!x");
+                EventManager.Instance.OnTriggerSolved(this);
+                been_solved = true;
+            }
+            }
+        }
+    }
 
 
     void Awake()
@@ -27,18 +45,17 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
 
     public bool CheckCompletion()
     {
-
-        if(_components!= null)
+        if (_components != null)
         {
-        foreach(IPuzzleComponent component in _components){
-            
-            if(!component.CheckCompletion()){
-                state= false;
-                break;
-            }else state = true;
+            foreach (IPuzzleComponent component in _components)
+            {
+                if (!component.CheckCompletion())
+                {
+                    return false; // Return immediately if any component is incomplete
+                }
+            }
         }
-        }
-        return state;
+        return true; 
     }
 
     public void ResetPuzzle()
@@ -46,19 +63,13 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
         foreach(IPuzzleComponent component in _components){
             component.ResetPuzzle();
         }
-        state = false;
+        State = false;
+        been_solved = false;
     }
+    
 
     void Update()
-    {
-        if(state)
-        {
-        if(!been_solved){
-            been_solved = true;
-            Debug.Log("soved but no event triggerd");
-            EventManager.Instance.OnTriggerSolved(this);
-        }
-        }
+    {   if(!been_solved) State = CheckCompletion();
     }
 
     private void Add(IPuzzleComponent component)

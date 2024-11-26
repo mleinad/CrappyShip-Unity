@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TerminalManager : MonoBehaviour
 {
     public GameObject directory_line;
@@ -14,6 +15,8 @@ public class TerminalManager : MonoBehaviour
     public GameObject msgList;
     BaseInterperter interperter;
 
+    private bool input_position;
+    private int position_index;
     private List<TMP_Text> dynamic_lines;
     private void Start()
     {   dynamic_lines = new List<TMP_Text>();
@@ -42,7 +45,6 @@ public class TerminalManager : MonoBehaviour
                 int lines = AddInterperterLines(interperter.Interpert(user_input));
 
                 ScrollToBottom(lines);
-
                 user_input_line.transform.SetAsLastSibling();
                 terminal_input.ActivateInputField();
                 terminal_input.Select();
@@ -68,7 +70,7 @@ public class TerminalManager : MonoBehaviour
         terminal_input.text ="";
     }
 
-
+    
 
     int AddInterperterLines(List<string> interpertation)
     {
@@ -127,6 +129,40 @@ public class TerminalManager : MonoBehaviour
             user_input_line.transform.SetAsLastSibling();
             terminal_input.ActivateInputField();
             terminal_input.Select();
+    }
+
+    public void ClearScreen(int i)
+    {
+        switch (i)
+        {
+            //disable
+            case 0:
+                foreach (Transform child in msgList.transform)
+                {
+                    if (child.name.Contains("Sample"))
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+                }
+                break;
+            //delete
+            case 1:
+                foreach (Transform child in msgList.transform)
+                {
+                    if (child.name.Contains("Sample"))
+                    {
+                        Destroy(child.gameObject);
+                    }
+                }
+                break;
+        }
+    }
+    
+
+    public void OverrideInputPosition(int position)
+    {
+        input_position = false;
+        position_index = position;
     }
 
 }

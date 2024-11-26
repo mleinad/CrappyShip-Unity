@@ -14,7 +14,14 @@ public abstract class BaseInterperter: MonoBehaviour
         { "red", "#ff0000" },
         { "white", "#ffffff" }
     };
-    
+
+    protected List<string> fileTypes = new List<string>
+    {
+        "exe",
+        "cpp",
+        "cs",
+        "py"
+    };
     public abstract List<string> response { get; set; }
 
     public abstract List<string> Interpert(string input);
@@ -46,6 +53,20 @@ public abstract class BaseInterperter: MonoBehaviour
             response.Add("");
         }
 
+        file.Close();
+
+        return response;
+    }
+
+    protected List<string> LoadTitle(string path)
+    {
+        StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
+        while(!file.EndOfStream)
+        {   
+            string temp_line = file.ReadLine();
+            
+            response.Add(temp_line);
+        }
         file.Close();
 
         return response;

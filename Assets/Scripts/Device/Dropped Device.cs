@@ -34,9 +34,10 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         state = false;
         meshRenderer = GetComponent<MeshRenderer>(); 
 
-        //turn off enviorment lights
-        //turn off player lights
-    
+        Player.Instance.EnablePlayerLight(false);
+        LightManager.Instance.EnableEnviormentLight(false);
+        LightManager.Instance.TurnOnLights(false);
+
     }
 
     private void Update()
@@ -84,8 +85,8 @@ public class DroppedDevice : MonoBehaviour, IPuzzleComponent
         
         yield return new WaitForSeconds(time + 3f);
         
-       //turn on player lights
-       //turn on enviorment lights
+        Player.Instance.EnablePlayerLight(true);
+        LightManager.Instance.EnableEnviormentLight(true);
         
         gameObject.SetActive(false);
 
