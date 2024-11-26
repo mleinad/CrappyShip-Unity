@@ -765,13 +765,9 @@ MonoBehaviour:
   crosshair1: {fileID: 0}
   crosshair2: {fileID: 0}
   message: {fileID: 0}
-  acceleration: 2
-  deceleration: 2
-  maxWalkSpeed: 0.5
-  maxRunSpeed: 1.2
+  main_camera: {fileID: 0}
   walking_speed: 3.5
   running_speed: 6
-  jump_speed: 8
   gravity: 20
   look_speed: 2
   look_X_limit: 45
@@ -2593,7 +2589,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1079
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3502,7 +3498,7 @@ PrefabInstance:
     - target: {fileID: 7534596899977643098, guid: 86b6f23b909d1824c93dd2136719ccf2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00030517578
+      value: -0.010803223
       objectReference: {fileID: 0}
     - target: {fileID: 8342086878565191084, guid: 86b6f23b909d1824c93dd2136719ccf2,
         type: 3}

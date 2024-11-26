@@ -24,57 +24,67 @@ public class RecyclingInterperter : BaseInterperter
     private int roomStatusIndex;
     private List<TMP_Text> terminalUI;
 
+    private bool page = false;
+
     void Start()
     {
         terminalManager = GetComponent<TerminalManager>();
+  
+        response.Add(" PRESS [ESC] TO EXIT                              ");
+        terminalManager.NoUserInputLines(response);
+        response.Clear();
         garbage_bin = puzzle_component_gameobject.GetComponent<PressurePlate>();
-        terminalManager.NoUserInputLines(LoadTitle("garbageUI.txt", "white", 3));
 
         foreach (Interactable i in interactable)
         {
             i.enabled = false;
         }
-
-        terminalUI = terminalManager.GetDynamicLines();
-        progresBarIndex = terminalUI.FindIndex(line => line.text.Contains("CONTAMINATION LEVEL:"));
-        roomStatusIndex = terminalUI.FindIndex(line => line.text.Contains("ROOM STATUS: "));
     }
 
     public override List<string> Interpert(string input)
     {
         response.Clear();
+        input = input.ToLower();
 
-        string[] args = input.Split();
-
+        string[] args = input.Split(); 
         if (args[0] == "help")
         {
-
-            ListEntry("help", "returns a list of commands");
-            ListEntry("open", "opens door");
+            ListEntry("run", "run a program from the terminal");
+            ListEntry("storage", "lists installed programs");
+            ListEntry("install", "install a new program");
             return response;
-
         }
-
-        if (args[0] == "open")
+        if (args[0] == "run")
         {
-
-            if (!garbage_bin.CheckCompletion())
+            if (args[1] == "manager.exe")
             {
-                response.Add("checking room contamination...");
-                //LoadTitle("","",2);
-                response.Add(BoldString("Unable to open door, contamination risk too high!"));
+
+                RunPage();
+                //puzzle logic      maybe use events...
+                if (!garbage_bin.CheckCompletion())
+                {
+                    //response.Add("checking room contamination...");
+                    //response.Add(BoldString("Unable to open door, contamination risk too high!"));
+                }
+                else
+                {
+                    //response.Add("Room unlocked...");
+                    Solved();
+                }
+                return response;
             }
-            else
+            if (args[1] == "decrypter.exe")
             {
-                response.Add("Room unlocked...");
-                Solved();
+                response.Add("decrypter program... beep boop bzzzz");
+                return response;
             }
 
+            response.Add("executable not found");
             return response;
         }
         else
         {
-            response.Add("Command not recognized. Type help for a list of commands");
+            response.Add("Command not recognized.");
             return response;
         }
     }
@@ -96,7 +106,14 @@ public class RecyclingInterperter : BaseInterperter
 
     private void Update()
     {
-        UpdateTerminalUI();
+        if (page)
+        {
+            UpdateTerminalUI();
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                Debug.Log("exit page!");
+            }
+        }
     }
     
     
@@ -105,12 +122,20 @@ public class RecyclingInterperter : BaseInterperter
 
     void UpdateTerminalUI()
     {
-        terminalUI[progresBarIndex].text = GenerateProgressBar(garbage_bin.GetCurrentObjects());
-
-        terminalUI[roomStatusIndex].text = GenerateStatus(garbage_bin.CheckCompletion() ? "normal" : "lockdown");
+       terminalUI[progresBarIndex].text = GenerateProgressBar(garbage_bin.GetCurrentObjects());
+       terminalUI[roomStatusIndex].text = GenerateStatus(garbage_bin.CheckCompletion() ? "normal" : "lockdown");
     }
 
-
+    
+    void RunPage()
+    {
+        terminalManager.ClearScreen(0);
+        terminalManager.UserInputState(false);
+        LoadTitle("garbageUI.txt");
+        terminalUI = terminalManager.GetDynamicLines();
+        progresBarIndex = terminalUI.FindIndex(line => line.text.Contains("CONTAMINATION LEVEL:"));
+        roomStatusIndex = terminalUI.FindIndex(line => line.text.Contains("ROOM STATUS: "));
+    }
     string GenerateStatus(string status)
     {
         return $"| ROOM STATUS:      {status}                                ";

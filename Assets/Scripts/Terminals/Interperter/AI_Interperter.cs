@@ -78,7 +78,6 @@ public class AI_Interperter : BaseInterperter
 
         return response;
     }
-    
 
     string ConvertToSpeech(string s)
     {

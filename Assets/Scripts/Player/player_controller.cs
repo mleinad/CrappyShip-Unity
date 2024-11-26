@@ -29,11 +29,13 @@ public class Player : MonoBehaviour
     Vector3 movement_vec = Vector3.zero;
 
 
-
+    [SerializeField]
+    private Light player_light;
+        
     Animator playerAnim;
 
-    private bool is_rotation_locked = false;    
-     private bool movement_locked = false;    
+    private bool is_rotation_locked = false;
+    private bool movement_locked = false;    
 
 #region Player Variables 
     public float walking_speed = 3.5f;
@@ -73,6 +75,8 @@ public class Player : MonoBehaviour
 
         left_arm.weight =0;
         right_arm.weight =0;
+        
+        player_light.enabled = false;
     }
 
     // Update is called once per frame
@@ -172,6 +176,10 @@ public class Player : MonoBehaviour
          DOTween.To(()=> left_arm.weight, x => left_arm.weight = x, y, 1f);
     }
 
+    public void EnablePlayerLight(bool state)
+    {
+        player_light.enabled = state;
+    }
 
 
 #region UI

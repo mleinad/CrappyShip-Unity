@@ -10,9 +10,16 @@ public class LightManager : MonoBehaviour
    [SerializeField]
    List<Light> lights;
 
+   public static LightManager Instance { get; private set; }
    private void Start()
    {
+      Instance = this;
       EventManager.Instance.onTurnOnLights += TurnOnLights;
+   }
+
+   void LoadLights()
+   {
+      //load lights from game object
    }
 
    public void EnableEnviormentLight(bool state)
@@ -21,7 +28,7 @@ public class LightManager : MonoBehaviour
       else environmentMaterial.DisableKeyword("_EMISSION");
    }
 
-   void TurnOnLights(bool state)
+   public void TurnOnLights(bool state)
    { 
       foreach(var light in lights)
       {

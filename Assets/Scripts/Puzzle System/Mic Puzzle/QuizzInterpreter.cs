@@ -16,6 +16,7 @@ public class QuizzInterpreter : BaseInterperter
     {
 
         response.Clear();
+        
 
         string[] args = input.Split();
 
