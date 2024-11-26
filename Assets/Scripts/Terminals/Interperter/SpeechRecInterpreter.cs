@@ -8,6 +8,8 @@ using UnityEngine;
 public class SpeechRecInterpreter : BaseInterperter
 {
     public MicrophoneDetector microphoneDetector;
+    [SerializeField] private Interactable interactable;
+
     List<string> _response = new List<string>();
     public override List<string> response
     {
@@ -17,8 +19,14 @@ public class SpeechRecInterpreter : BaseInterperter
     TerminalManager terminalManager;
     private bool isListening = false;
 
+    private void Start()
+    {
+        interactable.enabled = false;
+
+    }
     private void Awake()
     {
+        
         terminalManager = GetComponent<TerminalManager>();
     }
 
@@ -28,41 +36,21 @@ public class SpeechRecInterpreter : BaseInterperter
         response.Clear();
         string[] args = input.Split();
 
-        if (args[0] == "open")
-        {
             terminalManager.NoUserInputLines(new List<string> {
             "Keyboard malfunction, please use voice commands",
             "                                                         Voice Commands:",
-            "                  -Open door                                -Close Door"
+            " -Open door                               "
 
-        });
+            });
             
             DelayMessage(2f, "To activate the mirophone to use voice commands press <V>");
 
             StartCoroutine(WaitForMicrophoneInput());
 
-
-            return response;
-        }
-        else
-        {
-            terminalManager.NoUserInputLines(new List<string> {
-            "Keyboard malfunction, please use voice commands",
-            "                                                         Voice Commands:",
-            "                  -Open door                                                               -Close Door"
-
-
-        });
-
-            DelayMessage(2f, "To activate the microphone to use voice commands press <V>");
-
-            StartCoroutine(WaitForMicrophoneInput());
-
-
             return response;
         }
 
-    }
+    
     private void DelayMessage(float delay, string message)
     {
         StartCoroutine(DelayMessageCoroutine(delay, message));
@@ -89,6 +77,7 @@ public class SpeechRecInterpreter : BaseInterperter
         if (microphoneDetector.state)
         {
             terminalManager.NoUserInputLines(new List<string> { "Open door command activated" });
+            interactable.enabled = true;
         }
         else
         {
