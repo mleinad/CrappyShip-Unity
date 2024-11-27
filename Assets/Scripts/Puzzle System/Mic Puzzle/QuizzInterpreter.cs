@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuizzInterpreter : BaseInterperter
+public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
 {
     private List<string> _response = new List<string>();
     public override List<string> response
@@ -13,21 +13,29 @@ public class QuizzInterpreter : BaseInterperter
     }
 
     // State management
-    private int currentQuestionIndex = 0;  // Tracks which question the user is answering
-    private List<string> questions = new List<string> { "How many noodle boxes are in this room?", "What is the color of the sky?" };
-    private List<string> correctAnswers = new List<string> { "6", "blue" };  // Answers corresponding to questions
+    private bool done = false;  
+    private int currentQuestionIndex = 0; 
+    private List<string> questions = new List<string> { "How many noodle boxes are in this room?", "How many days have you been on this Ship?","What is the name of the Ship?"};
+    private List<string> correctAnswers = new List<string> { "6", "27","CS2075" };
+    [SerializeField]
+    Interactable interactable;
 
-    private bool isQuizActive = false;  // Determines if the quiz is currently active
+    private bool isQuizActive = false; 
+    
+    void Start()
+    {
+        interactable.enabled = false;
+    }
 
+    
     public override List<string> Interpert(string input)
     {
         response.Clear();
 
-        string[] args = input.Split();  // Split the input to handle commands or answers
+        string[] args = input.Split();
 
         if (args.Length > 0)
         {
-            // Command to get help
             if (args[0] == "help")
             {
                 response.Add("Solve the quiz to proceed to the next room.");
@@ -35,8 +43,7 @@ public class QuizzInterpreter : BaseInterperter
                 return response;
             }
 
-            // Command to start the quiz
-            if (args[0] == "quizz.exe")
+            if (args[0] == "quiz.exe")
             {
                 if (!isQuizActive)
                 {
@@ -49,7 +56,6 @@ public class QuizzInterpreter : BaseInterperter
                 return response;
             }
 
-            // If quiz is running, check for answers
             if (isQuizActive)
             {
                 CheckAnswer(args[0]);
@@ -57,43 +63,51 @@ public class QuizzInterpreter : BaseInterperter
             }
         }
 
-        // If the input is not recognized
         response.Add("Invalid command. Type <help> for assistance.");
         return response;
     }
 
-    // Starts the quiz and displays the first question
     private void StartQuiz()
     {
         isQuizActive = true;
-        currentQuestionIndex = 0;  // Start at the first question
-        response.Add(questions[currentQuestionIndex]);  // Display the first question
+        currentQuestionIndex = 0; 
+        response.Add(questions[currentQuestionIndex]);
     }
 
     // Checks if the provided answer is correct
     private void CheckAnswer(string answer)
     {
-        if (answer.ToLower() == correctAnswers[currentQuestionIndex].ToLower())  // Answer check is case-insensitive
+        if (answer.ToLower() == correctAnswers[currentQuestionIndex].ToLower()) 
         {
             response.Add("Correct!");
 
-            // Move to the next question
             currentQuestionIndex++;
 
             if (currentQuestionIndex < questions.Count)
             {
-                response.Add(questions[currentQuestionIndex]);  // Display next question
+                response.Add(questions[currentQuestionIndex]);
             }
             else
             {
+                done = true;
+                interactable.enabled = true;
                 response.Add("Congratulations! You have completed the quiz.");
-                isQuizActive = false;  // End the quiz
+                isQuizActive = false; 
             }
         }
         else
         {
             response.Add("Incorrect. Try again.");
         }
+    }
+
+    public bool CheckCompletion() => done;
+
+    public void ResetPuzzle()
+    {
+        done = false;
+        currentQuestionIndex = 0;
+        interactable.enabled = false;
     }
 }
 
