@@ -17,7 +17,7 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
     public List<string> code_template;
     TerminalManager terminalManager;
     
-     public float surprised__factor=0.0f;
+    public float surprised__factor=0.0f;
     public PuzzleComposite puzzleComposite;
     
     public GameObject face_camera;

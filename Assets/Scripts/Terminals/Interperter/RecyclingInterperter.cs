@@ -100,6 +100,7 @@ public class RecyclingInterperter : BaseInterperter
     }
     
     
+    
     public override List<string> Interpert(string input)
     {
         response.Clear();

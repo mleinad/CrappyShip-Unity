@@ -10,9 +10,23 @@ public abstract class BaseInterperter: MonoBehaviour
         { "orange", "#FA4224" },
         { "yellow", "#FDDC5C" },
         { "blue", "#475F94" },
-        { "green", "#00ff1b" },
-        { "red", "#ff0000" },
-        { "white", "#ffffff" }
+        { "green", "#00FF1B" },
+        { "red", "#FF0000" },
+        { "white", "#FFFFFF" },
+        { "cyan", "#00FFFF" },
+        { "purple", "#8A2BE2" },
+        { "pink", "#FF69B4" },
+        { "grey", "#808080" },
+        { "black", "#000000" },
+        { "lightblue", "#ADD8E6" },
+        { "lime", "#32CD32" },
+        { "gold", "#FFD700" },
+        { "darkred", "#8B0000" },
+        { "teal", "#008080" },
+        { "navy", "#000080" },
+        { "silver", "#C0C0C0" },
+        { "magenta", "#FF00FF" },
+        { "darkgreen", "#006400" }
     };
 
     protected List<string> fileTypes = new List<string>
@@ -99,12 +113,12 @@ public abstract class BaseInterperter: MonoBehaviour
 
     #region style
 
-    public string BoldString(string s)
+    protected string BoldString(string s)
     {
         return "<b>" + s + "</b>";
     }
 
-    public string HighlightString(string s, string color)
+    protected string HighlightString(string s, string color)
     {
         string leftTag = "<mark=" + color + ">";
         string rightTag = "</mark>";
@@ -112,7 +126,7 @@ public abstract class BaseInterperter: MonoBehaviour
         return leftTag + s + rightTag;
     }
 
-    public string ColorString(string s, string color)
+    protected string ColorString(string s, string color)
     {
         string leftTag = "<color=" + color + ">";
         string rightTag = "</color>";
@@ -122,8 +136,35 @@ public abstract class BaseInterperter: MonoBehaviour
 
     #endregion
     
-   protected void ListEntry(string a, string b)
+    protected void ListEntry(string a, string b)
     {
         response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
+    }
+
+    protected void ListFiles(string location, List<string> files)
+    {
+        response.Add(ColorString(location + ": ", colors["lime"]));
+        foreach (var file in files)
+        {
+            response.Add($"     {file}");
+        }
+    }
+
+    protected void ListHiddenFiles(string location, List<string> files, List<string> hiddenFiles)
+    {
+        response.Add(ColorString(location + ": ", colors["darkgreen"]));
+        foreach (var file in files)
+        {
+            response.Add($"     -{file}");
+        }
+        foreach (var file in hiddenFiles)
+        {
+            response.Add($"         -{HidenFile(file)}");
+        }
+    }
+
+    protected string HidenFile(string file)
+    {
+        return BoldString(ColorString(file, colors["darkred"]));
     }
 }
