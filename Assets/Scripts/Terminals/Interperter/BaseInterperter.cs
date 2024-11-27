@@ -26,7 +26,20 @@ public abstract class BaseInterperter: MonoBehaviour
 
     public abstract List<string> Interpert(string input);
     
-    
+    protected bool IsValidFile(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName)) return false;
+
+        int lastDotIndex = fileName.LastIndexOf('.');
+        if (lastDotIndex == -1 || lastDotIndex == fileName.Length - 1)
+        {
+            // No extension found or the dot is at the end of the string
+            return false;
+        }
+        
+        string extension = fileName.Substring(lastDotIndex + 1).ToLower(); // Extract and normalize the extension
+        return fileTypes.Contains(extension); // Check if it's in the valid file types list
+    }
     protected  List<string> LoadTitle(string path, string color, int spacing)
     {
         StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
@@ -58,19 +71,31 @@ public abstract class BaseInterperter: MonoBehaviour
         return response;
     }
 
-    protected List<string> LoadTitle(string path)
+    protected List<string> LoadTitle(string path, int mode)
     {
+        List<string> internalLines = new List<string>();
+        
         StreamReader file = new StreamReader(Path.Combine(Application.streamingAssetsPath, path));
         while(!file.EndOfStream)
         {   
             string temp_line = file.ReadLine();
             
-            response.Add(temp_line);
+            switch (mode)
+            {
+                case 0:
+                    response.Add(temp_line);
+                    break;
+                case 1:
+                    internalLines.Add(temp_line);
+                    break;
+            }
         }
         file.Close();
 
-        return response;
+        if(mode == 0) return response;
+        else return internalLines;
     }
+
 
     #region style
 

@@ -23,16 +23,6 @@ public class NavigationInterperter : BaseInterperter
     {
         terminalManager = GetComponent<TerminalManager>();
         
-        terminalManager.NoUserInputLines(LoadTitle("navigationUI.txt", "white", 1)); 
-        page1 = terminalManager.GetDynamicLines();
-        response.Clear();
-        terminalManager.NoUserInputLines(LoadTitle("garbageUI.txt", "white", 1));   //change to add more tabs, implement with page changing system
-        page2 = terminalManager.GetDynamicLines();
-        
-        foreach (var line in page1)
-        {
-            page2.Remove(line); // Remove page1 lines from page2
-        }
     }
 
     public override List<string> Interpert(string input)

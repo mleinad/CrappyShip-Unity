@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class RecyclingInterperter : BaseInterperter
@@ -13,96 +13,113 @@ public class RecyclingInterperter : BaseInterperter
         get { return _response; }
         set { _response = value; }
     }
-
+    
     [SerializeField] GameObject puzzle_component_gameobject;
     PressurePlate garbage_bin;
     TerminalManager terminalManager;
     [Range(0, 100)] public int contaminationLevel = 0;
     [SerializeField] private List<Interactable> interactable;
 
+    
+    private Dictionary<string, Action<string[]>> commandHandlers;
+    private Dictionary<string, Action> programHandlers;
+    
+    private Action deferredAction;
+    
+    
     private int progresBarIndex;
     private int roomStatusIndex;
     private List<TMP_Text> terminalUI;
 
     private bool page = false;
+    
+    UIPage recyclingUI;
 
     void Start()
     {
         terminalManager = GetComponent<TerminalManager>();
-  
-        response.Add(" PRESS [ESC] TO EXIT                              ");
-        terminalManager.NoUserInputLines(response);
-        response.Clear();
         garbage_bin = puzzle_component_gameobject.GetComponent<PressurePlate>();
 
         foreach (Interactable i in interactable)
         {
             i.enabled = false;
         }
+        InitializeHandlers();
+        
+        
     }
 
+    private void InitializeHandlers()
+    {
+        commandHandlers = new Dictionary<string, Action<string[]>>
+        {
+            { "help", HandleHelp },
+            { "run", HandleRun },
+            { "install", args => response.Add("Install functionality is not implemented.") },
+            { "delete", args => response.Add("Delete functionality is not implemented.") },
+            { "storage", HandleList}
+        };
+
+        programHandlers = new Dictionary<string, Action>
+        {
+            {"system_ctrl.exe", RunManager },
+            {"decrypter.exe", () => response.Add("Decrypter program... beep boop bzzzz") },
+            {"persona_logs.exe", () => response.Add("Diary program... beep boop bzzzz") },
+        };
+    }
+    private void HandleList(string[] args)
+    {
+        foreach (string programs in programHandlers.Keys)
+        {
+            response.Add(programs);
+        }
+    }
+    private void HandleHelp(string[] args)
+    {
+        ListEntry("run", "run a program from the terminal");
+        ListEntry("storage", "lists installed programs");
+        ListEntry("install", "install a new program");
+    }
+    private void HandleRun(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            response.Add("Please specify a program to run.");
+            return;
+        }
+
+        string programName = args[1];
+        if (programHandlers.ContainsKey(programName))
+        {
+            programHandlers[programName]();
+        }
+        else
+        {
+            response.Add("Executable not found.");
+        }
+    }
+    
+    
     public override List<string> Interpert(string input)
     {
         response.Clear();
+        
+        deferredAction = null; 
+        
         input = input.ToLower();
+        string[] args = input.Split();
 
-        string[] args = input.Split(); 
-        if (args[0] == "help")
+        if (args.Length > 0 && commandHandlers.ContainsKey(args[0]))
         {
-            ListEntry("run", "run a program from the terminal");
-            ListEntry("storage", "lists installed programs");
-            ListEntry("install", "install a new program");
-            return response;
-        }
-        if (args[0] == "run")
-        {
-            if (args[1] == "manager.exe")
-            {
-
-                RunPage();
-                //puzzle logic      maybe use events...
-                if (!garbage_bin.CheckCompletion())
-                {
-                    //response.Add("checking room contamination...");
-                    //response.Add(BoldString("Unable to open door, contamination risk too high!"));
-                }
-                else
-                {
-                    //response.Add("Room unlocked...");
-                    Solved();
-                }
-                return response;
-            }
-            if (args[1] == "decrypter.exe")
-            {
-                response.Add("decrypter program... beep boop bzzzz");
-                return response;
-            }
-
-            response.Add("executable not found");
-            return response;
+            commandHandlers[args[0]](args);
         }
         else
         {
             response.Add("Command not recognized.");
-            return response;
         }
+        
+        return response;
     }
-    
-
-    void ListEntry(string a, string b)
-    {
-        response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
-    }
-    
-    void Solved()
-    {
-        foreach (Interactable i in interactable)
-        {
-            i.enabled = true;
-        }
-    }
-
 
     private void Update()
     {
@@ -111,34 +128,60 @@ public class RecyclingInterperter : BaseInterperter
             UpdateTerminalUI();
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                Debug.Log("exit page!");
+                recyclingUI.TurnOffPage();
+                page = false;   
+                LoadCommandLine();
             }
         }
     }
-    
-    
-    
-    
 
+
+    void LoadCommandLine()
+    {
+        terminalManager.UserInputState(true);
+        
+    }
+    
+    
+    #region recycling UI
     void UpdateTerminalUI()
     {
        terminalUI[progresBarIndex].text = GenerateProgressBar(garbage_bin.GetCurrentObjects());
-       terminalUI[roomStatusIndex].text = GenerateStatus(garbage_bin.CheckCompletion() ? "normal" : "lockdown");
+       terminalUI[roomStatusIndex].text = GenerateStatus(garbage_bin.CheckCompletion() ? "NORMAL" : "LOCKDOWN");
     }
+    private void RunManager()
+    {
+        RunPage();
+        // Puzzle logic
+        if (!garbage_bin.CheckCompletion())
+        {
+            
+        }
+        else
+        {
 
-    
+            Solved();
+        }
+    }
     void RunPage()
     {
+        response.Clear();
         terminalManager.ClearScreen(0);
         terminalManager.UserInputState(false);
-        LoadTitle("garbageUI.txt");
+        terminalManager.NoUserInputLines(LoadTitle("garbageUI.txt",1));
+        //using the new class
         terminalUI = terminalManager.GetDynamicLines();
-        progresBarIndex = terminalUI.FindIndex(line => line.text.Contains("CONTAMINATION LEVEL:"));
-        roomStatusIndex = terminalUI.FindIndex(line => line.text.Contains("ROOM STATUS: "));
+        recyclingUI = new UIPage(terminalManager.GetDynamicLines());
+
+
+        progresBarIndex = recyclingUI.GetElementID("CONTAMINATION:");
+        roomStatusIndex = recyclingUI.GetElementID("ROOM STATUS:");
+        
+        page = true;
     }
     string GenerateStatus(string status)
     {
-        return $"| ROOM STATUS:      {status}                                ";
+        return $"| <b>ROOM STATUS:</b>    <color=#FF4500> {status}</color> <i>[OVERRIDE REQUIRED]</i>  ";
     }
     string GenerateProgressBar(int level)
     {
@@ -153,6 +196,21 @@ public class RecyclingInterperter : BaseInterperter
         string progressBar = new string('█', filledBlocks) + new string('░', emptyBlocks);
 
         // Format the string
-        return $"| CONTAMINATION LEVEL: [ {progressBar} ] {(percentage)*100}%";
+        return $"| <b>CONTAMINATION:</b>  <color=#FFA500>{(percentage)*100}</color> <color=#00FF00>[ {progressBar} ]</color>           ";
     }
+    
+    #endregion
+
+
+
+    
+    #region puzzle
+    void Solved()
+    {
+        foreach (Interactable i in interactable)
+        {
+            i.enabled = true;
+        }
+    }
+    #endregion
 }

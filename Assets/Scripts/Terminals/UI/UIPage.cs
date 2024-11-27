@@ -5,21 +5,30 @@ using TMPro;
 using UnityEngine.UI;
 public class UIPage
 {
-    private List<List<TMP_Text>> content;
-    public void StartPage()
+    public List<List<TMP_Text>> content;
+    
+    int currentPage;
+    public UIPage(List<TMP_Text> pageContent)
     {
-        
+        content = new List<List<TMP_Text>>();
+        content.Add(pageContent);
+        currentPage = 0;
     }
     public void UpdatePage()
     {
         
     }
 
-    int GetElementID(string s)
+   public int GetElementID(string s)
     {
-        return 0;
+        return content[currentPage].FindIndex(line => line.text.Contains(s));
     }
 
+    public void TurnOffPage()
+    {
+        EnableUI(content[currentPage],false);
+    }
+    
     private void SelectPage(int page)
     {
         EnableUI(content[page], true);

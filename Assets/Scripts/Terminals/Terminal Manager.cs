@@ -16,10 +16,11 @@ public class TerminalManager : MonoBehaviour
     BaseInterperter interperter;
 
     private bool input_position;
-    private int position_index;
     private List<TMP_Text> dynamic_lines;
     private void Start()
-    {   dynamic_lines = new List<TMP_Text>();
+    {  
+        dynamic_lines = new List<TMP_Text>();
+        
         interperter = GetComponent<BaseInterperter>();   
         if(interperter == null)
         {
@@ -52,9 +53,9 @@ public class TerminalManager : MonoBehaviour
     }
     private void AddDirectoryLine(string user_input)
     {
-        //resize the command line container -> weird stuff on scroll rect other wise
+        //resize the command line container -> weird stuff on scroll rect otherwise
        Vector2 msgListSize = msgList.GetComponent<RectTransform>().sizeDelta;
-       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y+ 70.0f);
+       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y + 45.0f);
 
        //instantiate the directory line
        GameObject msg = Instantiate(directory_line, msgList.transform);
@@ -104,7 +105,7 @@ public class TerminalManager : MonoBehaviour
         {
             sr.verticalNormalizedPosition = 0;
         }
-
+        
         
     }
 
@@ -159,10 +160,5 @@ public class TerminalManager : MonoBehaviour
     }
     
 
-    public void OverrideInputPosition(int position)
-    {
-        input_position = false;
-        position_index = position;
-    }
 
 }

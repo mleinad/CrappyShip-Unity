@@ -8,10 +8,7 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     
     public int numberOfObjects = 2;
     bool state = false;
-
-    [SerializeField]
-    private List<Interactable> interactable;
-
+    
     public List<GameObject> objectsOnPlate = new List<GameObject>();
 
     void OnTriggerEnter(Collider collision)
