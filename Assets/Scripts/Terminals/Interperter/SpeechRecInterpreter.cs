@@ -3,12 +3,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using TMPro;
 using UnityEngine;
 
 public class SpeechRecInterpreter : BaseInterperter
 {
+    public TerminalManager terminalManager;
     public MicrophoneDetector microphoneDetector;
     [SerializeField] private Interactable interactable;
+    private List<TMP_Text> terminalUI;
 
     List<string> _response = new List<string>();
     public override List<string> response
@@ -16,37 +19,20 @@ public class SpeechRecInterpreter : BaseInterperter
         get { return _response; }
         set { _response = value; }
     }
-    TerminalManager terminalManager;
     private bool isListening = false;
 
     private void Start()
     {
         interactable.enabled = false;
+        terminalManager.NoUserInputLines(LoadTitle("micUI.txt", "white", 0));
+        terminalManager.UserInputState(false);
+        terminalUI = terminalManager.GetDynamicLines();
+        WaitForMicrophoneInput();
 
     }
-    private void Awake()
-    {
-        
-        terminalManager = GetComponent<TerminalManager>();
-    }
-
-
+ 
     public override List<string> Interpert(string input)
     {
-        response.Clear();
-        string[] args = input.Split();
-
-            terminalManager.NoUserInputLines(new List<string> {
-            "Keyboard malfunction, please use voice commands",
-            "                                                         Voice Commands:",
-            " -Open door                               "
-
-            });
-            
-            DelayMessage(2f, "To activate the mirophone to use voice commands press <V>");
-
-            StartCoroutine(WaitForMicrophoneInput());
-
             return response;
         }
 
@@ -76,12 +62,13 @@ public class SpeechRecInterpreter : BaseInterperter
         
         if (microphoneDetector.state)
         {
-            terminalManager.NoUserInputLines(new List<string> { "Open door command activated" });
+           //Change something to Door Activated 
             interactable.enabled = true;
         }
         else
         {
-            terminalManager.NoUserInputLines(new List<string> { "No valid voice command detected. Please try again." });
+            //Change for Voice Command not Recognized
+            
         }
 
         isListening = false; 
@@ -92,7 +79,7 @@ public class SpeechRecInterpreter : BaseInterperter
 
         for (int i = 1; i <= seconds; i++)
         {
-                terminalManager.NoUserInputLines(new List<string> { $"Listening... {seconds - i} seconds remaining" });
+                //CHANGE (SECONDS) TO THE NUMBER OF SECONDS REMAINING THEN CHANGE THE MIC ACTIVATED
                 yield return new WaitForSeconds(1);
         }
     }
