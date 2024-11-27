@@ -105,8 +105,6 @@ public class TerminalManager : MonoBehaviour
         {
             sr.verticalNormalizedPosition = 0;
         }
-        
-        
     }
 
     public void UserInputState(bool state)
