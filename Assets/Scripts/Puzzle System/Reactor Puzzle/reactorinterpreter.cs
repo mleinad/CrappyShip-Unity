@@ -20,6 +20,10 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
     private int currentLevel = 0;
     public KeyCode upKey = KeyCode.UpArrow;
     public KeyCode downKey = KeyCode.DownArrow;
+    public int incrementValue = 15;
+    public int decrementValue = 10;
+    public int maxLevel = 100;
+    private bool isLocked = false;
 
     private void Start()
     {
@@ -41,26 +45,46 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
    
     private void Update()
     {
-        HandleInput();
-        UpdateTerminalUI();
+        if (!isLocked)
+        {
+            HandleInput();
+        }
+
+            UpdateTerminalUI();
     }
     void HandleInput()
     {
         if (interactable.WasTriggered())
         {
-            if (currentLevel == 100 && Input.GetKeyDown(upKey)) return;
-            if (currentLevel == 0 && Input.GetKeyDown(downKey)) return;
-
             if (Input.GetKeyDown(upKey))
             {
-                currentLevel = Mathf.Clamp(currentLevel + 5, 0, 100);
+                currentLevel += incrementValue;
+
+            
+                if (currentLevel > maxLevel)
+                {
+                    currentLevel = 0;
+                }
+                if(currentLevel == maxLevel)
+                {
+                    isLocked = true;
+                }
             }
             else if (Input.GetKeyDown(downKey))
             {
-                currentLevel = Mathf.Clamp(currentLevel - 5, 0, 100);
+                currentLevel -= decrementValue;
+
+              
+                if (currentLevel < 0)
+                {
+                    currentLevel = 0;
+                }
+                if (currentLevel == maxLevel)
+                {
+                    isLocked = true;
+                }
             }
         }
-       
     }
 
     void UpdateTerminalUI()
@@ -71,11 +95,11 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
     }
     string GenerateStatus(string status)
     {
-        return $"| ROOM STATUS:      {status}                                ";
+        return $"║ ROOM STATUS:      {status}                                ";
     }
     string GenerateProgressBar(int level)
     {
-        int total = 100;
+        int total = maxLevel;
         int totalBlocks = 20; // Total number of blocks in the bar
         // ReSharper disable once PossibleLossOfFraction
         float percentage = (float)level / total;
@@ -85,7 +109,7 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
         // Build the progress bar string
         string progressBar = new string('█', filledBlocks) + new string('░', emptyBlocks);
 
-        if (level == 100)
+        if (level == maxLevel)
         {
             done = true;
             vent.SetBool("isDone",true);
@@ -96,7 +120,7 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
         }
 
         // Format the string
-        return $"| CONTAMINATION LEVEL: [ {progressBar} ] {(percentage) * 100}%";
+        return $"║ CONTAMINATION LEVEL: [ {progressBar} ] {(percentage * 100):0}%";
         
     }
 
@@ -111,5 +135,8 @@ public class reactorinterpreter : BaseInterperter,IPuzzleComponent
     public void ResetPuzzle()
     {
         done = false;
+        currentLevel = 0;
+        isLocked = false;
+        vent.SetBool("isDone", false);
     }
 }

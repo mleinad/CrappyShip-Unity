@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +12,8 @@ public class SpeechRecInterpreter : BaseInterperter
     public MicrophoneDetector microphoneDetector;
     [SerializeField] private Interactable interactable;
     private List<TMP_Text> terminalUI;
+    public int timeStatusIndex, MicStatusIndex, VoiceCommandIndex;
+    public int timeMic= 8;
 
     List<string> _response = new List<string>();
     public override List<string> response
@@ -24,31 +26,34 @@ public class SpeechRecInterpreter : BaseInterperter
     private void Start()
     {
         interactable.enabled = false;
-        terminalManager.NoUserInputLines(LoadTitle("micUI.txt", "white", 0));
-        terminalManager.UserInputState(false);
+        terminalManager.NoUserInputLines(LoadTitle("micUI.txt", "white", 0)); 
         terminalUI = terminalManager.GetDynamicLines();
-        WaitForMicrophoneInput();
+        timeStatusIndex = terminalUI.FindIndex(line => line.text.Contains("WAITING "));
+        MicStatusIndex = terminalUI.FindIndex(line => line.text.Contains("MIC STATUS: "));
+        VoiceCommandIndex = terminalUI.FindIndex(line => line.text.Contains("VOICE COMMAND: "));
+
+        StartCoroutine(WaitForMicrophoneInput());
 
     }
- 
+    private void Update()
+    {
+        UpdateTerminalUI(); 
+    }
+
     public override List<string> Interpert(string input)
     {
             return response;
-        }
-
-    
-    private void DelayMessage(float delay, string message)
+    }
+    void UpdateTerminalUI()
     {
-        StartCoroutine(DelayMessageCoroutine(delay, message));
+        terminalUI[timeStatusIndex].text = "║WAITING " + timeMic.ToString();
+        terminalUI[MicStatusIndex].text = isListening ? "║ MIC STATUS: ACTIVATED" : "║ MIC STATUS OFF";
+        terminalUI[VoiceCommandIndex].text = microphoneDetector.state ? "║ VOICE COMMAND: OPEN DOOR":"║ VOICE COMMAND: NOT RECONIZED";
     }
 
-    private IEnumerator DelayMessageCoroutine(float delay, string message)
-    {
-        yield return new WaitForSeconds(delay);
-        terminalManager.NoUserInputLines(new List<string> { message });
-    }
     private IEnumerator WaitForMicrophoneInput()
     {
+        terminalManager.UserInputState(true);
         // Wait for the "V" key to be pressed
         while (!Input.GetKeyDown(KeyCode.V))
         {
@@ -62,7 +67,6 @@ public class SpeechRecInterpreter : BaseInterperter
         
         if (microphoneDetector.state)
         {
-           //Change something to Door Activated 
             interactable.enabled = true;
         }
         else
@@ -77,10 +81,11 @@ public class SpeechRecInterpreter : BaseInterperter
     private IEnumerator ExtendedListeningWindow(int seconds)
     {
 
-        for (int i = 1; i <= seconds; i++)
+        timeMic = seconds; 
+        while (timeMic > 0)
         {
-                //CHANGE (SECONDS) TO THE NUMBER OF SECONDS REMAINING THEN CHANGE THE MIC ACTIVATED
-                yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
+            timeMic--; 
         }
     }
 }
