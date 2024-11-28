@@ -32,7 +32,7 @@ public class LookedAt : MonoBehaviour, IPuzzleComponent
          if(other==null) return;
         if(other.CompareTag("MainCamera"))
         {
-            ResetPuzzle();
+            //ResetPuzzle();
         }
     }
 }

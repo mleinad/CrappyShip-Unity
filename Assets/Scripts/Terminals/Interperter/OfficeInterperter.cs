@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,12 @@ public class OfficeInterperter : BaseInterperter
         set { _response = value; }
     }
     private string correctPassword = "earth";
-    [SerializeField] private Animator doorAnimator;
+    [SerializeField] private Interactable door;
+
+    private void Start()
+    {
+        door.enabled = false;
+    }
 
     public override List<string> Interpert(string input)
     {
@@ -46,15 +52,6 @@ public class OfficeInterperter : BaseInterperter
 
     private void OpenDoor()
     {
-        Debug.Log("Password is correct! Opening Door...");
-        
-        if (doorAnimator != null)
-        {
-            doorAnimator.SetTrigger("OpenDoor");
-        }
-        else
-        {
-            Debug.LogWarning("Animator not assigned to OfficeInterperter script!");
-        }
+       door.enabled = true;
     }
 }

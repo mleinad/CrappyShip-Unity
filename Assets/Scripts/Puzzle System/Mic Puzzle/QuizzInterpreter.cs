@@ -39,7 +39,7 @@ public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
             if (args[0] == "help")
             {
                 response.Add("Solve the quiz to proceed to the next room.");
-                response.Add("Type <quizz.exe> to start the quiz.");
+                response.Add("Type <quiz.exe> to start the quiz.");
                 return response;
             }
 

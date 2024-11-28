@@ -1,28 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PickedUp : MonoBehaviour, IPuzzleComponent
+public class Interacted : MonoBehaviour, IPuzzleComponent
 {
     bool state;
 
     [SerializeField]
-    DragNDrop  dragNDrop;
+    Interactable  interactable;
 
 
     void Update()
     {
-        if(dragNDrop.IsPickedUp()&& !state)
+        if(interactable.WasTriggered()&&!state)
         {
             state = true;
-            EventManager.Instance.OnAiTrigger(this); 
+            EventManager.Instance.OnAiTrigger(this);
         }
     }
 
     public bool CheckCompletion()
     {
-       return state;
+        return state;
     }
 
     public void ResetPuzzle()

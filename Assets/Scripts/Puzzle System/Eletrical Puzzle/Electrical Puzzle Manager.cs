@@ -65,6 +65,8 @@ public class ElectricalPuzzleManager : MonoBehaviour
             EnableLights(redLights2, false);
             EnableLights(redLights3, false);
             EventManager.Instance.OnTurnOnLights(true);
+            Player.Instance.EnablePlayerLight(false);
+            EventManager.Instance.OnAiTrigger(mainPuzzleComposite);
         }
     }
 }

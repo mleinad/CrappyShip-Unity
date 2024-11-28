@@ -17,6 +17,9 @@ public class InteractableAction : MonoBehaviour   //possibly play animation acti
     public bool timed;
     public float timer;
     bool beenTriggerd;
+    
+    public bool doOnce = false;
+    private bool hasPlayedOnce;
     void Awake()
     {
         beenTriggerd = false; 
@@ -30,13 +33,19 @@ public class InteractableAction : MonoBehaviour   //possibly play animation acti
 
 
     private void Perform(Interactable obj)
-    {
+    {  
+        if (doOnce && hasPlayedOnce)
+            return;
+
         if (obj == interactable)
         {
              beenTriggerd = !beenTriggerd;
             animator.SetBool(Interaction, beenTriggerd);
             animator.SetTrigger(Triggered);
         }
+        
+        if (doOnce)
+            hasPlayedOnce = true;
     }
     
     IEnumerator DelayedAnimation(float delay)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class SignalEvaluator : MonoBehaviour, ISignalModifier
@@ -13,7 +14,8 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     public int count;
     Dictionary<ColliderIO, int> Collider_value_list;
     public List<int> inputSignals;
-
+    
+    public List<TMP_Text> textList;
     private void Start()
     {
         Collider_value_list = new Dictionary<ColliderIO, int>();
@@ -25,9 +27,40 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
     void Update()
     {
         DrawVectors();
+        Display();
+        
+        
     }
 
+    void Display()
+    {
+        foreach (var display in textList)
+        {
+            display.text = GenerateDisplay();
+        }
+    }
 
+    string GenerateDisplay()
+    {
+        string outputString = "";
+        if (mode == 0)
+        {
+            outputString += "AND\n\n";
+        }
+
+        if (mode == 1)
+        {
+            outputString += "XOR\n\n";
+        }
+
+        foreach (var input in inputSignals)
+        {
+            outputString += "in: " + input + " ";
+        }
+        outputString += $"\n out: {output}\n";
+        return outputString;
+        
+    }
     public void Disconnect(ColliderIO current)
     {   
        Collider_value_list[current] = 0;
@@ -90,10 +123,10 @@ public class SignalEvaluator : MonoBehaviour, ISignalModifier
         if(output) output.SwitchType(InputType.output);
     }
 
-
+    private int output;
     private int EvaluateSignal()
     {
-        int output = 0;
+        output = 0;
 
         inputSignals = Collider_value_list.Values.ToList();
 

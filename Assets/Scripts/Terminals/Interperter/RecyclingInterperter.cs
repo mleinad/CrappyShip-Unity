@@ -45,8 +45,8 @@ public class RecyclingInterperter : BaseInterperter
             i.enabled = false;
         }
         InitializeHandlers();
-        
-        
+
+        EventManager.Instance.onAiTrigger += CheckSolved;
     }
 
     private void InitializeHandlers()
@@ -63,8 +63,8 @@ public class RecyclingInterperter : BaseInterperter
         programHandlers = new Dictionary<string, Action>
         {
             {"system_ctrl.exe", RunManager },
-            {"decrypter.exe", () => response.Add("Decrypter program... beep boop bzzzz") },
-            {"persona_logs.exe", () => response.Add("Diary program... beep boop bzzzz") },
+            {"room_manual.pdf", HandleManual },
+            {"last_log.txt",HandleLog },
         };
     }
     private void HandleList(string[] args)
@@ -98,9 +98,18 @@ public class RecyclingInterperter : BaseInterperter
             response.Add("Executable not found.");
         }
     }
+
+    private void HandleManual()
+    {
+        terminalManager.ClearScreen(0);
+        LoadTitle("manual1.txt", 0);
+    }
     
-    
-    
+    private void HandleLog()
+    {
+        terminalManager.ClearScreen(0);
+        LoadTitle("log1.txt", 0);
+    }
     public override List<string> Interpert(string input)
     {
         response.Clear();
@@ -134,6 +143,9 @@ public class RecyclingInterperter : BaseInterperter
                 LoadCommandLine();
             }
         }
+        
+        
+        
     }
 
 
@@ -154,15 +166,6 @@ public class RecyclingInterperter : BaseInterperter
     {
         RunPage();
         // Puzzle logic
-        if (!garbage_bin.CheckCompletion())
-        {
-            
-        }
-        else
-        {
-
-            Solved();
-        }
     }
     void RunPage()
     {
@@ -206,6 +209,14 @@ public class RecyclingInterperter : BaseInterperter
 
     
     #region puzzle
+
+    void CheckSolved(IPuzzleComponent puzzle)
+    {
+        if (puzzle == garbage_bin)
+        {
+            Solved();
+        }
+    }
     void Solved()
     {
         foreach (Interactable i in interactable)
@@ -213,5 +224,6 @@ public class RecyclingInterperter : BaseInterperter
             i.enabled = true;
         }
     }
+    
     #endregion
 }

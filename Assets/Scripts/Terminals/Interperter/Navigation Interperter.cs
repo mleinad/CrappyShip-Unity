@@ -31,30 +31,7 @@ public class NavigationInterperter : BaseInterperter
 
             string[] args = input.Split();
 
-            if(args[0]=="set destination")
-            {
-                if(superComputer.CheckCompletion())
-                {
-
-                response.Add("Thank you for using the terminal");
-                response.Add("---------------------------------");
-
-                return response;
-                }
-                else 
-                {
-                response.Add("Something went wrong");
-
-                return response;
-
-                }
-            }
-            else
-            {
-                response.Add("Command not recognized. Type help for a list of commands");
-                return response;
-            }
-
+            return response;
 
 
     }

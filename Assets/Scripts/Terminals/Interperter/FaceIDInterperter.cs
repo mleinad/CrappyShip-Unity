@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -24,15 +25,24 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
     public GameObject _keycard;
     public GameObject _faceID;
 
-    IPuzzleComponent keycard;
+    keycard keycard;
 
+    
+    private Dictionary<string, Action<string[]>> commandHandlers;
+    private Dictionary<string, Action> programHandlers;
+    
+    
+    
+    
+    
+    
     [SerializeField]
     private List<Interactable> interactables;
 
     private int n;
     void Start()
     {
-        keycard = _keycard.GetComponent<IPuzzleComponent>();
+        keycard = _keycard.GetComponent<keycard>();
 
         terminalManager = GetComponent<TerminalManager>();
         code_template = new List<string>();
@@ -41,52 +51,86 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         {
             i.enabled = false; 
         }
+        EventManager.Instance.onTriggerSolved+=OnTriggerSolved;
+        InitializeHandlers();
     }
 
-    public override List<string> Interpert(string input)
+    private void OnTriggerSolved(IPuzzleComponent obj)
     {
-        response.Clear();
-
-        string[] args = input.Split(); // help ffff ffff 
-
-        if(args[0] == "help" )
+        if (obj == puzzleComposite)
         {
-            ListEntry("help", "returns a list of commands");
-            ListEntry("open", "opens door");
-            ListEntry("scan id", "scans user's id card");
-            return response;
-            
-        
+            Solved();
         }
-        if(args[0]=="open")
+    }
+
+    private void InitializeHandlers()
+    {
+        commandHandlers = new Dictionary<string, Action<string[]>>
         {
-            if(puzzleComposite.CheckCompletion())
-            {
-                response.Add("opening door!");  //add ascii
-                Solved();
-            }
-            else
-            {
-                if(!keycard.CheckCompletion())
-                {
-                    response.Add("no keycard found, access denied!");
-                }
-                else
-                {
-                    response.Add("facial recognition...");
-                    StartCoroutine(ScanFace());
-                }
+            { "help", HandleHelp },
+            { "run", HandleRun },
+            { "install", args => response.Add("Install functionality is not implemented.") },
+            { "delete", args => response.Add("Delete functionality is not implemented.") },
+            { "storage", HandleList}
+        };
 
-            }
+        programHandlers = new Dictionary<string, Action>
+        {
+            {"id_verify.exe", ScanID },
+            {"id_photo.png", () => response.Add("Diary program... beep boop bzzzz") },
+        };
+    }
+    
+    private void HandleHelp(string[] args)
+    {
+        ListEntry("run", "run a program from the terminal");
+        ListEntry("storage", "lists installed programs");
+        ListEntry("install", "install a new program");
+    }
+    private void HandleRun(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            response.Add("Please specify a program to run.");
+            return;
+        }
 
-
-            return response;
+        string programName = args[1];
+        if (programHandlers.ContainsKey(programName))
+        {
+            programHandlers[programName]();
         }
         else
         {
-            response.Add("Command not recognized. Type help for a list of commands");
-            return response;
+            response.Add("Executable not found.");
         }
+    }
+    private void HandleList(string[] args)
+    {
+        foreach (string programs in programHandlers.Keys)
+        {
+            response.Add(programs);
+        }
+    }
+    
+    public override List<string> Interpert(string input)
+    {
+        
+        response.Clear();
+        
+        input = input.ToLower();
+        string[] args = input.Split();
+
+        if (args.Length > 0 && commandHandlers.ContainsKey(args[0]))
+        {
+            commandHandlers[args[0]](args);
+        }
+        else
+        {
+            response.Add("Command not recognized.");
+        }
+        
+        return response;
     }
     
     
@@ -95,7 +139,20 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         response.Add(ColorString(a, colors["orange"]) + ":" + ColorString(b, colors["yellow"]));
     }
 
-
+    void ScanID()
+    {
+        if (keycard.CheckCompletion())
+        {
+            keycard.MoveToScaner();
+            response.Add("adicional security required");
+            response.Add("starting facial recognition process...");
+            StartCoroutine(ScanFace());
+        }
+        else
+        {
+            response.Add("keycard not recognized.");
+        }
+    }
     void Solved()
     {
         foreach (var i in interactables)
@@ -114,13 +171,15 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         state = false;
     }
 
-
+    private int numberOfAttempts = 0;
     IEnumerator ScanFace()
     {
+        numberOfAttempts++;
+        yield return new WaitForSeconds(0.5f);
         face_camera.SetActive(true); 
         
         surprised__factor = EmotionsManager.Emotions.surprised;
-        if(surprised__factor>.3f)
+        if(surprised__factor>.3f||numberOfAttempts>=3)
         {
             state = true;
         }

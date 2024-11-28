@@ -13,6 +13,8 @@ public class keycard : MonoBehaviour, IPuzzleComponent
     bool state;
     bool onHand = false;
 
+    [SerializeField] private Transform cardOffset;
+
     public bool CheckCompletion()=> state;
     public void ResetPuzzle()=> state = false;
     void Start()
@@ -73,6 +75,14 @@ public class keycard : MonoBehaviour, IPuzzleComponent
 
     }
 
+    public void MoveToScaner()
+    {
+        transform.SetParent(cardOffset);
+        transform.localPosition = new Vector3(0,0,0);
+        transform.localRotation = Quaternion.Euler(0,0,0);
+        dragNDrop.enabled = false;
+        SetLayerRecursively(transform, 0);
+    }
      void SetLayerRecursively(Transform transform, int layer)
     {
         transform.gameObject.layer = layer;
