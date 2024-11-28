@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.EventSystems;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
