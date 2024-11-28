@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using QFSW.QC;
-using Unity.Mathematics;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 [RequireComponent(typeof(DragNDrop))]

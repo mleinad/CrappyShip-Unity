@@ -36,10 +36,10 @@ public class LaserInterper : BaseInterperter, IPuzzleComponent
         string[] args = input.Split();
         if (args[0] == "help")
         {
-            response.Add("");
+            ListEntry("ON", "to turn on the sprinklers");
             return response;
         }
-        if (args[0] == "open")
+        if (args[0] == "ON")
         {
             response.Add("opened door...");
             state = true;
