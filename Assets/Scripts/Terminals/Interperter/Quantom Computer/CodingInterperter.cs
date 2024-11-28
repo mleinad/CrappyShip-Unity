@@ -82,7 +82,7 @@ public class CodingInterperter : BaseInterperter, IPuzzleComponent
         programHandlers = new Dictionary<string, Action>
         {
             {"system_ctrl.exe", ()=> response.Add("Decrypter program... beep boop bzzzz")  },
-          //  {"system_override.exe", () => response.Add("Decrypter program... beep boop bzzzz") },
+          //  {".exe", () => response.Add("Decrypter program... beep boop bzzzz") },
           //  {"persona_logs.exe", () => response.Add("Diary program... beep boop bzzzz") }
             
         };
@@ -105,7 +105,7 @@ public class CodingInterperter : BaseInterperter, IPuzzleComponent
 
         hiddenFilesHandlers = new Dictionary<string, Action>()
         {
-            { "secret_file.txt", () => response.Add("secret file is opened!") }
+            { "override_AI_instructions.txt", () => response.Add("to override AI use //.override 5678") }
         };
         
         commandDescriptions = new Dictionary<string, string>
