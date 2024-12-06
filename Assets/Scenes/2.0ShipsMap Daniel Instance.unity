@@ -26892,6 +26892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 743800949}
+  - component: {fileID: 743800950}
   m_Layer: 0
   m_Name: -------------------ASCII ------------------------------
   m_TagString: Untagged
@@ -26916,6 +26917,19 @@ Transform:
   - {fileID: 226009797}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &743800950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743800948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ca963a374853c45a8d14d593a2563d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxActiveCameras: 0
 --- !u!1001 &744727824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77335,9 +77349,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8996209040755828420, guid: a75940d5b93eb2b4093d85360a9c1000,
         type: 3}
+      propertyPath: ASCIICam
+      value: 
+      objectReference: {fileID: 6426740384058465468, guid: 956eec1eb4ab37844ace087125345818,
+        type: 3}
+    - target: {fileID: 8996209040755828420, guid: a75940d5b93eb2b4093d85360a9c1000,
+        type: 3}
       propertyPath: _keycard
       value: 
       objectReference: {fileID: 1258142171}
+    - target: {fileID: 8996209040755828420, guid: a75940d5b93eb2b4093d85360a9c1000,
+        type: 3}
+      propertyPath: mediaLine
+      value: 
+      objectReference: {fileID: 2469721459269927049, guid: 5dfe8544c146d6b4dab208199b9327ae,
+        type: 3}
     - target: {fileID: 8996209040755828420, guid: a75940d5b93eb2b4093d85360a9c1000,
         type: 3}
       propertyPath: face_camera
