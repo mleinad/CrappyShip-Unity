@@ -42,7 +42,7 @@ public class TerminalManager : MonoBehaviour
                 //Instanciate GameObject with a directory prefix
                 AddDirectoryLine(user_input);
 
-
+                                                        //base class interperter
                 int lines = AddInterperterLines(interperter.Interpert(user_input));
 
                 ScrollToBottom(lines);

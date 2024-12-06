@@ -11,19 +11,19 @@ public class RecyclingInterperter : BaseInterperter
         get { return _response; }
         set { _response = value; }
     }
+    #region Puzzle logic
+
     
+
     [SerializeField] GameObject puzzle_component_gameobject;
     PressurePlate garbage_bin;
     TerminalManager terminalManager;
     [Range(0, 100)] public int contaminationLevel = 0;
     [SerializeField] private List<Interactable> interactable;
 
-    
+    #endregion
     private Dictionary<string, Action<string[]>> commandHandlers;
     private Dictionary<string, Action> programHandlers;
-    
-    private Action deferredAction;
-    
     
     private int progresBarIndex;
     private int roomStatusIndex;
@@ -45,6 +45,24 @@ public class RecyclingInterperter : BaseInterperter
         InitializeHandlers();
 
         EventManager.Instance.onAiTrigger += CheckSolved;
+    }
+    public override List<string> Interpert(string input)
+    {
+        response.Clear();
+        
+        input = input.ToLower();
+        string[] args = input.Split();
+
+        if (args.Length > 0 && commandHandlers.ContainsKey(args[0]))
+        {
+            commandHandlers[args[0]](args);
+        }
+        else
+        {
+            response.Add("Command not recognized.");
+        }
+        
+        return response;
     }
 
     private void InitializeHandlers()
@@ -96,39 +114,16 @@ public class RecyclingInterperter : BaseInterperter
             response.Add("Executable not found.");
         }
     }
-
     private void HandleManual()
     {
         terminalManager.ClearScreen(0);
         LoadTitle("manual1.txt", 0);
     }
-    
     private void HandleLog()
     {
         terminalManager.ClearScreen(0);
         LoadTitle("log1.txt", 0);
     }
-    public override List<string> Interpert(string input)
-    {
-        response.Clear();
-        
-        deferredAction = null; 
-        
-        input = input.ToLower();
-        string[] args = input.Split();
-
-        if (args.Length > 0 && commandHandlers.ContainsKey(args[0]))
-        {
-            commandHandlers[args[0]](args);
-        }
-        else
-        {
-            response.Add("Command not recognized.");
-        }
-        
-        return response;
-    }
-
     private void Update()
     {
         if (page)

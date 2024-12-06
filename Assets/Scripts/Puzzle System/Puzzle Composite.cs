@@ -33,16 +33,6 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
             }
         }
     }
-
-
-    void Awake()
-    {
-        foreach(GameObject g in gameObjects)
-        {
-            Add(g.GetComponent<IPuzzleComponent>());
-        }
-    }
-
     public bool CheckCompletion()
     {
         if (_components != null)
@@ -56,6 +46,15 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
             }
         }
         return true; 
+    }
+    
+    
+    void Awake()
+    {
+        foreach(GameObject g in gameObjects)
+        {
+            Add(g.GetComponent<IPuzzleComponent>());
+        }
     }
 
     public void ResetPuzzle()

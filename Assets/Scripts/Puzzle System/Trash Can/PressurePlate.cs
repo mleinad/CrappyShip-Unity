@@ -19,17 +19,22 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
         }
 
     }
-
-
+    
     void OnTriggerExit(Collider collision)
     {
         if(collision.gameObject.CompareTag("PlateObject"))
         {
             objectsOnPlate.Remove(collision.gameObject);
             CheckActivation();
-
+            
         }
 
+    }
+    private void ActivatePlate()
+    {
+       // Debug.Log("Placa de Pressao Ativada.");
+       state = true;
+       EventManager.Instance.OnAiTrigger(this);
     }
 
     private void CheckActivation()
@@ -45,13 +50,6 @@ public class PressurePlate : MonoBehaviour, IPuzzleComponent
     }
 
 
-    private void ActivatePlate()
-    {
-       // Debug.Log("Placa de Pressao Ativada.");
-       state = true;
-
-        EventManager.Instance.OnAiTrigger(this);
-    }
 
     private void DeactivatePlate()
     {

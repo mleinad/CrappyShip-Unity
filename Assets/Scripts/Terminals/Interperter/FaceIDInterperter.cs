@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoodMe;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
 {
@@ -29,10 +31,10 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
     
     private Dictionary<string, Action<string[]>> commandHandlers;
     private Dictionary<string, Action> programHandlers;
-    
-    
-    
-    
+
+
+    public GameObject mediaLine;
+    public GameObject ASCIICam;
     
     
     [SerializeField]
@@ -76,7 +78,7 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         programHandlers = new Dictionary<string, Action>
         {
             {"id_verify.exe", ScanID },
-            {"id_photo.png", () => response.Add("Diary program... beep boop bzzzz") },
+            {"id_photo.png", LoadImage},
         };
     }
     
@@ -189,4 +191,25 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
             terminalManager.NoUserInputLines(new List<string>{"access granted!"});
         else terminalManager.NoUserInputLines(new List<string>{"access denied!"});
     }
+
+
+
+
+    private void LoadImage()
+    {
+     GameObject msg = Instantiate(mediaLine, terminalManager.msgList.transform);
+     msg.transform.SetSiblingIndex(terminalManager.msgList.transform.childCount -1);
+
+                                                    //random position away from game, in the future create a parent object in a different layer
+     GameObject asciiCamera = Instantiate(ASCIICam, new Vector3(0,0,0), quaternion.identity);
+     ASCIICameraManager.Instance.AddObject(asciiCamera.transform);
+     
+     ASCIIImage image = asciiCamera.GetComponent<ASCIIImage>();
+     
+     image.SetWebCamTexture();
+     
+     msg.transform.GetChild(0).GetComponent<RawImage>().texture = image.SetRenderTexture(900, 900);
+     
+    }
+    
 }
