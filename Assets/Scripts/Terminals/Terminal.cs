@@ -26,6 +26,8 @@ public class Terminal : MonoBehaviour
             Player.Instance.LockMovement(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            
+            Player.Instance.DeviceEnabledState(false);
 
             EnableTerminal(true); 
         }
@@ -39,6 +41,8 @@ public class Terminal : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             interactable.SetTrigger(false);
+            
+            Player.Instance.DeviceEnabledState(true);
         }
     }
     

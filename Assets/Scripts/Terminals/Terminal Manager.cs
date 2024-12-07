@@ -13,7 +13,7 @@ public class TerminalManager : MonoBehaviour
     public GameObject user_input_line;
     public ScrollRect sr;
     public GameObject msgList;
-    BaseInterperter interperter;
+    private BaseInterperter interperter;
 
     private bool input_position;
     private List<TMP_Text> dynamic_lines;
@@ -55,7 +55,7 @@ public class TerminalManager : MonoBehaviour
     {
         //resize the command line container -> weird stuff on scroll rect otherwise
        Vector2 msgListSize = msgList.GetComponent<RectTransform>().sizeDelta;
-       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y + 45.0f);
+       msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y + 65.0f);
 
        //instantiate the directory line
        GameObject msg = Instantiate(directory_line, msgList.transform);
@@ -71,9 +71,8 @@ public class TerminalManager : MonoBehaviour
         terminal_input.text ="";
     }
 
-    
 
-    int AddInterperterLines(List<string> interpertation)
+    private int AddInterperterLines(List<string> interpertation)
     {
         dynamic_lines = new List<TMP_Text>();
         dynamic_lines.Clear();
@@ -94,7 +93,7 @@ public class TerminalManager : MonoBehaviour
     }
 
 
-    void ScrollToBottom(int lines)
+    private void ScrollToBottom(int lines)
     {
         
         if(lines > 4)

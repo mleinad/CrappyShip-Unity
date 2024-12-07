@@ -21,6 +21,8 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
     
     public float surprised__factor=0.0f;
     public PuzzleComposite puzzleComposite;
+
+    [SerializeField] private Texture randomImage;
     
     public GameObject face_camera;
     public GameObject _keycard;
@@ -202,11 +204,12 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
 
                                                     //random position away from game, in the future create a parent object in a different layer
      GameObject asciiCamera = Instantiate(ASCIICam, new Vector3(0,0,0), quaternion.identity);
+     
      ASCIICameraManager.Instance.AddObject(asciiCamera.transform);
      
      ASCIIImage image = asciiCamera.GetComponent<ASCIIImage>();
      
-     image.SetWebCamTexture();
+     image.SetImage(randomImage);
      
      msg.transform.GetChild(0).GetComponent<RawImage>().texture = image.SetRenderTexture(900, 900);
      

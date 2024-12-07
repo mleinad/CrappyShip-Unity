@@ -10,9 +10,11 @@ public class DeviceStateManager : MonoBehaviour
 
     public Animator animator;
 
+    private bool isEnabled;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        isEnabled = true;
         current_state = deviceStored_state;
 
         current_state.EnterState(this);
@@ -24,7 +26,8 @@ public class DeviceStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        current_state.UpdateState(this);
+        if(isEnabled)
+            current_state.UpdateState(this);
     }
 
     public void SwitchState(DeviceBaseState state){
@@ -35,4 +38,5 @@ public class DeviceStateManager : MonoBehaviour
     }
 
     public DeviceBaseState GetCurrentDeviceState() => current_state;
+    public void SetState(bool state)=> isEnabled = state;
 }

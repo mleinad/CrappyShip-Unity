@@ -1,4 +1,5 @@
 
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -12,7 +13,9 @@ public class Player : MonoBehaviour
 
     public TwoBoneIKConstraint right_arm;
     public TwoBoneIKConstraint left_arm;
-
+    
+    [SerializeField]
+    private DeviceStateManager deviceStateManager;
     
     [SerializeField]
     private GameObject crosshair1, crosshair2, message;
@@ -175,7 +178,7 @@ public class Player : MonoBehaviour
         player_light.enabled = state;
     }
 
-
+    public void DeviceEnabledState(bool state) => deviceStateManager.SetState(state);
 #region UI
     
     public void CrosshairOn(){
