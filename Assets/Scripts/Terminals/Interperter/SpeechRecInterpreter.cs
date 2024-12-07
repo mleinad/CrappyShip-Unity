@@ -72,7 +72,11 @@ public class SpeechRecInterpreter : BaseInterperter
             
         }
 
-        isListening = false; 
+        isListening = false;
+        microphoneDetector.StopRecording();
+
+
+        StartCoroutine(WaitForMicrophoneInput());
     }
 
     private IEnumerator ExtendedListeningWindow(int seconds)

@@ -29,14 +29,35 @@ public class MicrophoneDetector : MonoBehaviour, IPuzzleComponent
         active = true;
     }
  
-    private void StopRecording()
+    public void StopRecording()
     {
+        if (!Microphone.IsRecording(null))
+        {
+            Debug.LogWarning("Microphone is not recording. StopRecording called prematurely.");
+            return;
+        }
+
         var position = Microphone.GetPosition(null);
+        Debug.Log($"Microphone recording stopped. Position: {position}");
+
         Microphone.End(null);
+
+        // Validate the audio clip
+        if (clip == null || !clip.isReadyToPlay)
+        {
+            Debug.LogError("Audio clip is invalid or not ready after stopping microphone.");
+            return;
+        }
+
+        position = Mathf.Min(position, clip.samples);
+
         var samples = new float[position * clip.channels];
         clip.GetData(samples, 0);
+
         bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);
+
         active = false;
+        Debug.Log($"Recording processed: {samples.Length} samples.");
         SendRecording();
     }
 
