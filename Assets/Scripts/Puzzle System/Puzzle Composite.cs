@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
 {
@@ -14,6 +15,9 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     private bool state = false; 
     
     private readonly List<IPuzzleComponent> _components = new List<IPuzzleComponent>();
+
+    //handles hints...
+    private Dictionary<IPuzzleComponent, Action> hintDictionary;
 
     public bool State
     {

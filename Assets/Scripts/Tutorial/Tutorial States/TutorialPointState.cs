@@ -6,16 +6,20 @@ public class TutorialPointState : TutorialBaseState
 {
     public override void EnterState(TutorialUIManager context)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void UpdateState(TutorialUIManager context)
     {
-        throw new System.NotImplementedException();
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            context.SwithState(context.offState);
+        }
     }
 
     public override void ExitState(TutorialUIManager context)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

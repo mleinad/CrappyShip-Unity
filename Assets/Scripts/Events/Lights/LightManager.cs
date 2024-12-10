@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using QFSW.QC;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public class LightManager : MonoBehaviour
 {
 
    [SerializeField]
    Material environmentMaterial;
-   [SerializeField]
-   List<Light> lights;
-   
    [SerializeField]
    List<RoomLights> roomLights;
    public static LightManager Instance { get; private set; }
@@ -35,6 +34,23 @@ public class LightManager : MonoBehaviour
 
    public void TurnOnLights(bool state)
    { 
-     LoadLights(state);
+      LoadLights(state);
    }
+
+
+   
+   [Preserve]
+   [Command]
+   void LightsON()
+   {
+      LoadLights(true);
+   }
+
+   [Preserve]
+   [Command]
+   void LightsOFF()
+   {
+      LoadLights(false);
+   }
+   
 }

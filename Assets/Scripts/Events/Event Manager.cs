@@ -11,6 +11,8 @@ public class EventManager : MonoBehaviour
     public event Action <IPuzzleComponent> onTriggerSolved;
     public event Action <IPuzzleComponent> onAiTrigger;
     public event Action <bool> onTurnOnLights;
+    
+    public event Action <IPuzzleComponent> onHintRequest;
 
 
     private void Awake()
@@ -29,8 +31,6 @@ public class EventManager : MonoBehaviour
     }
 
 
-
-    //test function
     public void OnTriggerInteraction(Interactable obj)
     {
         onTriggerInteraction?.Invoke(obj);
@@ -49,6 +49,11 @@ public class EventManager : MonoBehaviour
     public void OnAiTrigger(IPuzzleComponent puzzleComp)
     {
         onAiTrigger?.Invoke(puzzleComp);
+    }
+
+    public void OnHintRequest(IPuzzleComponent puzzleComp)
+    {
+        onHintRequest?.Invoke(puzzleComp);
     }
     
 }

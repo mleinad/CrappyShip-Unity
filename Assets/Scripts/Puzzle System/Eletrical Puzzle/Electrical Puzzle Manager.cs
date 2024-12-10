@@ -22,6 +22,10 @@ public class ElectricalPuzzleManager : MonoBehaviour
     List<Light> redLights2;
     [SerializeField]
     List<Light> redLights3;
+            
+    
+    
+    
     
     private void Start()
     {
@@ -38,7 +42,7 @@ public class ElectricalPuzzleManager : MonoBehaviour
     {
         
     }
-
+    
     private void EnableLights(List<Light> lights, bool enable)
     {
         foreach (var light in lights)

@@ -1,20 +1,28 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class TutorialMediaState : TutorialBaseState
+public class TutorialTextState : TutorialBaseState
 {
+    private string hintText;
+    
     [SerializeField]
-    GameObject mediaPanel;
+    GameObject Hint;
+    
+    [SerializeField]
+    private TMP_Text HintText;
+    [SerializeField]
+    private TMP_Text instructionText;
+    
     public override void EnterState(TutorialUIManager context)
     {
-        mediaPanel.SetActive(true);
     }
 
     public override void UpdateState(TutorialUIManager context)
     {
-        
+        HintText.text = hintText;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             context.SwithState(context.offState);
@@ -23,11 +31,11 @@ public class TutorialMediaState : TutorialBaseState
 
     public override void ExitState(TutorialUIManager context)
     {
-        mediaPanel.SetActive(false);
+        
     }
 
-    private void Awake()
+    public void SetHintText(string text)
     {
-        mediaPanel.SetActive(false);
+        hintText = text;
     }
 }

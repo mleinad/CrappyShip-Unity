@@ -8,20 +8,17 @@ public class TutorialUIManager : MonoBehaviour  //Tutorial State Machine
      TutorialBaseState currentState;
      
      //states 
-     TutorialOffState offState = new TutorialOffState();    //off state by default
-     
-     [SerializeField]
-     TutorialPointState pointState;     //points to an object on screen
-     [SerializeField]
-     TutorialMediaState mediaState;     //shows a graphical explanation
-     [SerializeField]
-     TutorialBaseState hintState;  //shows a hint
+     public TutorialOffState offState;    //off state by default
+     public TutorialPointState pointState;     //points to an object on screen
+     public TutorialMediaState mediaState;     //shows a graphical explanation
+     public TutorialHintState hintState;  //shows a hint
 
      
      //UI
      public Image backdropImage;
      void Start()
      {
+          BackdropState(0, false);
           currentState = offState;
           currentState.EnterState(this);
      }
@@ -36,5 +33,14 @@ public class TutorialUIManager : MonoBehaviour  //Tutorial State Machine
           currentState.ExitState(this);
           currentState = state;
           state.EnterState(this);
+     }
+
+
+     public void BackdropState(float intensity, bool state)
+     {
+          backdropImage.enabled = state;
+          Color color = backdropImage.color;
+          color.a = intensity;
+          backdropImage.color = color;
      }
 }
