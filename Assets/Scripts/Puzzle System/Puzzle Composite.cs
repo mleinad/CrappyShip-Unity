@@ -23,10 +23,10 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
             if (state != value)
             {
             state = value;
-            Debug.Log($"State changed to: {state}");
+//            Debug.Log($"State changed to: {state}");
             if (state)
             {
-                Debug.Log("solved!x");
+  //              Debug.Log("solved!x");
                 EventManager.Instance.OnTriggerSolved(this);
                 been_solved = true;
             }
