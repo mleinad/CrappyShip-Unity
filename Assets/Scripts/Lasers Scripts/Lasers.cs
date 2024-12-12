@@ -56,6 +56,11 @@ public class Lasers : MonoBehaviour, IPuzzleComponent
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
                 remainLength -= Vector3.Distance(ray.origin, hit.point);
+
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("NonReflect"))
+                {
+                    break;
+                }
                 
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
                 {

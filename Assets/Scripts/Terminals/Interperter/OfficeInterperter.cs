@@ -28,6 +28,7 @@ public class OfficeInterperter : BaseInterperter
         if (args[0] == "help")
         {
             response.Add("help");
+            response.Add("password <correctpassword>");
             return response;
         }
         if (args[0] == "password") 
