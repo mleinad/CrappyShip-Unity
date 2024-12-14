@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SoundManager : MonoBehaviour
 {
@@ -11,9 +12,22 @@ public class SoundManager : MonoBehaviour
         public string boolMemberName; // Name of the bool field, property, or method to monitor
         public AudioSource audioSource; // AudioSource to play
         public bool useAnimator; // True if using Animator, false if monitoring a script
+        public UnityEvent onTrue; // Event triggered when the boolean becomes true
+        public UnityEvent onFalse; // Event triggered when the boolean becomes false
+        [HideInInspector] public bool lastState; // Tracks the previous state to detect changes
     }
 
     public BoolAudioPair[] boolAudioPairs; // Array of Bool-AudioSource pairs
+    public bool debugLogging = false; // Enable logging for debugging
+
+    void Start()
+    {
+        // Initialize lastState for all pairs
+        foreach (var pair in boolAudioPairs)
+        {
+            pair.lastState = GetBoolValue(pair);
+        }
+    }
 
     void Update()
     {
@@ -21,61 +35,74 @@ public class SoundManager : MonoBehaviour
         {
             if (pair.audioSource == null || pair.targetObject == null) continue;
 
-            bool isBoolTrue = false;
+            bool currentState = GetBoolValue(pair);
 
-            if (pair.useAnimator)
+            // Trigger audio and events on state change
+            if (currentState != pair.lastState)
             {
-                // Handle Animator
-                Animator animator = pair.targetObject.GetComponent<Animator>();
-                if (animator != null)
+                if (debugLogging)
+                    Debug.Log($"State changed for {pair.boolMemberName} on {pair.targetObject.name}: {currentState}");
+
+                if (currentState)
                 {
-                    isBoolTrue = animator.GetBool(pair.boolMemberName);
+                    pair.audioSource.Play();
+                    pair.onTrue.Invoke();
                 }
-            }
-            else
-            {
-                // Handle Custom Scripts
-                MonoBehaviour[] scripts = pair.targetObject.GetComponents<MonoBehaviour>();
-                foreach (var script in scripts)
+                else
                 {
-                    // Use Reflection to check for the field, property, or method
-                    var type = script.GetType();
-
-                    // Check for field
-                    var field = type.GetField(pair.boolMemberName);
-                    if (field != null && field.FieldType == typeof(bool))
-                    {
-                        isBoolTrue = (bool)field.GetValue(script);
-                        break;
-                    }
-
-                    // Check for property
-                    var property = type.GetProperty(pair.boolMemberName);
-                    if (property != null && property.PropertyType == typeof(bool))
-                    {
-                        isBoolTrue = (bool)property.GetValue(script);
-                        break;
-                    }
-
-                    // Check for method
-                    var method = type.GetMethod(pair.boolMemberName);
-                    if (method != null && method.ReturnType == typeof(bool) && method.GetParameters().Length == 0)
-                    {
-                        isBoolTrue = (bool)method.Invoke(script, null);
-                        break;
-                    }
+                    pair.audioSource.Stop();
+                    pair.onFalse.Invoke();
                 }
-            }
 
-            // Manage AudioSource based on bool value
-            if (isBoolTrue && !pair.audioSource.isPlaying)
-            {
-                pair.audioSource.Play();
-            }
-            else if (!isBoolTrue && pair.audioSource.isPlaying)
-            {
-                pair.audioSource.Stop();
+                pair.lastState = currentState;
             }
         }
+    }
+
+    private bool GetBoolValue(BoolAudioPair pair)
+    {
+        if (pair.useAnimator)
+        {
+            // Handle Animator
+            Animator animator = pair.targetObject.GetComponent<Animator>();
+            if (animator != null)
+            {
+                return animator.GetBool(pair.boolMemberName);
+            }
+        }
+        else
+        {
+            // Handle Custom Scripts
+            MonoBehaviour[] scripts = pair.targetObject.GetComponents<MonoBehaviour>();
+            foreach (var script in scripts)
+            {
+                var type = script.GetType();
+
+                // Check for field
+                var field = type.GetField(pair.boolMemberName);
+                if (field != null && field.FieldType == typeof(bool))
+                {
+                    return (bool)field.GetValue(script);
+                }
+
+                // Check for property
+                var property = type.GetProperty(pair.boolMemberName);
+                if (property != null && property.PropertyType == typeof(bool))
+                {
+                    return (bool)property.GetValue(script);
+                }
+
+                // Check for method
+                var method = type.GetMethod(pair.boolMemberName);
+                if (method != null && method.ReturnType == typeof(bool) && method.GetParameters().Length == 0)
+                {
+                    return (bool)method.Invoke(script, null);
+                }
+            }
+        }
+
+        if (debugLogging)
+            Debug.LogWarning($"Bool member {pair.boolMemberName} not found on {pair.targetObject.name}");
+        return false;
     }
 }
