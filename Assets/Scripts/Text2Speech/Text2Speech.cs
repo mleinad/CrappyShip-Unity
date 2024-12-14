@@ -13,8 +13,14 @@ public class Text2Speech : MonoBehaviour
 {
 
     [SerializeField] private AudioSource audiosource;
+
+    private bool isAudioPlaying = false;
     public async void ConvertTextToSpeech(string text)
     {
+        if (isAudioPlaying)
+        {
+            await WaitForAudioToFinish();
+        }
         var credentials = new BasicAWSCredentials("", "");
         var client = new AmazonPollyClient(credentials, RegionEndpoint.EUWest3);
 
@@ -22,7 +28,7 @@ public class Text2Speech : MonoBehaviour
         {
             Text = text,
             Engine = Engine.Neural,
-            VoiceId = VoiceId.Aria,
+            VoiceId = VoiceId.Stephen,
             OutputFormat = OutputFormat.Mp3
         };
 
@@ -40,7 +46,10 @@ public class Text2Speech : MonoBehaviour
 
             audiosource.clip = clip;
             audiosource.Play();
-            
+            isAudioPlaying = true;
+
+            await WaitForAudioToFinish();
+
         }
     }
 
@@ -55,5 +64,14 @@ public class Text2Speech : MonoBehaviour
                 fileStream.Write(buffer, 0, bytesRead);
             }
         }
+    }
+    private async Task WaitForAudioToFinish()
+    {
+        while (audiosource.isPlaying)
+        {
+            await Task.Yield(); 
+        }
+
+        isAudioPlaying = false;
     }
 }

@@ -20,18 +20,17 @@ public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
     [SerializeField]
     Interactable interactable;
 
-    private bool isQuizActive = false; 
-    
+    private bool isQuizActive = false;
+    private TerminalManager terminalManager;
+
     void Start()
     {
         interactable.enabled = false;
     }
 
-    
     public override List<string> Interpert(string input)
     {
         response.Clear();
-
         string[] args = input.Split();
 
         if (args.Length > 0)
@@ -70,15 +69,16 @@ public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
     private void StartQuiz()
     {
         isQuizActive = true;
-        currentQuestionIndex = 0; 
+        currentQuestionIndex = 0;
+        response.Clear();
         response.Add(questions[currentQuestionIndex]);
     }
 
-    // Checks if the provided answer is correct
     private void CheckAnswer(string answer)
     {
-        if (answer.ToLower() == correctAnswers[currentQuestionIndex].ToLower()) 
+        if (answer.ToLower() == correctAnswers[currentQuestionIndex].ToLower())
         {
+            response.Clear();
             response.Add("Correct!");
 
             currentQuestionIndex++;
@@ -90,16 +90,17 @@ public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
             else
             {
                 done = true;
-                interactable.enabled = true;
+                interactable.enabled = true; 
                 response.Add("Congratulations! You have completed the quiz.");
                 isQuizActive = false; 
             }
         }
         else
         {
-            response.Add("Incorrect. Try again.");
+            response.Clear();
         }
     }
+
 
     public bool CheckCompletion() => done;
 
@@ -110,4 +111,3 @@ public class QuizzInterpreter : BaseInterperter, IPuzzleComponent
         interactable.enabled = false;
     }
 }
-
