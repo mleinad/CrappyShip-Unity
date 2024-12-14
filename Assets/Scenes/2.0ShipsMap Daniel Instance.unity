@@ -4163,6 +4163,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 109395707}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &110148104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5237833870946110064, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2135645744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &111131336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24382,7 +24394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4835150508649426, guid: 56a5197ff15a7a04ab8780f0f519dd7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4835150508649426, guid: 56a5197ff15a7a04ab8780f0f519dd7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -50320,6 +50332,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2131149627}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1313237875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7248512268811941992, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2135645744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1313705826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54823,6 +54847,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 856630292}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1429994598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8768223234130862611, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2135645744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1430595020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85100,6 +85136,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 964806431655478273, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: backPanel
+      value: 
+      objectReference: {fileID: 1313237875}
     - target: {fileID: 1008988952730716995, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
       propertyPath: m_UiScaleMode
@@ -85152,14 +85193,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6125659216567097048, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: dbac7d543bd0d7e4ebeb5d70f6509ee1,
+        type: 2}
+    - target: {fileID: 6125659216567097048, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
       propertyPath: textState
       value: 
       objectReference: {fileID: 150202682}
+    - target: {fileID: 6776757019606337292, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: arrow
+      value: 
+      objectReference: {fileID: 1429994598}
     - target: {fileID: 6955646378501171090, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7661969839484891199, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: hintText
+      value: 
+      objectReference: {fileID: 110148104}
+    - target: {fileID: 7661969839484891199, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: backPanel
+      value: 
+      objectReference: {fileID: 1313237875}
     - target: {fileID: 8184091136111845249, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
       propertyPath: m_Camera

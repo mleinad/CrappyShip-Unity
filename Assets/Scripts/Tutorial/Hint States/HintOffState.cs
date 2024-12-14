@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HintOffState : HintBaseState
@@ -10,10 +8,10 @@ public class HintOffState : HintBaseState
         color.a = 0; // Set alpha to 0
         context.backdropImage.color = color;
         
-        context.mediaState.Hide();
-        context.textState.Hide();
-        context.requestHintState.Hide();
-        context.pointState.Hide();
+        context.mediaState.Hide(context);
+        context.textState.Hide(context);
+        context.requestHintState.Hide(context);
+        context.pointState.Hide(context);
     }
 
     public override void UpdateState(HintsUIManager context)
@@ -26,7 +24,9 @@ public class HintOffState : HintBaseState
         
     }
 
-    public override void Hide()
+    public override void Hide(HintsUIManager context)
     {
+        //maybe enable backdrop here
+        
     }
 }

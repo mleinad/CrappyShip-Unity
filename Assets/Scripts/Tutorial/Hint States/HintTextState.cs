@@ -1,32 +1,23 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HintTextState : HintBaseState
 {
     private string content;
     private string instruction = "press esc to hide hint";
     
-    [SerializeField]
-    private TMP_Text hintText;
-    [SerializeField]
-    private TMP_Text instructionText;
-    [SerializeField]
-    private Image backPanel;
+
     
     public override void EnterState(HintsUIManager context)
     {
-        hintText.gameObject.SetActive(true);
-        instructionText.gameObject.SetActive(true);
-        
-        backPanel.enabled = true;
-        
-        instructionText.text = instruction;
+        context.hintText.gameObject.SetActive(true);
+        context.instructionText.gameObject.SetActive(true);
+        context.backpanel.enabled = true;
+        context.instructionText.text = instruction;
     }
 
     public override void UpdateState(HintsUIManager context)
     {
-        hintText.text = content;
+        context.hintText.text = content;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -36,7 +27,7 @@ public class HintTextState : HintBaseState
 
     public override void ExitState(HintsUIManager context)
     {
-        Hide();
+        Hide(context);
     }
 
     public void SetHintText(string text)
@@ -44,10 +35,10 @@ public class HintTextState : HintBaseState
         content = text;
     }
 
-    public override void Hide()
+    public override void Hide(HintsUIManager context)
     {
-        hintText.gameObject.SetActive(false);
-        instructionText.gameObject.SetActive(false);
-        backPanel.enabled = false;
+        context.hintText.gameObject.SetActive(false);
+        context.instructionText.gameObject.SetActive(false);
+        context.backpanel.enabled = false;
     }
 }

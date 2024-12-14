@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HintPointState : HintBaseState
 {
-    [SerializeField] 
-    private Image arrow;
     public override void EnterState(HintsUIManager context)
     {
-        arrow.enabled = true;   
+        context.arrow.enabled = true;   
     }
 
     public override void UpdateState(HintsUIManager context)
@@ -26,8 +21,8 @@ public class HintPointState : HintBaseState
         
     }
 
-    public override void Hide()
+    public override void Hide(HintsUIManager context)
     {
-        arrow.enabled = false;    
+        context.arrow.enabled = false;    
     }
 }

@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Mono.CSharp;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour

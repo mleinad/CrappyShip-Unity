@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class HintBaseState: MonoBehaviour
+public abstract class HintBaseState
 {
     public abstract void EnterState(HintsUIManager context);
     
@@ -10,5 +6,5 @@ public abstract class HintBaseState: MonoBehaviour
     
     public abstract void ExitState(HintsUIManager context);
     
-    public abstract void Hide();
+    public abstract void Hide(HintsUIManager context);
 }

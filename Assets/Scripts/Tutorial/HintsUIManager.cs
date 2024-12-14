@@ -1,31 +1,35 @@
 using QFSW.QC;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.UI;
 
 public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
 {
+     //  request/text hint
+     public Image backpanel;
+     public TMP_Text instructionText;
+     public TMP_Text hintText;
 
-     #region  UI elements
-
-     public GameObject a;
-     public GameObject b;
-     public GameObject c;
-     public GameObject d;
-     
-     #endregion
+     //media panel
+     public GameObject mediaPanel;
+    
+     //point panel
+     public Image arrow;
      
      
-     //handle hint/help/puzzle solving system...
+     
+     
+     
      
      HintBaseState currentState;
      
      //states 
-     public HintOffState offState;    //off state by default
-     public HintPointState pointState;     //points to an object on screen
-     public HintMediaState mediaState;     //shows a graphical explanation
-     public RequestHintState requestHintState;  //shows a hint request
-     public HintTextState textState;     //simple comment/text hint 
+     public HintOffState offState = new HintOffState();    //off state by default
+     public HintPointState pointState = new HintPointState();     //points to an object on screen
+     public HintMediaState mediaState = new HintMediaState();     //shows a graphical explanation
+     public RequestHintState requestHintState = new RequestHintState();  //shows a hint request
+     public HintTextState textState = new HintTextState();     //simple comment/text hint 
      
      //UI
      public Image backdropImage;
@@ -34,6 +38,8 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
           BackdropState(0, false);
           currentState = offState;
           currentState.EnterState(this);
+          
+          
      }
 
      void Update()

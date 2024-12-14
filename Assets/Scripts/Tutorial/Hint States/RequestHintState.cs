@@ -9,25 +9,16 @@ public class RequestHintState : HintBaseState
     string _showHint = "Show Hint";//possibly improve 
     string _instructions =  "E: show\n" +
                            "Backspace: ignore";
-
-    [SerializeField] 
-    private Image backPanel;    
-    [FormerlySerializedAs("HintText")] [SerializeField]
-    private TMP_Text hintText;
-    [SerializeField]
-    private TMP_Text instructionText;
     
     private HintBaseState _nextState;
     
     public override void EnterState(HintsUIManager context)
     {
-        backPanel.enabled = true;
-        
-        hintText.gameObject.SetActive(true);
-        instructionText.gameObject.SetActive(true);
-        
-        hintText.text = _showHint;
-        instructionText.text =_instructions;
+        context.backpanel.enabled = true;
+        context.hintText.gameObject.SetActive(true);
+        context.instructionText.gameObject.SetActive(true);
+        context.hintText.text = _showHint;
+        context.instructionText.text =_instructions;
     }
 
     public override void UpdateState(HintsUIManager context)
@@ -45,7 +36,7 @@ public class RequestHintState : HintBaseState
 
     public override void ExitState(HintsUIManager context)
     {
-       Hide();
+       Hide(context);
     }
 
     public void SetHint(HintBaseState nextState)
@@ -53,11 +44,10 @@ public class RequestHintState : HintBaseState
         _nextState = nextState;
     }
     
-    public override void Hide()
+    public override void Hide(HintsUIManager context)
     {
-        backPanel.enabled = false;
-        
-        hintText.gameObject.SetActive(false);
-        instructionText.gameObject.SetActive(false);
+        context.backpanel.enabled = false;
+        context.hintText.gameObject.SetActive(false);
+        context.instructionText.gameObject.SetActive(false);
     }
 }
