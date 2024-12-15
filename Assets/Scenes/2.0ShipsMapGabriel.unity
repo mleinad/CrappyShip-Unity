@@ -5557,7 +5557,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1474256945966966, guid: 66032d11bb9ec1c41ae157b4a4f79f90, type: 3}
       propertyPath: m_Layer
-      value: 14
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474256945966966, guid: 66032d11bb9ec1c41ae157b4a4f79f90, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 4039410153317606, guid: 66032d11bb9ec1c41ae157b4a4f79f90, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5597,6 +5601,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4039410153317606, guid: 66032d11bb9ec1c41ae157b4a4f79f90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64171361052120822, guid: 66032d11bb9ec1c41ae157b4a4f79f90,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64171361052120822, guid: 66032d11bb9ec1c41ae157b4a4f79f90,
+        type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -47469,6 +47483,7 @@ MonoBehaviour:
   - {fileID: 1641437054}
   interperter: {fileID: 223623707}
   notification: {fileID: 8972346566110037834}
+  textToSpeech: {fileID: 0}
 --- !u!1001 &1460528817
 PrefabInstance:
   m_ObjectHideFlags: 0

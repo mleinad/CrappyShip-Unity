@@ -57,6 +57,12 @@ public class Lasers : MonoBehaviour, IPuzzleComponent
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
                 remainLength -= Vector3.Distance(ray.origin, hit.point);
 
+                if (hit.collider.CompareTag("Obstacle"))
+                {
+                    Debug.Log("Laser bloqueado por: " + hit.collider.gameObject.name);
+                    break; // Interrompe o loop, parando o laser
+                }   
+
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("NonReflect"))
                 {
                     break;
