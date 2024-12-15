@@ -17640,6 +17640,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 477901133}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &478057010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 478057011}
+  m_Layer: 0
+  m_Name: Console Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &478057011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478057010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984604593}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &478116499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36677,6 +36708,7 @@ Transform:
   - {fileID: 1458033857}
   - {fileID: 146901762}
   - {fileID: 947761517}
+  - {fileID: 478057011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986295812
@@ -81384,7 +81416,7 @@ PrefabInstance:
     - target: {fileID: 4735113768296962263, guid: 2da3dcc22749e7f4280737786d898334,
         type: 3}
       propertyPath: _singletonMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4735113768296962263, guid: 2da3dcc22749e7f4280737786d898334,
         type: 3}
@@ -92169,7 +92201,7 @@ PrefabInstance:
     - target: {fileID: 7785233406650102926, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 2103
+      value: 18487
       objectReference: {fileID: 0}
     - target: {fileID: 7911474503963515053, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
