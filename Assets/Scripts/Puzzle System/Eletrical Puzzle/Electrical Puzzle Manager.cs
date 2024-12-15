@@ -22,9 +22,9 @@ public class ElectricalPuzzleManager : MonoBehaviour
     List<Light> redLights2;
     [SerializeField]
     List<Light> redLights3;
-            
-    
-    
+
+
+    public EnterArea startPuzzle;
     
     
     private void Start()
@@ -36,11 +36,6 @@ public class ElectricalPuzzleManager : MonoBehaviour
 
         EventManager.Instance.onTriggerSolved += TurnOnLights;
 
-    }
-
-    private void Update()
-    {
-        
     }
     
     private void EnableLights(List<Light> lights, bool enable)

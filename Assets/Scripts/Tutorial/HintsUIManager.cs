@@ -18,9 +18,7 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      public Image arrow;
      
      
-     
-     
-     
+     public GameObject HintGameObject;
      
      HintBaseState currentState;
      
@@ -33,13 +31,21 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      
      //UI
      public Image backdropImage;
+     
+     
+     public static HintsUIManager Instance;
      void Start()
      {
+          Instance = this;
+          
           BackdropState(0, false);
           currentState = offState;
           currentState.EnterState(this);
-          
-          
+
+          if (HintGameObject.activeSelf == false)
+          {
+               HintGameObject.SetActive(true);
+          }
      }
 
      void Update()
@@ -66,11 +72,27 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
 
      [Preserve]
      [Command]
-     void GiveHint()
+     void GiveHint(int i)
      {
-          SwitchState(requestHintState);  //requests hint
-          
-          requestHintState.SetHint(textState); //hint type
-          textState.SetHintText("you should pay more attention to this tutorial.");  //hint content 
+
+          switch (i)
+          {
+               case 0:
+                    SwitchState(requestHintState);  //requests hint
+                    requestHintState.SetHint(textState); //hint type
+                    textState.SetHintText("you should pay more attention to this tutorial!");  //hint content 
+                    break;
+               
+               case 1:
+                    SwitchState(requestHintState);
+                    requestHintState.SetHint(mediaState);
+                    
+                    break;
+
+               case 2:
+                    SwitchState(requestHintState);
+                    requestHintState.SetHint(pointState);
+                    break;
+          }
      }
 }
