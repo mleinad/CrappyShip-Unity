@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class RequestHintState : HintBaseState
 {
-    string _showHint = "Show Hint";//possibly improve 
+    public string text = "Show Hint";//possibly improve 
     string _instructions =  "E: show\n" +
                            "Backspace: ignore";
     
@@ -17,7 +17,7 @@ public class RequestHintState : HintBaseState
         context.backpanel.enabled = true;
         context.hintText.gameObject.SetActive(true);
         context.instructionText.gameObject.SetActive(true);
-        context.hintText.text = _showHint;
+        context.hintText.text = text;
         context.instructionText.text =_instructions;
     }
 

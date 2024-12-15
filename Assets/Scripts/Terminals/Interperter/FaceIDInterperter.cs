@@ -80,7 +80,7 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         programHandlers = new Dictionary<string, Action>
         {
             {"id_verify.exe", ScanID },
-            {"id_photo.png", LoadImage},
+            {"id_photo.png", PrintImage},
         };
     }
     
@@ -194,25 +194,9 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         else terminalManager.NoUserInputLines(new List<string>{"access denied!"});
     }
 
-
-
-
-    private void LoadImage()
+    void PrintImage()
     {
-     GameObject msg = Instantiate(mediaLine, terminalManager.msgList.transform);
-     msg.transform.SetSiblingIndex(terminalManager.msgList.transform.childCount -1);
-
-                                                    //random position away from game, in the future create a parent object in a different layer
-     GameObject asciiCamera = Instantiate(ASCIICam, new Vector3(0,0,0), quaternion.identity);
-     
-     ASCIICameraManager.Instance.AddObject(asciiCamera.transform);
-     
-     ASCIIImage image = asciiCamera.GetComponent<ASCIIImage>();
-     
-     image.SetImage(randomImage);
-     
-     msg.transform.GetChild(0).GetComponent<RawImage>().texture = image.SetRenderTexture(900, 900);
-     
+        terminalManager.LoadImage(randomImage);
     }
     
 }

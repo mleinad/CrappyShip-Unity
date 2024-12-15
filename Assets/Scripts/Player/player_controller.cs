@@ -179,7 +179,8 @@ public class Player : MonoBehaviour
     }
 
     public void DeviceEnabledState(bool state) => deviceStateManager.SetState(state);
-#region UI
+    
+    #region UI
     
     public void CrosshairOn(){
         
@@ -195,7 +196,12 @@ public class Player : MonoBehaviour
        // Debug.Log("crosshair off");
     }
 
-
+    public void CrosshairFullOff()
+    {
+        crosshair1.SetActive(false);
+        crosshair2.SetActive(false);
+    }
+    
     public void MessageOn(bool state)
     {
         message.SetActive(state);

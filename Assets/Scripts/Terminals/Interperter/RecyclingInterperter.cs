@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using AYellowpaper.SerializedCollections;
 using TMPro;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RecyclingInterperter : BaseInterperter
 {
@@ -18,18 +23,30 @@ public class RecyclingInterperter : BaseInterperter
     [Range(0, 100)] public int contaminationLevel = 0;
     [SerializeField] private List<Interactable> interactable;
 
-    
+    //core
     private Dictionary<string, Action<string[]>> commandHandlers;
     private Dictionary<string, Action> programHandlers;
     
-    private Action deferredAction;
+    private Dictionary<string, Action> filesHandlers;
     
+    //hidden files
+    private Dictionary<string, Action> hiddenProgramHandlers;
+    private Dictionary<string, Action> hiddenFilesHandlers;
+   
+    //description
+    private Dictionary<string, string> commandDescriptions;
+
+    public SerializedDictionary<string, Texture> imageDictionary;
     
     private int progresBarIndex;
     private int roomStatusIndex;
     private List<TMP_Text> terminalUI;
 
     private bool page = false;
+    
+    public GameObject mediaLine;
+    public GameObject ASCIICam;
+    
     
     UIPage recyclingUI;
 
@@ -55,28 +72,73 @@ public class RecyclingInterperter : BaseInterperter
             { "run", HandleRun },
             { "install", args => response.Add("Install functionality is not implemented.") },
             { "delete", args => response.Add("Delete functionality is not implemented.") },
-            { "storage", HandleList}
+            { "storage", HandleList},
+            {"//.storage", HandleHiddenList}
         };
 
         programHandlers = new Dictionary<string, Action>
         {
             {"system_ctrl.exe", RunManager },
             {"room_manual.pdf", HandleManual },
-            {"last_log.txt",HandleLog },
         };
+        
+        filesHandlers = new Dictionary<string, Action>()
+        {
+            { "ship_logs.txt", () => response.Add("Ship logs.txt") },
+            { "diagnostics_report.txt", () => response.Add("Diagnostics report.txt") },
+            { "crew_manifest.txt", () => response.Add("Crew manifest.txt") },
+            { "override_docs.txt", () => response.Add("Crew manifest.txt") },
+            { "last_log.txt",HandleLog },
+            
+        };
+        
+        hiddenProgramHandlers = new Dictionary<string, Action>
+        {
+            {"hidden.exe", ()=> response.Add("Decrypter program... beep boop bzzzz") },
+            {"hidden2.exe", () => response.Add("Decrypter program... beep boop bzzzz") },
+            {"hidden3.exe", () => response.Add("Diary program... beep boop bzzzz") },
+        };
+
+        hiddenFilesHandlers = new Dictionary<string, Action>()
+        {
+            { "hidden_text_file.txt", () => response.Add("secret stuff...!") }
+        };
+
+        
+        commandDescriptions = new Dictionary<string, string>
+        {
+            { "help", "Lists all available commands." },
+            { "unlock", "Unlocks additional commands using a password." },
+            { "run", "Runs a specified program, e.g.->run program.exe" },
+            { "install", "Installs a new program (functionality not implemented)." },
+            { "delete", "Deletes a program or file from storage (functionality not implemented)." },
+            { "storage", "Lists all programs and files in storage." }
+        };
+        
+        
     }
+    
+    
+
+
+    #region Handlers
     private void HandleList(string[] args)
     {
-        foreach (string programs in programHandlers.Keys)
-        {
-            response.Add(programs);
-        }
+        ListFiles("Programs", programHandlers.Keys.ToList());
+        ListFiles("Downloads", new List<string>());
+        ListFiles("Files", filesHandlers.Keys.ToList());
     }
     private void HandleHelp(string[] args)
     {
-        ListEntry("run", "run a program from the terminal");
-        ListEntry("storage", "lists installed programs");
-        ListEntry("install", "install a new program");
+        foreach (var command in commandHandlers)
+        {   
+            if(command.Key.Contains("//")) continue;    //ignore hidden commands
+
+            if (commandDescriptions.TryGetValue(command.Key, out var description))  //not yet implemented descriptions
+            { 
+                ListEntry(command.Key, description);
+            }
+        }
     }
     private void HandleRun(string[] args)
     {
@@ -85,34 +147,63 @@ public class RecyclingInterperter : BaseInterperter
             response.Add("Please specify a program to run.");
             return;
         }
+        
+        string itemName = args[1];
 
-        string programName = args[1];
-        if (programHandlers.ContainsKey(programName))
+        if (programHandlers.ContainsKey(itemName))
         {
-            programHandlers[programName]();
+            programHandlers[itemName]();
+        }
+        else if (filesHandlers.ContainsKey(itemName))
+        {
+            filesHandlers[itemName]();
         }
         else
         {
-            response.Add("Executable not found.");
+            response.Add("Executable or file not found.");
         }
     }
-
     private void HandleManual()
     {
         terminalManager.ClearScreen(0);
         LoadTitle("manual1.txt", 0);
     }
-    
     private void HandleLog()
     {
         terminalManager.ClearScreen(0);
         LoadTitle("log1.txt", 0);
     }
+    void HandleHiddenList(string[] args)
+    {
+        
+
+        ListHiddenFiles("Programs", programHandlers.Keys.ToList(), hiddenProgramHandlers.Keys.ToList());
+        ListHiddenFiles("Downloads", new List<string>(),new List<string>());
+        ListHiddenFiles("Files", filesHandlers.Keys.ToList(), hiddenFilesHandlers.Keys.ToList());
+
+        //needs to attach to program handler to recognize command
+        programHandlers.AddRange(hiddenProgramHandlers);
+        filesHandlers.AddRange(hiddenFilesHandlers);
+        
+        //removes files and programs from list again
+        foreach (var program in hiddenProgramHandlers.Keys)
+        {
+            programHandlers.Remove(program);
+        }
+        foreach (var file in hiddenFilesHandlers.Keys)
+        {
+            filesHandlers.Remove(file);
+        }
+    }
+
+    void HandleImage()
+    {
+        terminalManager.LoadImage(imageDictionary[""]);
+    }
+    #endregion
     public override List<string> Interpert(string input)
     {
         response.Clear();
-        
-        deferredAction = null; 
         
         input = input.ToLower();
         string[] args = input.Split();
@@ -142,8 +233,6 @@ public class RecyclingInterperter : BaseInterperter
             }
         }
         
-        
-        
     }
 
 
@@ -152,6 +241,8 @@ public class RecyclingInterperter : BaseInterperter
         terminalManager.UserInputState(true);
         
     }
+    
+    
     
     
     #region recycling UI
@@ -202,9 +293,6 @@ public class RecyclingInterperter : BaseInterperter
     }
     
     #endregion
-
-
-
     
     #region puzzle
 

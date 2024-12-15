@@ -8,7 +8,9 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     [SerializeField]
     List<GameObject> gameObjects;
 
-
+    public GameObject solvedPrefab;
+    
+    
     private bool been_solved = false;
      
      
@@ -76,6 +78,15 @@ public class PuzzleComposite : MonoBehaviour, IPuzzleComponent
     {   if(!been_solved) State = CheckCompletion();
     }
 
+
+    public void Solve()
+    {
+        been_solved = true;
+        state = true;
+        
+        Instantiate(solvedPrefab);
+    }
+    
     private void Add(IPuzzleComponent component)
     {
         _components.Add(component);

@@ -23,6 +23,8 @@ public class Terminal : MonoBehaviour
 
             //temporary solution: on trigger Player's crosshair bust be disabled in order to press the Terminal UI elemets
             camera.enabled = true;
+
+            Player.Instance.CrosshairFullOff();
             Player.Instance.LockMovement(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -43,6 +45,7 @@ public class Terminal : MonoBehaviour
             interactable.SetTrigger(false);
             
             Player.Instance.DeviceEnabledState(true);
+            Player.Instance.CrosshairOff();
         }
     }
     

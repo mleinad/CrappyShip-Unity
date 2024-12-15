@@ -45,6 +45,7 @@ public class CodingInterperter : BaseInterperter, IPuzzleComponent
     private Dictionary<string, Action> hiddenProgramHandlers;
     private Dictionary<string, Action> hiddenFilesHandlers;
    
+    //description
     private Dictionary<string, string> commandDescriptions;
 
     private float timer;

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class TerminalManager : MonoBehaviour
 {
+    public GameObject mediaLine;
+    public GameObject ASCIICam;
+    
     public GameObject directory_line;
     public GameObject response_line;
     public TMP_InputField terminal_input;
@@ -156,6 +160,21 @@ public class TerminalManager : MonoBehaviour
         }
     }
     
+    public void LoadImage(Texture texImage)
+    {
+        var msg = Instantiate(mediaLine, msgList.transform);
+        msg.transform.SetSiblingIndex(msgList.transform.childCount -1);
 
+        //random position away from game, in the future create a parent object in a different layer
+        var asciiCamera = Instantiate(ASCIICam, new Vector3(0,0,0), quaternion.identity);
+     
+        ASCIICameraManager.Instance.AddObject(asciiCamera.transform);
+     
+        ASCIIImage image = asciiCamera.GetComponent<ASCIIImage>();
+     
+        image.SetImage(texImage);
+     
+        msg.transform.GetChild(0).GetComponent<RawImage>().texture = image.SetRenderTexture(900, 900);
+    }
 
 }
