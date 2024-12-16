@@ -89,10 +89,34 @@ public class RecyclingInterperter : BaseInterperter
         
         filesHandlers = new Dictionary<string, Action>()
         {
-            { "log_day_28.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay28.txt", 0) },
-            { "log_day_58.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay58.txt", 0) },
-            { "log_day_70.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay70.txt", 0) },
-            { "log_day_81.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay81.txt", 0) },
+            { "log_day_28.txt", () =>
+                {
+                    terminalManager.ClearScreen(0);
+                    
+                    LoadTitle("TripulantDiarys/TripulantDiaryDay28.txt", 0);
+                }
+            },
+            { "log_day_58.txt", () =>
+                {
+                    terminalManager.ClearScreen(0);
+
+                    LoadTitle("TripulantDiarys/TripulantDiaryDay58.txt", 0);
+                }
+            },
+            { "log_day_70.txt", () =>
+                {
+                    terminalManager.ClearScreen(0);
+
+                    LoadTitle("TripulantDiarys/TripulantDiaryDay70.txt", 0);
+                }
+            },
+            { "log_day_81.txt", () =>
+                {
+                    terminalManager.ClearScreen(0);
+
+                    LoadTitle("TripulantDiarys/TripulantDiaryDay81.txt", 0);
+                }
+            },
             { "last_log.txt", HandleLog },
             
         };

@@ -81,6 +81,7 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
         {
             {"id_verify.exe", ScanID },
             {"id_photo.png", PrintImage},
+            {"webcam", ShowCam}
         };
     }
     
@@ -196,7 +197,24 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
 
     void PrintImage()
     {
+        
         terminalManager.LoadImage(randomImage);
     }
-    
+
+    void ShowCam()
+    {
+        var msg = Instantiate(mediaLine, terminalManager.msgList.transform);
+        msg.transform.SetSiblingIndex(terminalManager.msgList.transform.childCount -1);
+
+        //random position away from game, in the future create a parent object in a different layer
+        var asciiCamera = Instantiate(ASCIICam, new Vector3(0,0,0), quaternion.identity);
+     
+        ASCIICameraManager.Instance.AddObject(asciiCamera.transform);
+     
+        ASCIIImage image = asciiCamera.GetComponent<ASCIIImage>();
+     
+        image.SetWebCamTexture();
+     
+        msg.transform.GetChild(0).GetComponent<RawImage>().texture = image.SetRenderTexture(900, 900);
+    }
 }

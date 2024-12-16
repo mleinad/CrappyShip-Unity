@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
@@ -8,7 +9,7 @@ public class FuseBox : MonoBehaviour, IPuzzleComponent, IEletricalComponent
     public int signal;
     public int signal_needed;
     
-    public Light light;
+   public Light light_;
 
     Dictionary<IEletricalComponent, ColliderIO> adjencency_dictionary;
     public List<string> adj_comp_names;
