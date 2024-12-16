@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MoodMe;
 using Unity.Mathematics;
 using UnityEngine;
@@ -111,10 +112,7 @@ public class FaceIDInterperter : BaseInterperter, IPuzzleComponent
     }
     private void HandleList(string[] args)
     {
-        foreach (string programs in programHandlers.Keys)
-        {
-            response.Add(programs);
-        }
+        ListFiles("Storage:", programHandlers.Keys.ToList());
     }
     
     public override List<string> Interpert(string input)
