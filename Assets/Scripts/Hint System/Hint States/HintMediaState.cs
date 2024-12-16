@@ -7,8 +7,9 @@ public class HintMediaState : HintBaseState
     public override void EnterState(HintsUIManager context)
     {
         context.mediaPanel.SetActive(true);
-        image = context.mediaPanel.transform.GetChild(0).GetComponent<RawImage>();
+        //image = context.mediaPanel.transform.GetChild(0).GetComponent<RawImage>();
         context.BackdropState(0.1f, true);
+        context.mediaInstructionText.text = "press ESC to exit ";
     }
 
     public override void UpdateState(HintsUIManager context)
@@ -31,8 +32,9 @@ public class HintMediaState : HintBaseState
         context.mediaPanel.SetActive(false);
     }
 
-    public void SetImage(Texture texture)
+    public void SetImage(Texture texture, HintsUIManager context)
     {
+        image = context.hintImage;
         image.texture = texture;
     }
 }

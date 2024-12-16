@@ -56,7 +56,7 @@ public class GlobalPuzzleManager : MonoBehaviour
       RequestHintState request = HintsUIManager.Instance.requestHintState;
       HintsUIManager.Instance.SwitchState(request);
             
-      request.text = "Solve Puzzle";
+      request.text = "Solve Puzzle?";
       request.SetHint(HintsUIManager.Instance.offState);
       
       currentPuzzle.Solve();

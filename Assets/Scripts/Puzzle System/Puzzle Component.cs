@@ -7,4 +7,6 @@ public interface IPuzzleComponent
 {
      bool CheckCompletion();
      void ResetPuzzle();  
+     
+     
 }

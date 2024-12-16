@@ -151,7 +151,7 @@ public abstract class BaseInterperter: MonoBehaviour
 
     protected void ListHiddenFiles(string location, List<string> files, List<string> hiddenFiles)
     {
-        response.Add(ColorString(location + ": ", colors["cyan"]));
+        response.Add(ColorString(location + ": ", colors["lime"]));
         foreach (var file in files)
         {
             response.Add($"     -{file}");

@@ -1,7 +1,9 @@
 using QFSW.QC;
+using QFSW.QC.Suggestors.Tags;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Scripting;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
@@ -13,10 +15,13 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
 
      //media panel
      public GameObject mediaPanel;
-    
-     //point panel
-     public Image arrow;
+     public RawImage hintImage;
+     public TMP_Text mediaInstructionText;
      
+     //point panel
+     public Image highlight;
+     public Image leftArrow;
+     public Image rightArrow;
      
      public GameObject HintGameObject;
      
@@ -32,7 +37,10 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      //UI
      public Image backdropImage;
 
+     //test command
      public Texture testImage;
+     public Transform testTransform;
+     
      
      public static HintsUIManager Instance;
      void Start()
@@ -73,7 +81,9 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
 
      [Preserve]
      [Command]
-     void GiveHint(int i)
+     void GiveHint(
+          [Suggestions(0, 1, 2, 3)] int i
+          )
      {
 
           switch (i)
@@ -85,14 +95,26 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
                     break;
                
                case 1:
-                    SwitchState(requestHintState);
+                         //order might be important -> load image before start called
+                    mediaState.SetImage(testImage, this);
                     requestHintState.SetHint(mediaState);
-                    mediaState.SetImage(testImage);
+                 
+                    SwitchState(requestHintState);
                     break;
 
                case 2:
                     SwitchState(requestHintState);
                     requestHintState.SetHint(pointState);
+                    pointState.SetObject(testTransform);
+                    break;
+               case 3:
+                    SwitchState(requestHintState);
+                    textState.SetHintText("solve puzzle?");
+                    requestHintState.SetHint(offState);
+                    //solve puzzle
+                    break;
+               default:
+                    Debug.LogWarning("Unknown hint type");
                     break;
           }
      }
