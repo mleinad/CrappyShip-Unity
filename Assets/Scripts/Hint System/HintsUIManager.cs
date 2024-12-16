@@ -31,7 +31,8 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      
      //UI
      public Image backdropImage;
-     
+
+     public Texture testImage;
      
      public static HintsUIManager Instance;
      void Start()
@@ -86,7 +87,7 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
                case 1:
                     SwitchState(requestHintState);
                     requestHintState.SetHint(mediaState);
-                    
+                    mediaState.SetImage(testImage);
                     break;
 
                case 2:

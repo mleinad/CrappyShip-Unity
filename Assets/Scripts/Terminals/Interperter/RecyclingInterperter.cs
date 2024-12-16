@@ -34,7 +34,16 @@ public class RecyclingInterperter : BaseInterperter
     private Dictionary<string, Action> hiddenFilesHandlers;
    
     //description
-    private Dictionary<string, string> commandDescriptions;
+    public SerializedDictionary<string, string> commandDescriptions = 
+        new SerializedDictionary<string, string>()
+    {
+        { "help", "Lists all available commands." },
+        { "unlock", "Unlocks additional commands using a password." },
+        { "run", "Runs a specified program, e.g.->run program.exe" },
+        { "install", "Installs a new program (functionality not implemented)." },
+        { "delete", "Deletes a program or file from storage (functionality not implemented)." },
+        { "storage", "Lists all programs and files in storage." }
+    };
 
     public SerializedDictionary<string, Texture> imageDictionary;
     
@@ -43,10 +52,6 @@ public class RecyclingInterperter : BaseInterperter
     private List<TMP_Text> terminalUI;
 
     private bool page = false;
-    
-    public GameObject mediaLine;
-    public GameObject ASCIICam;
-    
     
     UIPage recyclingUI;
 
@@ -92,6 +97,12 @@ public class RecyclingInterperter : BaseInterperter
             
         };
         
+        foreach (var (imageKey, texture) in imageDictionary)
+        {
+            filesHandlers.Add(imageKey, () => terminalManager.LoadImage(texture));
+        }
+
+        
         hiddenProgramHandlers = new Dictionary<string, Action>
         {
             {"hidden.exe", ()=> response.Add("Decrypter program... beep boop bzzzz") },
@@ -102,17 +113,6 @@ public class RecyclingInterperter : BaseInterperter
         hiddenFilesHandlers = new Dictionary<string, Action>()
         {
             { "hidden_text_file.txt", () => response.Add("secret stuff...!") }
-        };
-
-        
-        commandDescriptions = new Dictionary<string, string>
-        {
-            { "help", "Lists all available commands." },
-            { "unlock", "Unlocks additional commands using a password." },
-            { "run", "Runs a specified program, e.g.->run program.exe" },
-            { "install", "Installs a new program (functionality not implemented)." },
-            { "delete", "Deletes a program or file from storage (functionality not implemented)." },
-            { "storage", "Lists all programs and files in storage." }
         };
         
         
@@ -195,11 +195,7 @@ public class RecyclingInterperter : BaseInterperter
             filesHandlers.Remove(file);
         }
     }
-
-    void HandleImage()
-    {
-        terminalManager.LoadImage(imageDictionary[""]);
-    }
+    
     #endregion
     public override List<string> Interpert(string input)
     {
