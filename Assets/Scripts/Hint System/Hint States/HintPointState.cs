@@ -64,7 +64,7 @@ public class HintPointState : HintBaseState
 
     public override void ExitState(HintsUIManager context)
     {
-        
+        Hide(context);
     }
 
     public override void Hide(HintsUIManager context)

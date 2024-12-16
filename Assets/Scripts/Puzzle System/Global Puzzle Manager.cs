@@ -15,6 +15,14 @@ public class GlobalPuzzleManager : MonoBehaviour
    
    public float hintTime = 10f;
    public float timeLimit = 100f;
+  
+   public static GlobalPuzzleManager Instance;
+
+   private void Start()
+   {
+      Instance = this;
+   }
+
    private void Update()
    {
       if (currentPuzzle)

@@ -9,7 +9,7 @@ public class ASCIICameraManager : MonoBehaviour
     public static ASCIICameraManager Instance;
 
     private int _activeCameras;
-    public int MaxActiveCameras;
+    public int MaxActiveCameras = 10;
     public int ActiveCameras
     {
         get => _activeCameras;
@@ -20,7 +20,7 @@ public class ASCIICameraManager : MonoBehaviour
                 Debug.Log(value);
                 if (_activeCameras > MaxActiveCameras)
                 {
-                    Debug.Log($"MaxActiveCameras: {MaxActiveCameras}");
+                    DestroyFirst();
                 }
             }
         }
@@ -48,5 +48,10 @@ public class ASCIICameraManager : MonoBehaviour
         newCamTransform.parent = transform;
         newCamPos.x += 20f;
         newCamTransform.localPosition = newCamPos;
+    }
+
+    void DestroyFirst()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

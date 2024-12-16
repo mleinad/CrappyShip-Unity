@@ -89,11 +89,11 @@ public class RecyclingInterperter : BaseInterperter
         
         filesHandlers = new Dictionary<string, Action>()
         {
-            { "ship_logs.txt", () => response.Add("Ship logs.txt") },
-            { "diagnostics_report.txt", () => response.Add("Diagnostics report.txt") },
-            { "crew_manifest.txt", () => response.Add("Crew manifest.txt") },
-            { "override_docs.txt", () => response.Add("Crew manifest.txt") },
-            { "last_log.txt",HandleLog },
+            { "log_day_28.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay28.txt", 0) },
+            { "log_day_58.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay58.txt", 0) },
+            { "log_day_70.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay70.txt", 0) },
+            { "log_day_81.txt", () => LoadTitle("TripulantDiarys/TripulantDiaryDay81.txt", 0) },
+            { "last_log.txt", HandleLog },
             
         };
         
