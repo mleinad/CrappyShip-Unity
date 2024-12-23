@@ -60,14 +60,15 @@ public class Player : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
  
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
 
 
         left_arm.weight =0;
