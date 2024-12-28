@@ -12,10 +12,14 @@ public class    DragNDrop : MonoBehaviour
     private Rigidbody objRigidbody;
     public float throwAmount;
 
-
+    public GameObject currentRoom;
+    public Vector3 spawnLocation;
+    
     void Awake()
     {
         objRigidbody = GetComponent<Rigidbody>();
+        
+        spawnLocation = transform.position;
     }
     void OnTriggerStay(Collider other)
     {
@@ -46,22 +50,49 @@ public class    DragNDrop : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                transform.parent = Player.Instance.GetMainCameraTransform(); //gets camera transform from player singleton class
-                objRigidbody.useGravity = false;
-                objRigidbody.isKinematic = true;
-                pickedup = true;
+                OnPickUp();
 
             }
             if (Input.GetMouseButtonUp(0))
             {
-                transform.parent = null;
-                objRigidbody.useGravity = true;
-                objRigidbody.isKinematic = false;
-                pickedup = false;
+              OnDrop();
 
             }
         }
     }
 
+    private void OnDrop()
+    {
+        objRigidbody.useGravity = true;
+        objRigidbody.isKinematic = false;
+        pickedup = false;
+        
+    }
+
+    private void OnPickUp()
+    {
+        transform.parent = Player.Instance.GetMainCameraTransform(); //gets camera transform from player singleton class
+        objRigidbody.useGravity = false;
+        objRigidbody.isKinematic = true;
+        pickedup = true;
+    }
+
+    private void FindCurrentRoom()
+    {
+        GameObject closestRoom = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var room in Loadingmanager.Instance.roomList)
+        {
+            float distance = Vector3.Distance(transform.position, room.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestRoom = room;
+            }
+        }
+        
+    }
     public bool IsPickedUp()=> pickedup;
 }

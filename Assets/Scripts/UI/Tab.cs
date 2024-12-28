@@ -1,21 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
+[RequireComponent(typeof(Image))]
 public class Tab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-
-
-    public UnityEvent onTabSelected;
-    public UnityEvent onTabDeselcted;
+    
     public TabGroup tabGroup;
-    public Animator animator;
-
+    public Image background;
     public void OnPointerClick(PointerEventData eventData)
     {
         tabGroup.OnTabSelected(this);
@@ -31,26 +23,11 @@ public class Tab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IP
         tabGroup.OnTabExit(this);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        background  = GetComponent<Image>();
         tabGroup.Subscribe(this);
-        animator = GetComponent<Animator>();
     }
-
-    public void Deselect()
-    {
-        if(onTabDeselcted!=null)
-        {
-            onTabDeselcted.Invoke();
-        }
-    }
-    public void Select()
-    {
-        if(onTabSelected!=null)
-        {
-            onTabSelected.Invoke();
-        }
-    }
+    
 
 }
