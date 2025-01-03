@@ -30,8 +30,9 @@ public class Terminal : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             
             Player.Instance.DeviceEnabledState(false);
-
+    
             EnableTerminal(true); 
+            TerminalSingleton.Instance.DisableOtherTerminals(this);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -46,6 +47,8 @@ public class Terminal : MonoBehaviour
             
             Player.Instance.DeviceEnabledState(true);
             Player.Instance.CrosshairOff();
+            
+            TerminalSingleton.Instance.ReenableTerminals(this);
         }
     }
     
@@ -55,6 +58,6 @@ public class Terminal : MonoBehaviour
         canvasGroup.blocksRaycasts = state;
     }
 
-
+   
 
 }

@@ -83,5 +83,5 @@ public class Interactable : MonoBehaviour
     {
         EventManager.Instance.OnTriggerInteraction(this);   
     }
-
+    
 }

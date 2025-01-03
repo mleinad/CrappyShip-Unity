@@ -58,16 +58,15 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);  // Destroy the extra instance to ensure there is only one
         }
-
-        DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
  
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
 
 
         left_arm.weight =0;

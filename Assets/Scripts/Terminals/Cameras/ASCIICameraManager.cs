@@ -54,4 +54,6 @@ public class ASCIICameraManager : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(false);
     }
+
+    
 }

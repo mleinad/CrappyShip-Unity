@@ -16,7 +16,7 @@ public class InteractableAction : MonoBehaviour   //possibly play animation acti
     
     public bool timed;
     public float timer;
-    bool beenTriggerd;
+   public bool beenTriggerd;
     
     public bool doOnce = false;
     private bool hasPlayedOnce;

@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
 
 
-    [SerializeField]
-    List<Tab> tab_buttons;
-    
-    public List<GameObject> objects_to_swap;
-    public Tab selected_tab;
+     [SerializeField]
+    List<Tab> tabButtons;
+
+    public Sprite tabIdle;
+    public Sprite tabHover;
+    public Sprite tabActive;
+    public List<GameObject> objectsToSwap; 
+    public Tab selectedTab;
 
    public void Subscribe(Tab button){
-        if(tab_buttons==null)
+       
+       if(tabButtons==null)
         {
-            tab_buttons = new List<Tab>();
+            tabButtons = new List<Tab>();
         }
 
-        tab_buttons.Add(button);
+        tabButtons.Add(button);
    }
 
    public void OnTabEnter(Tab button)
     {
         ResetTabs();
-        if(selected_tab == null||button!=selected_tab)
+        if(selectedTab == null||button!=selectedTab)
         {
-     //   button.background.sprite = tab_hover;
-        button.animator.SetTrigger("Highlighted");
+             button.background.sprite = tabHover;
         }
     }
         
@@ -38,30 +42,22 @@ public class TabGroup : MonoBehaviour
 
    public void OnTabSelected(Tab button)
     {
-       if(selected_tab != null)
-       {
-        selected_tab.Deselect();
-       }
-       
-        selected_tab = button;
-
-        selected_tab.Select();
-
+        
+        selectedTab = button;
+        
         ResetTabs();
-        //button.background.sprite = tab_active;
-        button.animator.SetTrigger("Pressed");
-
+        button.background.sprite = tabActive;
 
         int index = button.transform.GetSiblingIndex();
-        for(int i =0; i<objects_to_swap.Count;i++)
+        for(int i =0; i<objectsToSwap.Count;i++)
         {
             if( i == index)
             { 
-                objects_to_swap[i].SetActive(true);
+                objectsToSwap[i].SetActive(true);
             }
             else
             {
-                objects_to_swap[i].SetActive(false);
+                objectsToSwap[i].SetActive(false);
             }
         }
     }
@@ -69,12 +65,11 @@ public class TabGroup : MonoBehaviour
 
    public void ResetTabs()
    {
-    foreach(Tab button in tab_buttons)
-    {
-        if(selected_tab!=null && button == selected_tab){continue;}
-       // button.background.sprite = tab_idle;
-        button.animator.SetTrigger("Normal");
-    }
+        foreach(Tab button in tabButtons)
+        {
+            if(selectedTab!=null && button == selectedTab){continue;}
+            button.background.sprite = tabIdle;
+        }
    }
 
 
