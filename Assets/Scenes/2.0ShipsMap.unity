@@ -2103,6 +2103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &77216264
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2876,6 +2878,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &114907878
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5094,12 +5098,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1056643800}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &223623701 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2806987706418143112, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1056643800}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &223623707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6520,6 +6518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &293102308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8995,6 +8995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &404644540
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10376,6 +10378,7 @@ MonoBehaviour:
   gameObjects:
   - {fileID: 1258142171}
   - {fileID: 1596200722}
+  solvedPrefab: {fileID: 0}
 --- !u!1001 &441135055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10698,6 +10701,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4119128597020490, guid: d254b57da3b8f7b4696e9f26e0b0eeaf,
     type: 3}
   m_PrefabInstance: {fileID: 459957204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &462362402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 56e1c7c0fe56ccf44907f0cd4e8ca9cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 375258844}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &467243017
 PrefabInstance:
@@ -11602,6 +11611,8 @@ MonoBehaviour:
   dialog:
   - Look at this components
   - try to pick them up
+  audioLine: {fileID: 0}
+  playerAudioSource: {fileID: 0}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &482818248
@@ -14566,6 +14577,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - 'This terminals control the Reactor '
+  audioLine: {fileID: 8300000, guid: 363ac31596abaac44af8de727b8b5a7d, type: 3}
+  playerAudioSource: {fileID: 1015988236}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &590312580
@@ -15778,6 +15791,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &649576589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15860,7 +15875,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1303617717566150, guid: 32e0f6e467f11854192c473658137475,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1556387291}
+    - targetCorrespondingSourceObject: {fileID: 1303617717566150, guid: 32e0f6e467f11854192c473658137475,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1556387290}
   m_SourcePrefab: {fileID: 100100000, guid: 32e0f6e467f11854192c473658137475, type: 3}
 --- !u!4 &654309805 stripped
 Transform:
@@ -17297,6 +17320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &709112639
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17667,6 +17692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &716499435
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18110,7 +18137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &727521614
 Transform:
   m_ObjectHideFlags: 0
@@ -20606,6 +20633,7 @@ MonoBehaviour:
   interactable: {fileID: 826261211}
   timed: 0
   timer: 0
+  beenTriggerd: 0
   doOnce: 0
 --- !u!1 &829031812
 GameObject:
@@ -20836,6 +20864,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &833935193
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21082,6 +21112,8 @@ MonoBehaviour:
   dialog:
   - "It looks like it\xB4s the Reactor Core!"
   - "But it\xB4s not working"
+  audioLine: {fileID: 8300000, guid: 5e18d497210ca0f4dbc999292d5b3754, type: 3}
+  playerAudioSource: {fileID: 1015988236}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &840152302
@@ -23082,6 +23114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253ca82a141b6eb49ad332ce8f5c2cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hologramObject: {fileID: 462362402}
+  hologramAnimator: {fileID: 979001675}
 --- !u!4 &912994740
 Transform:
   m_ObjectHideFlags: 0
@@ -23701,6 +23735,7 @@ MonoBehaviour:
   interactable: {fileID: 927957876}
   timed: 0
   timer: 0
+  beenTriggerd: 0
   doOnce: 0
 --- !u!65 &927957878
 BoxCollider:
@@ -24997,6 +25032,12 @@ PrefabInstance:
 --- !u!4 &979001674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 56e1c7c0fe56ccf44907f0cd4e8ca9cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 375258844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &979001675 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 56e1c7c0fe56ccf44907f0cd4e8ca9cb,
     type: 3}
   m_PrefabInstance: {fileID: 375258844}
   m_PrefabAsset: {fileID: 0}
@@ -27226,7 +27267,7 @@ PrefabInstance:
     - target: {fileID: 65785129574297974, guid: 947441de82a48ae4e8d693f272edde94,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27973,6 +28014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 20
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &1048820598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28012,7 +28055,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2134780501}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 199699074375943543, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
@@ -28032,7 +28075,7 @@ PrefabInstance:
     - target: {fileID: 248294044067372502, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0021972656
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 666355206846727229, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
@@ -32216,6 +32259,8 @@ MonoBehaviour:
   - This door seems to be locked...
   - maybe the console could give insight on whats happening
   - try using the console
+  audioLine: {fileID: 0}
+  playerAudioSource: {fileID: 0}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &1194610072
@@ -33561,6 +33606,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &1252228713
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34124,6 +34171,22 @@ MonoBehaviour:
   puzzle_component_gameobject: {fileID: 3243471543537572508}
   contaminationLevel: 0
   interactable: []
+  commandDescriptions:
+    _serializedList:
+    - Key: help
+      Value: Lists all available commands.
+    - Key: unlock
+      Value: Unlocks additional commands using a password.
+    - Key: run
+      Value: Runs a specified program, e.g.->run program.exe
+    - Key: install
+      Value: Installs a new program (functionality not implemented).
+    - Key: delete
+      Value: Deletes a program or file from storage (functionality not implemented).
+    - Key: storage
+      Value: Lists all programs and files in storage.
+  imageDictionary:
+    _serializedList: []
 --- !u!1001 &1268921347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35750,6 +35813,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - This is the Playground Room
+  audioLine: {fileID: 0}
+  playerAudioSource: {fileID: 1015988236}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &1334041148
@@ -36580,6 +36645,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &1376614653
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -38675,7 +38742,6 @@ MonoBehaviour:
   - {fileID: 1651068355}
   interperter: {fileID: 223623707}
   notification: {fileID: 8972346566110037834}
-  textToSpeech: {fileID: 1458033859}
 --- !u!114 &1458033859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38688,7 +38754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905ccf20cd7779242a19f1ced5cafc4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audiosource: {fileID: 1015988236}
 --- !u!1001 &1460528817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40921,6 +40986,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1952992003}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1556387289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1303617717566150, guid: 32e0f6e467f11854192c473658137475,
+    type: 3}
+  m_PrefabInstance: {fileID: 654309804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1556387290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556387289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ae5c63efe099f4da5cbdbe9145fe9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
+--- !u!54 &1556387291
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556387289}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1558743095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43326,6 +43439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Interact with the terminal to play a Quiz
+  audioLine: {fileID: 8300000, guid: 5287f1d49e9d4ca4caab75d897f841fd, type: 3}
+  playerAudioSource: {fileID: 1015988236}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &1651068356
@@ -44273,6 +44388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &1680583684
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -46801,6 +46918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &1767742711
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -47183,18 +47302,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777724658}
   m_Mesh: {fileID: 4300000, guid: aff468455364849428ff670b8dac5e47, type: 3}
---- !u!114 &1778152370 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2617842294739735549, guid: 3efe2e6509d179d489365a42317e8433,
-    type: 3}
-  m_PrefabInstance: {fileID: 7506121577904887295}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295f16a5764261942986089d3f1d5d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1779383202
 GameObject:
   m_ObjectHideFlags: 0
@@ -50471,6 +50578,8 @@ MonoBehaviour:
   dialog:
   - This seems to be another room
   - I wonder what's there to do
+  audioLine: {fileID: 0}
+  playerAudioSource: {fileID: 0}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &1884349637
@@ -50896,6 +51005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjects:
   - {fileID: 1046372052}
+  solvedPrefab: {fileID: 0}
 --- !u!1001 &1906364282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52689,6 +52799,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Now drop it in that base!
+  audioLine: {fileID: 0}
+  playerAudioSource: {fileID: 0}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &1970212923
@@ -53962,18 +54074,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2018439567}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2019265171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5610462505082793718, guid: 3efe2e6509d179d489365a42317e8433,
-    type: 3}
-  m_PrefabInstance: {fileID: 7506121577904887295}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295f16a5764261942986089d3f1d5d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2020841820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55265,6 +55365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &2056743357
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -56302,6 +56404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &2095761797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -57433,12 +57537,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 958269800}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &2134780501 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 291608468741413508, guid: 3efe2e6509d179d489365a42317e8433,
-    type: 3}
-  m_PrefabInstance: {fileID: 7506121577904887295}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2135301084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57565,6 +57663,16 @@ PrefabInstance:
       propertyPath: m_UiScaleMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1814233351788350723, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -27.769989
+      objectReference: {fileID: 0}
+    - target: {fileID: 1814233351788350723, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -99.93934
+      objectReference: {fileID: 0}
     - target: {fileID: 3110571416061245934, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
       propertyPath: m_IsActive
@@ -57579,6 +57687,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473876734418202835, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 17711
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354320379942653039, guid: 4e54087121fc0754aa4e43fdc459d4b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8184091136111845249, guid: 4e54087121fc0754aa4e43fdc459d4b3,
         type: 3}
@@ -60519,6 +60637,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1572538198857097631, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572538198857097631, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572538198857097631, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1616452659542755834, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_Layer
@@ -60728,6 +60861,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167139463691044468, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167139463691044468, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167139463691044468, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248138808650697991, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248138808650697991, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0015869141
       objectReference: {fileID: 0}
     - target: {fileID: 2301096659425328172, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -61069,6 +61227,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3073443981992817006, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073443981992817006, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073443981992817006, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3086080000635637034, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -61153,6 +61326,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536222216043078930, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536222216043078930, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536222216043078930, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3580953289738790349, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -61382,12 +61570,12 @@ PrefabInstance:
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.4
+      value: -1.22
       objectReference: {fileID: 0}
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.29
+      value: 0.026
       objectReference: {fileID: 0}
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -61658,6 +61846,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.0755548
+      objectReference: {fileID: 0}
+    - target: {fileID: 4788572009746993095, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4788572009746993095, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4788572009746993095, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4836757476013008776, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -62169,6 +62372,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6429563286176423952, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6429563286176423952, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6429563286176423952, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6439787275445913554, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_Cameras.Array.size
@@ -62504,6 +62722,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8063504710897273874, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063504710897273874, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063504710897273874, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8123745037759650537, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: tab_buttons.Array.size
@@ -62513,12 +62746,12 @@ PrefabInstance:
         type: 3}
       propertyPath: tab_buttons.Array.data[0]
       value: 
-      objectReference: {fileID: 1778152370}
+      objectReference: {fileID: 0}
     - target: {fileID: 8123745037759650537, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: tab_buttons.Array.data[1]
       value: 
-      objectReference: {fileID: 2019265171}
+      objectReference: {fileID: 0}
     - target: {fileID: 8149183714022751888, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -62769,15 +63002,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9221931147417772458, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221931147417772458, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221931147417772458, guid: 3efe2e6509d179d489365a42317e8433,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3799459157866570548, guid: 3efe2e6509d179d489365a42317e8433, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6302783270149294972, guid: 3efe2e6509d179d489365a42317e8433, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 291608468741413508, guid: 3efe2e6509d179d489365a42317e8433,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 223623701}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1741508091390964098, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -63082,6 +63326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwAmount: 0
+  currentRoom: {fileID: 0}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!54 &8822322247724655758
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -63202,3 +63448,4 @@ SceneRoots:
   - {fileID: 146901762}
   - {fileID: 1722980992}
   - {fileID: 912994740}
+  - {fileID: 1056643800}

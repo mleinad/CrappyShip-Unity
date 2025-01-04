@@ -5,10 +5,17 @@ using UnityEngine.Events;
 
 public class SoundManager : MonoBehaviour
 {
+    public enum AnimatorType
+    {
+        Door,
+        Terminal
+    }
+
     [System.Serializable]
     public class BoolAudioPair
     {
         public GameObject targetObject; // Object containing the Animator or Script
+        public AnimatorType animatorType; // Type of the Animator (Door/Terminal)
         public string boolMemberName; // Name of the bool field, property, or method to monitor
         public AudioSource audioSource; // AudioSource to play
         public bool useAnimator; // True if using Animator, false if monitoring a script
@@ -43,18 +50,44 @@ public class SoundManager : MonoBehaviour
                 if (debugLogging)
                     Debug.Log($"State changed for {pair.boolMemberName} on {pair.targetObject.name}: {currentState}");
 
+                PlayAudio(pair, currentState);
+
                 if (currentState)
                 {
-                    pair.audioSource.Play();
                     pair.onTrue.Invoke();
                 }
                 else
                 {
-                    pair.audioSource.Stop();
                     pair.onFalse.Invoke();
                 }
 
                 pair.lastState = currentState;
+            }
+        }
+    }
+
+    private void PlayAudio(BoolAudioPair pair, bool state)
+    {
+        // Select specific sound based on animator type
+        if (pair.useAnimator)
+        {
+            switch (pair.animatorType)
+            {
+                case AnimatorType.Door:
+                    pair.audioSource.clip = state ? Resources.Load<AudioClip>("DoorOpen") : Resources.Load<AudioClip>("DoorClose");
+                    break;
+                case AnimatorType.Terminal:
+                    pair.audioSource.clip = state ? Resources.Load<AudioClip>("TerminalActivate") : Resources.Load<AudioClip>("TerminalDeactivate");
+                    break;
+            }
+
+            if (pair.audioSource.clip != null)
+            {
+                pair.audioSource.Play();
+            }
+            else if (debugLogging)
+            {
+                Debug.LogWarning($"AudioClip missing for {pair.animatorType} on {pair.targetObject.name}");
             }
         }
     }

@@ -17,9 +17,17 @@ public class Interactable : MonoBehaviour
     
     public bool repeat;
     bool beenTriggerd;
+
+    private InteractableAction interactableAction;
+    private Terminal terminal;
+    private AudioSource audioSource;
     void Awake(){
         isOn = false;
         triggered = false;
+
+        interactableAction = GetComponent<InteractableAction>();
+        terminal = GetComponent<Terminal>();
+        audioSource = GetComponent<AudioSource>();
     }
     void OnTriggerEnter(Collider other){
         
@@ -83,5 +91,45 @@ public class Interactable : MonoBehaviour
     {
         EventManager.Instance.OnTriggerInteraction(this);   
     }
-    
+    private void PlaySound()
+    {
+        if (audioSource == null) return;
+
+        if (interactableAction != null)
+        {
+            // Determine the sound based on the animator controller
+            var animator = interactableAction.GetComponent<Animator>();
+            if (animator != null)
+            {
+                var runtimeAnimatorController = animator.runtimeAnimatorController;
+                if (runtimeAnimatorController != null)
+                {
+                    if (runtimeAnimatorController.name == "AnimatorOne")
+                    {
+                        audioSource.clip = Resources.Load<AudioClip>("SoundOne");
+                    }
+                    else if (runtimeAnimatorController.name == "AnimatorTwo")
+                    {
+                        audioSource.clip = Resources.Load<AudioClip>("SoundTwo");
+                    }
+                    else
+                    {
+                        audioSource.clip = Resources.Load<AudioClip>("SoundThree");
+                    }
+                    audioSource.Play();
+                }
+            }
+        }
+        else if (terminal != null)
+        {
+            // Play terminal interaction sound
+            audioSource.clip = Resources.Load<AudioClip>("TerminalSound");
+            audioSource.Play();
+        }
+        else
+        {
+            // No action for objects without InteractableAction or Terminal scripts
+            Debug.Log($"No sound assigned for {gameObject.name} as it lacks relevant scripts.");
+        }
+    }
 }

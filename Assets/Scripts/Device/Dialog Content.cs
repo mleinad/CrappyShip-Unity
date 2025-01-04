@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
 public class DialogContent : MonoBehaviour
 {
     public List<string> dialog;
+    public AudioClip audioLine;
+    [SerializeField] private AudioSource playerAudioSource;
 
     public bool isRepeated = false;
     int repCount;
@@ -36,6 +38,28 @@ public class DialogContent : MonoBehaviour
         //if been repeated could change...
 
         return dialog;
+    }
+    public IEnumerator PlayAudioAtPlayerPosition()
+    {
+        if (audioLine != null && playerAudioSource != null)
+        {
+            // Stop any currently playing audio
+            playerAudioSource.Stop();
+
+            // Play the new audio clip from the player's AudioSource
+            playerAudioSource.clip = audioLine;
+            playerAudioSource.Play();
+
+            // Wait until the audio has finished playing
+            while (playerAudioSource.isPlaying)
+            {
+                yield return null; // Wait until the audio finishes playing
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Audio clip or player AudioSource is missing.");
+        }
     }
 
     public void HandleRepetition(ref List<DialogContent> list)

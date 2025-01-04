@@ -8,7 +8,6 @@ public class AIManager : MonoBehaviour
     public AI_Interperter interperter;
     public Notification notification;
 
-    [SerializeField] private Text2Speech textToSpeech;
 
     void Start()
     {
@@ -38,12 +37,7 @@ public class AIManager : MonoBehaviour
                 {
                     interperter.PushLines(content.GetLines(), 0f);
                     StartCoroutine(notification.Appear(content.GetLines()[0], 3));
-                    if (textToSpeech != null)
-                    {
-                        // Send the first line of the dialog to Text2Speech to convert to speech
-                        string cleanedText = CleanTextForPolly(content.GetLines()[0]);
-                        textToSpeech.ConvertTextToSpeech(cleanedText);
-                    }
+                    StartCoroutine(content.PlayAudioAtPlayerPosition());
                     content.HandleRepetition(ref itemsToRemove);
                 }
             }
