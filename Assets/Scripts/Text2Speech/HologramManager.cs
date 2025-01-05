@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HologramManager : MonoBehaviour
@@ -9,17 +7,20 @@ public class HologramManager : MonoBehaviour
 
     private bool isPuzzleComplete = false;
 
+    public static HologramManager Instance;
     void Start()
     {
-        hologramObject.SetActive(false);   
+        Instance = this;
+        hologramObject.SetActive(false);
+        EventManager.Instance.onAiTrigger += OnTextToSpeechActivated;
     }
 
     void Update()
     {
-            OnTextToSpeechActivated();
+                    //  OnTextToSpeechActivated();
     }
 
-    public void OnTextToSpeechActivated()
+    public void OnTextToSpeechActivated(IPuzzleComponent puzzleComponent)
     {
         hologramObject.SetActive(true);
 
@@ -29,7 +30,7 @@ public class HologramManager : MonoBehaviour
         }
     }
 
-    private void HandlePuzzleCompletion()
+    public void HandlePuzzleCompletion()
     {
         isPuzzleComplete = true;
 

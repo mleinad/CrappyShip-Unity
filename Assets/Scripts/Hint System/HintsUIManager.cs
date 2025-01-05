@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using QFSW.QC;
 using QFSW.QC.Suggestors.Tags;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Scripting;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
@@ -43,12 +44,16 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      
      
      public static HintsUIManager Instance;
+     
+     
+     public IPuzzleComponent currentPuzzleComponent;
+     
      void Start()
      {
           Instance = this;
+          currentState = offState;
           
           BackdropState(0, false);
-          currentState = offState;
           currentState.EnterState(this);
 
           if (HintGameObject.activeSelf == false)
@@ -61,6 +66,9 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      {
           currentState.UpdateState(this);
      }
+     
+     
+     
 
      public void SwitchState(HintBaseState state)
      {
@@ -82,8 +90,7 @@ public class HintsUIManager : MonoBehaviour  //Tutorial State Machine
      [Preserve]
      [Command]
      void GiveHint(
-          [Suggestions(0, 1, 2, 3)] int i
-          )
+          [Suggestions(0, 1, 2, 3)] int i)
      {
 
           switch (i)

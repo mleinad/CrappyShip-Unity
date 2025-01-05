@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,8 +18,11 @@ public class Loadingmanager : MonoBehaviour
     private void Update()
     {
         EnableRoomsWithinRadius();
-        
-        LookForward(Player.Instance.GetPlayerPositon(), Player.Instance.transform.forward, forwardRange);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LookForward(Player.Instance.GetPlayerPositon(), Player.Instance.transform.forward, forwardRange);
+        }
     }
 
     void EnableRoomsWithinRadius()
@@ -52,8 +53,8 @@ public class Loadingmanager : MonoBehaviour
     public void LookForward(Vector3 startPosition, Vector3 direction, float maxDistance)
     {
         if (Physics.Raycast(startPosition, direction, out RaycastHit hit, maxDistance))
-        {
-            Debug.DrawRay(startPosition, direction * maxDistance, Color.red);            
+        {   
+            Debug.DrawRay(startPosition, direction * maxDistance, Color.red);
         }
     }
 

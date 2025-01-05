@@ -26,8 +26,6 @@ public class EventManager : MonoBehaviour
         {
             Destroy(gameObject);  // Destroy the extra instance to ensure there is only one
         }
-
-        DontDestroyOnLoad(gameObject);  // Optional: Persist the singleton across scenes
     }
 
 
