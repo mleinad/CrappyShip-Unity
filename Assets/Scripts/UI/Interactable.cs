@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
+using static Unity.Barracuda.TextureAsTensorData;
 
 public class Interactable : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class Interactable : MonoBehaviour
         interactableAction = GetComponent<InteractableAction>();
         terminal = GetComponent<Terminal>();
         audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false; // Prevent audio from playing immediately
+        }
     }
     void OnTriggerEnter(Collider other){
         
@@ -75,6 +81,7 @@ public class Interactable : MonoBehaviour
 
                 Player.Instance.MessageOn(isOn);
             }
+        PlaySound();
     }
 
     IEnumerator OffDelay()
@@ -104,17 +111,32 @@ public class Interactable : MonoBehaviour
                 var runtimeAnimatorController = animator.runtimeAnimatorController;
                 if (runtimeAnimatorController != null)
                 {
-                    if (runtimeAnimatorController.name == "AnimatorOne")
+                    if (runtimeAnimatorController.name == "SM_Bld_Door_Single_03 (1)")
                     {
-                        audioSource.clip = Resources.Load<AudioClip>("SoundOne");
+                        if (interactableAction.beenTriggerd)
+                        {
+                            audioSource.clip = Resources.Load<AudioClip>("SoundDoor1");
+                        }
+                        
                     }
-                    else if (runtimeAnimatorController.name == "AnimatorTwo")
+                    else if (runtimeAnimatorController.name == "door3")
                     {
-                        audioSource.clip = Resources.Load<AudioClip>("SoundTwo");
+                        if (interactableAction.beenTriggerd) 
+                        {
+                            audioSource.clip = Resources.Load<AudioClip>("SoundDoor2");
+                        } 
+                        
                     }
-                    else
+                    else if(runtimeAnimatorController.name =="Locker")
                     {
-                        audioSource.clip = Resources.Load<AudioClip>("SoundThree");
+                        if(animator.GetBool("interaction") == true)
+                        {
+                            audioSource.clip = Resources.Load<AudioClip>("SoundLocker");
+                        }else if(animator.GetBool("interaction") == false)
+                        {
+                            audioSource.clip = Resources.Load<AudioClip>("SoundLockerClose");
+                        }    
+                        
                     }
                     audioSource.Play();
                 }
@@ -123,13 +145,18 @@ public class Interactable : MonoBehaviour
         else if (terminal != null)
         {
             // Play terminal interaction sound
-            audioSource.clip = Resources.Load<AudioClip>("TerminalSound");
-            audioSource.Play();
+            if (WasTriggered())
+            {
+                audioSource.clip = Resources.Load<AudioClip>("TerminalSound");
+                if (audioSource.clip == null)
+                {
+                    Debug.LogError("Failed to load SoundOne. Check the file name and ensure it's in the Resources folder.");
+                }
+                audioSource.Play();
+            }
         }
         else
         {
-            // No action for objects without InteractableAction or Terminal scripts
-            Debug.Log($"No sound assigned for {gameObject.name} as it lacks relevant scripts.");
         }
     }
 }
