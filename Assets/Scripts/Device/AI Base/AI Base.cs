@@ -34,20 +34,15 @@ public class AIBase : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {   
-        
+    {
+
         //compare to check if is player USE singleton
-        if (other.transform == Player.Instance.transform)
-        {
-            if (!beenTriggered)
-            { 
-                beenTriggered = true;
-                HologramManager.Instance.docked = true;
-                InstantiateAI();
-                content.Play();
-                
-            }
-        }
+        if (beenTriggered) return;
+        if (other.transform != Player.Instance.transform) return;
+        beenTriggered = true;
+        HologramManager.Instance.docked = true;
+        InstantiateAI();
+        content.Play();
     }
     
     public void Display(GameObject target, Transform offset)
