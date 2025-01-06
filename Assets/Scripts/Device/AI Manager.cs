@@ -36,7 +36,7 @@ public class AIManager : MonoBehaviour
                 if (content.CanPlay() && content.GetTrigger().CheckCompletion())
                 {
                     interperter.PushLines(content.GetLines(), 0f);
-                    StartCoroutine(notification.Appear(content.GetLines()[0], 3));
+                 //   StartCoroutine(notification.Appear(content.GetLines()[0], 3));
                     StartCoroutine(content.PlayAudioAtPlayerPosition());
                     content.HandleRepetition(ref itemsToRemove);
                 }

@@ -8,9 +8,10 @@ public class RecycleHints : MonoBehaviour, HintData
     public float globalTime, relativeTime;
 
     [SerializeField] public float timeTrigger1, timeTrigger2, timeTrigger3, timeTrigger4;
-    
+    private bool hint1Triggered = false, hint2Triggered = false;
     private bool globalEntered = false, localEntered;
-    
+
+    [SerializeField] private Interactable terminal;
     public Vector3[] Area 
     {
         get
@@ -30,6 +31,7 @@ public class RecycleHints : MonoBehaviour, HintData
             }
         } 
     }
+   
     HintsUIManager hintsUIManager;
 
     private void Start()
@@ -49,6 +51,12 @@ public class RecycleHints : MonoBehaviour, HintData
             Tick();           
             
             CheckInactivity();
+        }
+
+        if (terminal.WasTriggered())
+        {
+            timeTrigger1 = 0;
+            timeTrigger2 = 0;
         }
     }
 
@@ -81,9 +89,16 @@ public class RecycleHints : MonoBehaviour, HintData
 
     void CheckInactivity()
     {
-        if (globalTime >= timeTrigger1)
+        if (!hint1Triggered && globalTime >= timeTrigger1)
         {
-            //throw hint
+            Hint1();
+            hint1Triggered = true;  
+        }
+
+        if (!hint2Triggered && globalTime >= timeTrigger2 && hint1Triggered)
+        {
+            Hint2();
+            hint2Triggered = true;
         }
     }
 
@@ -91,6 +106,18 @@ public class RecycleHints : MonoBehaviour, HintData
     {
         globalTime += Time.deltaTime;    
     }
-    
-    
+
+    void Hint1()
+    {
+        HintsUIManager.Instance.SwitchState(HintsUIManager.Instance.requestHintState);  //requests hint
+        HintsUIManager.Instance.requestHintState.SetHint(HintsUIManager.Instance.textState); //hint type
+        HintsUIManager.Instance.textState.SetHintText("try exploring the room, and interact with objects");
+    }
+
+    void Hint2()
+    {
+        HintsUIManager.Instance.SwitchState(HintsUIManager.Instance.requestHintState);
+        HintsUIManager.Instance.requestHintState.SetHint(HintsUIManager.Instance.pointState);
+        HintsUIManager.Instance.pointState.SetObject(terminal.transform);
+    }
 }
