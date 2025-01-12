@@ -89,13 +89,17 @@ public class RecycleHints : MonoBehaviour, HintData
 
     void CheckInactivity()
     {
-        if (!hint1Triggered && globalTime >= timeTrigger1)
+        
+        //should also check if player moves at all
+        
+        
+        if(!hint1Triggered && globalTime >= timeTrigger1)
         {
             Hint1();
             hint1Triggered = true;  
         }
 
-        if (!hint2Triggered && globalTime >= timeTrigger2 && hint1Triggered)
+        if(!hint2Triggered && globalTime >= timeTrigger2 && hint1Triggered)
         {
             Hint2();
             hint2Triggered = true;

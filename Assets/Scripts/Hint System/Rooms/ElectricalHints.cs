@@ -6,6 +6,19 @@ using UnityEngine;
 public class ElectricalHints : MonoBehaviour, HintData
 {
     public Transform pos1, pos2;
+
+    public float globalTime;
+    public float relativeTime;
+    
+    HintsUIManager hintsUIManager;
+    
+    [SerializeField] public float timeTrigger, timeTrigger2, timeTrigger3, timeTrigger4;
+    private bool hint1Triggered= false, hint2Triggered = false, hint3Triggered = false, hint4Triggered = false;
+    
+    //active triggers
+    [SerializeField] 
+    private DragNDrop sr;
+    
     public Vector3[] Area 
     {
         get
@@ -25,6 +38,43 @@ public class ElectricalHints : MonoBehaviour, HintData
             }
         } 
     }
+
+    private void Start()
+    {
+        hintsUIManager = HintsUIManager.Instance;
+    }
+
+    private void Update()
+    {
+        if(PlayerInArea())
+        {
+            Tick();
+               
+            CheckInactivity();
+        }
+    }
+
+    void CheckInactivity()
+    {
+
+    }
+
+    bool GrabComponent()
+    {
+        if (sr.IsPickedUp())
+        {
+            hint1Triggered = true;
+            return true;
+        }
+
+        return false;
+    }
+    
+    private void Tick()
+    {
+        globalTime += Time.deltaTime;    
+    }
+    
     public bool PlayerInArea()
     {
         Vector3 playerPosition = Player.Instance.transform.position;
