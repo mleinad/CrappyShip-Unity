@@ -2723,8 +2723,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Navigation is this way....
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 7524da4e911f56a4da45479a9654afc6, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &74942073
@@ -6860,8 +6860,8 @@ MonoBehaviour:
   dialog:
   - This is the Laser Target.
   - It receives the laser and does something with it......
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 642b4789d3e93e34bac6b23185cc0798, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &216290317
@@ -10448,8 +10448,8 @@ MonoBehaviour:
   - This is the Lasers Room
   - And Weapon Storage.
   - Looks like a mess now....
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: d9d5d5e5322c24745a6e76a52bd77b45, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &293711073
@@ -13660,8 +13660,8 @@ MonoBehaviour:
   dialog:
   - the ship seems to be on its emergency power mode
   - something's wrong in the quantum electricity generator
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 8dc058164c229bf4f8253f08f0f343bb, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &388906513
@@ -13865,7 +13865,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1334041146}
-  - {fileID: 1651068354}
   m_Father: {fileID: 1462366777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &402243930 stripped
@@ -14708,8 +14707,8 @@ MonoBehaviour:
   dialog:
   - This is your office.
   - You remember it, right?
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 87345b58779c28644a367b84c64cdbfb, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &410193653
@@ -15797,8 +15796,8 @@ MonoBehaviour:
   - This is a terminal
   - You can use them to control and check information
   - try giving this one a go
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 152531c8e3d834142a127f12e685a746, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 1654050640}
 --- !u!65 &433590674
@@ -17553,8 +17552,8 @@ MonoBehaviour:
   dialog:
   - Ohhhh.....
   - He looks bad....
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 76e35c5aa7792c049ad5cfe4ac90c410, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &468760300
@@ -21623,8 +21622,8 @@ MonoBehaviour:
   dialog:
   - This is a signal comparator
   - it returns a positive output if all signals are different
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 1feb75acb3439f24d882fe06989b2039, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &566051684
@@ -22532,8 +22531,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - You need to get those systems working if you want to return to earth!
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 4e60f00dd20a36e4ab7da9f17d429912, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &585252023
@@ -22700,8 +22699,8 @@ MonoBehaviour:
   dialog:
   - 'This terminals control the Reactor '
   - You can increase/decrease the Quantic Levels
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 363ac31596abaac44af8de727b8b5a7d, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &590312580
@@ -26844,8 +26843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Wait then Step on the Elevator Platform to go up.
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 1843ae652124bdc4abfcf63116b61fca, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &710589880
@@ -27493,7 +27492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &727521614
 Transform:
   m_ObjectHideFlags: 0
@@ -29051,8 +29050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - this is probably not important... it even looks broken
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 4f60d164691c3894f89c24ad26e3afe0, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!4 &770354860 stripped
@@ -32132,8 +32131,8 @@ MonoBehaviour:
   dialog:
   - It looks like the Core Reactor
   - I think its not working
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 5e18d497210ca0f4dbc999292d5b3754, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &840152302
@@ -33199,8 +33198,8 @@ MonoBehaviour:
   - Oh, whats this?
   - Its the letter E....
   - Seems to be useful for something....
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: b7ef495ba9005af4aaa12aeab8abe7ea, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &880043675
@@ -33358,8 +33357,8 @@ MonoBehaviour:
   - the quantum electrical system seems to be down...
   - its basically like a normal electrical circuit
   - just... quantum
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: dc27133ffda59a64fbd8d4d2bd81597e, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &888651443
@@ -39245,6 +39244,12 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &1015988232 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 549492908069258302, guid: 3efe2e6509d179d489365a42317e8433,
+    type: 3}
+  m_PrefabInstance: {fileID: 7506121577904887295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1016205726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46906,8 +46911,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - You sure look surprised in this picture!
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 1f1f8e90b80bb32478eb2efdeedb2eef, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &1219557105
@@ -51194,8 +51199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - This is the Playground Room
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 5287f1d49e9d4ca4caab75d897f841fd, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &1334041148
@@ -53792,8 +53797,8 @@ MonoBehaviour:
   - some components amplify the circuit intensity...
   - but careful to not blow it up
   - you might need to reset it
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 4967a45f89e27034686f670ae7ef1ece, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &1390283490
@@ -57369,8 +57374,8 @@ MonoBehaviour:
   dialog:
   - 'This terminals control the Reactor '
   - You can increase/decrease the Quantic Levels
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 363ac31596abaac44af8de727b8b5a7d, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &1494647567
@@ -58445,8 +58450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Wait then Step on the Elevator to go down.
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: c92b62b381411474793232199c52b28f, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!65 &1521344933
@@ -62599,8 +62604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - Looks like the next room requires SPECIAL security clearance
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 12ffbd69040c1eb4abc690a4cba2450f, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &1634528824
@@ -63076,91 +63081,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1650476977}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1651068353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1651068354}
-  - component: {fileID: 1651068355}
-  - component: {fileID: 1651068356}
-  - component: {fileID: 1651068357}
-  m_Layer: 0
-  m_Name: See Terminal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1651068354
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651068353}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.42, y: 0, z: -3.07}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 399607658}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1651068355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651068353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2673e617af143d9499d0dc5999cdae6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialog:
-  - Interact with the terminal to play a Quiz
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
-  isRepeated: 0
-  previousDialog: {fileID: 0}
---- !u!65 &1651068356
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651068353}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4.125292, y: 2.158556, z: 3.54249}
-  m_Center: {x: 1.5626459, y: 0.57927823, z: -1.271245}
---- !u!114 &1651068357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651068353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26044aafde2a1f54eaf1d927b4115e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1651583643
 GameObject:
   m_ObjectHideFlags: 0
@@ -63406,8 +63326,8 @@ MonoBehaviour:
   - That is the navigation room...
   - its there that you can set the ship's course back to Earth
   - but it seems to be locked
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: 98bf27b4fe09cc14bbece41ee57811cd, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 1971369019}
 --- !u!1 &1655324623
@@ -66777,8 +66697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - THIS is the Navigation room
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: fcd54a54203eafa4d87aec75adb51277, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &1766671193
@@ -71222,7 +71142,7 @@ MonoBehaviour:
   dialog:
   - likewise, this component returns an output if its inputs are all equal
   audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &1862836444
@@ -71358,8 +71278,8 @@ MonoBehaviour:
   - This is a Laser Emitter.
   - It shoots a laser tha reflects on mirrors.
   - But it seems that some mirrors are blocked....
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: a5a5061ff4408584eb738b1d401eca35, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!114 &1863902335
@@ -74527,7 +74447,7 @@ PrefabInstance:
     - target: {fileID: 248294044067372502, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.004699707
+      value: -0.007751465
       objectReference: {fileID: 0}
     - target: {fileID: 666355206846727229, guid: 7dd9be85a39f2fa4e9fa5c824aaef62e,
         type: 3}
@@ -76601,8 +76521,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - this is a signal rederection component
-  audioLine: {fileID: 0}
-  playerAudioSource: {fileID: 0}
+  audioLine: {fileID: 8300000, guid: e704e2a0b5c61864b80a1b7733b90fc8, type: 3}
+  playerAudioSource: {fileID: 1015988232}
   isRepeated: 0
   previousDialog: {fileID: 0}
 --- !u!1001 &1959158711
@@ -80487,6 +80407,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos1: {fileID: 1611435177}
   pos2: {fileID: 444572673}
+  globalTime: 0
+  relativeTime: 0
+  timeTrigger: 0
+  timeTrigger2: 0
+  timeTrigger3: 0
+  timeTrigger4: 0
+  sr: {fileID: 0}
 --- !u!1001 &2033023819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90817,7 +90744,7 @@ PrefabInstance:
     - target: {fileID: 2248138808650697991, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00018310547
+      value: -0.0006713867
       objectReference: {fileID: 0}
     - target: {fileID: 2301096659425328172, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
@@ -91742,17 +91669,17 @@ PrefabInstance:
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.19
+      value: -5.98
       objectReference: {fileID: 0}
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.104
+      value: 0.34
       objectReference: {fileID: 0}
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.11
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: 4047763420307960758, guid: 3efe2e6509d179d489365a42317e8433,
         type: 3}
