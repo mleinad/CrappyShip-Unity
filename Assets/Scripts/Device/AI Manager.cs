@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class AIManager : MonoBehaviour
 {
@@ -7,37 +8,46 @@ public class AIManager : MonoBehaviour
     public List<DialogContent> speech_list;
     public AI_Interperter interperter;
     public Notification notification;
-
+    private bool isAudioPlaying = false;
+    [SerializeField] private AudioSource audioSource;
 
     void Start()
     {
              EventManager.Instance.onAiTrigger += Perform;
     }
-    public string CleanTextForPolly(string inputText)
+    private async Task WaitForAudioToFinish()
     {
-        // Remove any <color> or other HTML-style tags
-        string cleanText = System.Text.RegularExpressions.Regex.Replace(inputText, "<.*?>", string.Empty);
-        string cleanedText = cleanText.Replace("AI->", "").Trim();
-        return cleanedText;
+        while (audioSource.isPlaying)
+        {
+            await Task.Yield();
+        }
+
+        isAudioPlaying = false;
     }
 
-    // Update is called once per frame
-
-    void Perform(IPuzzleComponent component)
+    private async void Perform(IPuzzleComponent component)
     {
         if(speech_list==null) return;
 
         List<DialogContent> itemsToRemove = new List<DialogContent>();
-        
+
+        if (isAudioPlaying)
+        {
+            await WaitForAudioToFinish();
+        }
+
+
         foreach (var content in speech_list)
         {
             if (content.GetTrigger() == component)
             {
                 if (content.CanPlay() && content.GetTrigger().CheckCompletion())
                 {
+                    isAudioPlaying = true;
                     interperter.PushLines(content.GetLines(), 0f);
                  //   StartCoroutine(notification.Appear(content.GetLines()[0], 3));
                     StartCoroutine(content.PlayAudioAtPlayerPosition());
+                    await WaitForAudioToFinish();
                     content.HandleRepetition(ref itemsToRemove);
                 }
             }

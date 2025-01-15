@@ -105,7 +105,6 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            // Handle Custom Scripts
             MonoBehaviour[] scripts = pair.targetObject.GetComponents<MonoBehaviour>();
             foreach (var script in scripts)
             {

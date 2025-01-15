@@ -126,28 +126,17 @@ public class Interactable : MonoBehaviour
                     switch (runtimeAnimatorController.name)
                     {
                         case "SM_Bld_Door_Single_03 (1)":
-                            if (interactableAction.beenTriggerd && !soundPlayed)
+                            if (WasTriggered())
                             {
                                 clipToPlay = Resources.Load<AudioClip>("Door1");
                                 soundPlayed = true; 
                             }
-                            else if (!interactableAction.beenTriggerd && soundPlayed)
-                            {
-                                clipToPlay = Resources.Load<AudioClip>("Door1");
-                                soundPlayed = false; 
-                            }
                             break;
 
                         case "door3":
-                            if (interactableAction.beenTriggerd && !soundPlayed)
+                            if (WasTriggered())
                             {
                                 clipToPlay = Resources.Load<AudioClip>("Door2");
-                                soundPlayed = true;
-                            }
-                            else if (!interactableAction.beenTriggerd && soundPlayed)
-                            {
-                                clipToPlay = Resources.Load<AudioClip>("Door2");
-                                soundPlayed = false;
                             }
                             break;
 

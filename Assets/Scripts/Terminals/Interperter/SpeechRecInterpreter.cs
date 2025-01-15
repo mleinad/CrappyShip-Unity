@@ -54,7 +54,7 @@ public class SpeechRecInterpreter : BaseInterperter
         // Wait for the "V" key to be pressed
         while (!Input.GetKeyDown(KeyCode.V))
         {
-            yield return null; // Wait for the next frame
+            yield return null; 
         }
         microphoneDetector.StartRecording();
         isListening = true;
@@ -68,7 +68,7 @@ public class SpeechRecInterpreter : BaseInterperter
         }
         else
         {
-            //Change for Voice Command not Recognized
+
             
         }
 
